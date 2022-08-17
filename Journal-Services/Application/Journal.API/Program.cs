@@ -1,11 +1,28 @@
+using System.Reflection;
+using System.Reflection.Metadata;
+using Journal.API.DependencyInjection;
+using Journal.Infrastructure.Database;
+using Journal.SharedSettings;
+using MediatR;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+builder.Configuration.AddJsonFile( Path.Combine(path, "sharedSettings.Secrets.json"), false, false);
 
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwagger();
+
+builder.Services.AddSharedSettings(builder.Configuration);
+builder.Services.AddDatabase();
+builder.Services.AddFeatures();
+
+//Must be after AddFeatures
+builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+
 
 var app = builder.Build();
 

@@ -4,11 +4,11 @@ using Npgsql;
 
 namespace Journal.Infrastructure.Database;
 
-public class DapperContext
+public class DatabaseContext
 {
     private readonly SettingsData _settingsData;
 
-    public DapperContext(SettingsData settingsData)
+    public DatabaseContext(SettingsData settingsData)
     {
         _settingsData = settingsData;
     }
