@@ -1,45 +1,89 @@
-﻿namespace Journal.SharedSettings;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Journal.SharedSettings;
 
 /// <summary>
-/// Defines all setting s used by all system
+/// Defines all setting s used by all system.
 /// </summary>
 public class SettingsData
 {
+    /// <summary>
+    /// Database configuration section.
+    /// <see cref="DatabaseSettings"/> for more details.
+    /// </summary>
     public DatabaseSettings Database { get; }
 
-    public SettingsData()
+    public SettingsData(IConfiguration configuration)
     {
-        Database = new DatabaseSettings();
+        var dbSection = configuration.GetSection(nameof(Database));
+        Database = new DatabaseSettings(dbSection);
     }
 }
 
 /// <summary>
-/// Defines all properties used by the system to connect the database
+/// Defines all properties used by the system to connect the database.
 /// </summary>
 public class DatabaseSettings
 {
-    public string Host { get; set; } = default!;
+    /// <summary>
+    /// Host address for the database.
+    /// </summary>
+    public string Host { get; } = default!;
 
-    public int Port { get; set; }
+    /// <summary>
+    /// Port number the <see cref="Host"/> is listen to.
+    /// </summary>
+    public int Port { get; }
 
-    public string DatabaseName { get; set; } = default!;
+    /// <summary>
+    /// Name of the database.
+    /// </summary>
+    public string DatabaseName { get; } = default!;
 
-    public string User { get; set; } = default!;
+     /// <summary>
+     /// User to connect to the database.
+     /// </summary>
+    public string User { get; } = default!;
 
-    public string Password { get; set; } = default!;
+    /// <summary>
+    /// Password to connect to the database.
+    /// </summary>
+    public string Password { get; } = default!;
+
+    /// <summary>
+    /// Search path the database driver will use to locate the tables.
+    /// </summary>
+    public string SearchPath { get; } = default!;
 
     private string _connectionString = default!;
 
+    /// <summary>
+    /// Formatted connection string the driver will use to connect to the database.
+    /// </summary>
     public string ConnectionString
     {
         get
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
-                _connectionString = "";
+                _connectionString =
+                    $"Username={User};Password={Password};Host={Host};Port={Port};Database={DatabaseName};SearchPath={SearchPath}";
             }
 
             return _connectionString;
+        }
+    }
+
+    public DatabaseSettings(IConfigurationSection configuration)
+    {
+        if (configuration is not null)
+        {
+            Host = configuration[nameof(Host)];
+            Port = Convert.ToInt32(configuration[nameof(Port)]);
+            DatabaseName = configuration[nameof(DatabaseName)];
+            User = configuration[nameof(User)];
+            Password = configuration[nameof(Password)];
+            SearchPath = configuration[nameof(SearchPath)];
         }
     }
 }

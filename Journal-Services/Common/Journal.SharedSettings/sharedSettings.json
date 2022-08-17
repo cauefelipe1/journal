@@ -1,0 +1,17 @@
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    },
+    "Database": {
+        "Host": "[HOST HERE]",
+        "Port": 0,
+        "DatabaseName": "[DATABASE NAME HERE]",
+        "User": "[USER HERE]",
+        "Password": "[PASSWORD HERE]",
+        "SearchPath": "[SEARCH PATH HERE]"
+    }
+}
