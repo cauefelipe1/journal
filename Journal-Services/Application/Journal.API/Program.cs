@@ -7,8 +7,7 @@ using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-builder.Configuration.AddJsonFile( Path.Combine(path, "sharedSettings.Secrets.json"), false, false);
+builder.Configuration.AddAdditionalConfigFiles();
 
 // Add services to the container.
 builder.Services.AddControllers();
