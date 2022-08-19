@@ -1,7 +1,4 @@
-using System.Reflection;
-using System.Reflection.Metadata;
 using Journal.API.DependencyInjection;
-using Journal.Infrastructure.Database;
 using Journal.SharedSettings;
 using MediatR;
 

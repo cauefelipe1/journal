@@ -1,4 +1,3 @@
-using System.ComponentModel.Design;
 using MediatR;
 
 namespace Journal.Infrastructure.Features.HealthCheck;
