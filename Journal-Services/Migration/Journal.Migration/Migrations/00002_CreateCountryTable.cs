@@ -16,11 +16,20 @@ public class CreateCountryTable_00002 : FluentMigrator.Migration
     public override void Up()
     {
         Create.Table("country").InSchema(_settings.Database.SearchPath)
-            .WithColumn("country_id").AsInt32().NotNullable().PrimaryKey().Identity()
+            .WithColumn("country_id").AsInt16().NotNullable().PrimaryKey().Identity()
             .WithColumn("country_code_2_letters").AsString(2).NotNullable()
             .WithColumn("country_code_3_letters").AsString(3).NotNullable()
             .WithColumn("country_numeric_code").AsInt32().NotNullable()
             .WithColumn("country_name").AsString(50).NotNullable();
+
+        Create.Table("country_i18n_translation").InSchema(_settings.Database.SearchPath)
+            .WithColumn("country_id").AsInt16().NotNullable()
+            .WithColumn("country_name").AsString(80).NotNullable()
+            .WithColumn("language_id").AsInt16().NotNullable();
+
+        Create.ForeignKey()
+            .FromTable("country_i18n_translation").InSchema(_settings.Database.SearchPath).ForeignColumn("country_id")
+            .ToTable("country").InSchema(_settings.Database.SearchPath).PrimaryColumn("country_id");
 
         PopulateCountryTable();
     }
