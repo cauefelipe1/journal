@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="28.0.1" />
       <PackageReference Include="Dapper" Version="2.0.123" />
       <PackageReference Include="FluentMigrator" Version="3.3.2" />
       <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
@@ -19,11 +20,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Common\Journal.SharedSettings\Journal.SharedSettings.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="Migrations\Database" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Journal.SharedSettings\Journal.SharedSettings.csproj" />
+      <None Update="Data\country.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
