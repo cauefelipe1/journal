@@ -1,11 +1,11 @@
 namespace Journal.Migration.Migrations;
 
-[ Migration(00003)]
-public class CreateVehicleTables_00003 : FluentMigrator.Migration
+[ Migration(00004)]
+public class CreateVehicleTables_00004 : FluentMigrator.Migration
 {
     private readonly SettingsData _settings;
 
-    public CreateVehicleTables_00003(SettingsData settings) => _settings = settings;
+    public CreateVehicleTables_00004(SettingsData settings) => _settings = settings;
 
     public override void Up()
     {
