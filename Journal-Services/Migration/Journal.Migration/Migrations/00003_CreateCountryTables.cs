@@ -2,7 +2,9 @@ using System.Data;
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Journal.Domain.Models.Language;
 using Journal.Migration.Migrations.DTOs;
+using Mapster;
 
 namespace Journal.Migration.Migrations;
 
@@ -17,9 +19,10 @@ public class CreateCountryTables_00003 : FluentMigrator.Migration
     {
         Create.Table("country").InSchema(_settings.Database.SearchPath)
             .WithColumn("country_id").AsInt16().NotNullable().PrimaryKey()
-            .WithColumn("country_code_2_letters").AsString(2).NotNullable()
-            .WithColumn("country_code_3_letters").AsString(3).NotNullable()
-            .WithColumn("country_numeric_code").AsInt32().NotNullable();
+            .WithColumn("iso_alpha_2_letters_code").AsString(2).NotNullable()
+            .WithColumn("iso_alpha_3_letters_code").AsString(3).NotNullable()
+            .WithColumn("iso_numeric_code").AsInt32().NotNullable()
+            .WithColumn("international_dialing_code").AsString(10).NotNullable();
 
         Create.Table("country_i18n_translation").InSchema(_settings.Database.SearchPath)
             .WithColumn("country_id").AsInt16().NotNullable()
@@ -49,17 +52,26 @@ public class CreateCountryTables_00003 : FluentMigrator.Migration
 
         using var csv = new CsvReader(sr, csvConfig);
 
-        var records = csv.GetRecords<CountryDTO>();
+        var records = csv.GetRecords<CountryCsvDTO>();
 
         foreach (var r in records)
         {
             Insert.IntoTable("country").InSchema(_settings.Database.SearchPath)
-                .Row(r);
+                .Row(r.Adapt<CountryDTO>());
+
+            Insert.IntoTable("country_i18n_translation").InSchema(_settings.Database.SearchPath)
+                .Row(new CountryI18NTranslationDTO
+                {
+                    country_id = r.country_id,
+                    country_name = r.country_name,
+                    language_id = (short)LanguageCode.English
+                });
         }
     }
 
     public override void Down()
     {
+        Delete.Table("country_i18n_translation").InSchema(_settings.Database.SearchPath);
         Delete.Table("country").InSchema(_settings.Database.SearchPath);
     }
 }

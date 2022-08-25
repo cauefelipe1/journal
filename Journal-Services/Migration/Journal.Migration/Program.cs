@@ -40,4 +40,36 @@ var server = builder.Build();
 
 var mig = server.Services.GetRequiredService<IMigrationRunner>();
 
-mig.MigrateUp();
+void ShowInformDirectionMessage()
+{
+    Console.WriteLine("Inform the migration direction.");
+    Console.WriteLine("Up or Down.");
+}
+
+ShowInformDirectionMessage();
+
+bool validInput = false;
+
+do
+{
+    string input = Console.ReadLine();
+
+    if (string.Equals(input, "up", StringComparison.InvariantCultureIgnoreCase))
+    {
+        mig.MigrateUp();
+        validInput = true;
+    }
+    else if (string.Equals(input, "down", StringComparison.InvariantCultureIgnoreCase))
+    {
+        mig.MigrateDown(2); //GAMBIARRA
+        validInput = true;
+    }
+
+    if (!validInput)
+    {
+        Console.WriteLine("Invalid option!");
+        ShowInformDirectionMessage();
+    }
+
+} while (!validInput);
+
