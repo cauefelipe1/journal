@@ -1,3 +1,5 @@
+using Journal.Migration.Migrations.DTOs;
+
 namespace Journal.Migration.Migrations;
 
 [ Migration(00004)]
@@ -9,9 +11,17 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
 
     public override void Up()
     {
+        CreateTables();
+        PopulateVehicleType();
+    }
+
+
+    private void CreateTables()
+    {
         Create.Table("vehicle_type").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_type_id").AsInt32().NotNullable().PrimaryKey().Identity()
-            .WithColumn("vehicle_type_name").AsString(50).NotNullable();
+            .WithColumn("vehicle_type_name").AsString(50).NotNullable()
+            .WithColumn("is_active").AsBoolean().NotNullable();
 
         Create.Table("vehicle_brand").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_brand_id").AsInt32().NotNullable().PrimaryKey().Identity()
@@ -42,5 +52,28 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
         Delete.Table("vehicle").InSchema(_settings.Database.SearchPath);
         Delete.Table("vehicle_brand").InSchema(_settings.Database.SearchPath);
         Delete.Table("vehicle_type").InSchema(_settings.Database.SearchPath);
+    }
+
+    private void PopulateVehicleType()
+    {
+        Insert.IntoTable("vehicle_type").InSchema(_settings.Database.SearchPath)
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 1,
+                vehicle_type_name = "Car",
+                is_active = true
+            })
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 2,
+                vehicle_type_name = "Truck",
+                is_active = false
+            })
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 3,
+                vehicle_type_name = "Motorcycle",
+                is_active = false
+            });
     }
 }
