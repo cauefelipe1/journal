@@ -15,7 +15,6 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
         PopulateVehicleType();
     }
 
-
     private void CreateTables()
     {
         Create.Table("vehicle_type").InSchema(_settings.Database.SearchPath)
@@ -67,13 +66,32 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
             {
                 vehicle_type_id = 2,
                 vehicle_type_name = "Truck",
-                is_active = false
+                is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 3,
                 vehicle_type_name = "Motorcycle",
-                is_active = false
+                is_active = true
+            })
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 4,
+                vehicle_type_name = "Boat",
+                is_active = true
+            })
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 5,
+                vehicle_type_name = "Airplane",
+                is_active = true
+            })
+            .Row(new VehicleTypeDTO
+            {
+                vehicle_type_id = 6,
+                vehicle_type_name = "Chooper",
+                is_active = true
             });
+
     }
 }

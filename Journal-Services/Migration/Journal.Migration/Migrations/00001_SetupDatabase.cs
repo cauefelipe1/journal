@@ -9,15 +9,20 @@ public class SetupDatabase_00001 : FluentMigrator.Migration
 
     public override void Up()
     {
-        string SQL = $"CREATE SCHEMA {_settings.Database.SearchPath};";
+        AddOrRemoveSchemas(MigrationDirection.Up);
+    }
+
+    private void AddOrRemoveSchemas(MigrationDirection direction)
+    {
+        string getOperation() => direction is MigrationDirection.Up ? "CREATE" : "DROP";
+
+        string SQL = $"{getOperation()} SCHEMA {_settings.Database.SearchPath};";
 
         Execute.Sql(SQL);
     }
 
     public override void Down()
     {
-        string SQL = $"DROP SCHEMA {_settings.Database.SearchPath};";
-
-        Execute.Sql(SQL);
+        AddOrRemoveSchemas(MigrationDirection.Down);
     }
 }
