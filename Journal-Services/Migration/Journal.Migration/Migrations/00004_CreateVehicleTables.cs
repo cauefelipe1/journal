@@ -1,4 +1,8 @@
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Journal.Migration.Migrations.DTOs;
+using Mapster;
 
 namespace Journal.Migration.Migrations;
 
@@ -13,6 +17,7 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
     {
         CreateTables();
         PopulateVehicleType();
+        PopulateVehicleBrand();
     }
 
     private void CreateTables()
@@ -93,5 +98,24 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
                 is_active = true
             });
 
+    }
+
+    private void PopulateVehicleBrand()
+    {
+        string path = "Data/Vehicles/brand.csv";
+        using var sr = new StreamReader(path);
+
+        var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture);
+        csvConfig.Delimiter = ";";
+
+        using var csv = new CsvReader(sr, csvConfig);
+
+        var records = csv.GetRecords<VehicleBrandDTO>();
+
+        foreach (var r in records)
+        {
+            Insert.IntoTable("vehicle_brand").InSchema(_settings.Database.SearchPath)
+                .Row(r);
+        }
     }
 }

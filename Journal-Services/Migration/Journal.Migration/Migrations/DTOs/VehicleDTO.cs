@@ -11,3 +11,12 @@ public class VehicleTypeDTO
 
     public bool is_active { get; set; }
 }
+
+public class VehicleBrandDTO
+{
+    public int vehicle_brand_id { get; set; }
+
+    public string? vehicle_brand_name { get; set; }
+
+    public int country_id { get; set; }
+}
