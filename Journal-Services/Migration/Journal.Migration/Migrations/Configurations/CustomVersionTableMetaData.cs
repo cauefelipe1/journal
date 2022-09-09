@@ -2,7 +2,6 @@ using FluentMigrator.Runner.VersionTableInfo;
 
 namespace Journal.Migration.Migrations.Configurations;
 
-[VersionTableMetaData]
 #pragma warning disable CS0618
 public class CustomVersionTableMetaData : DefaultVersionTableMetaData
 #pragma warning restore CS0618

@@ -42,8 +42,6 @@ public class CreateCountryTables_00003 : FluentMigrator.Migration
 
     private void PopulateCountryTable()
     {
-        const char separator = ';';
-
         string path = "Data/country.csv";
         using var sr = new StreamReader(path);
 

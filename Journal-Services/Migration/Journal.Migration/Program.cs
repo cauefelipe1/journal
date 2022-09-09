@@ -27,7 +27,7 @@ bool validInput = false;
 
 do
 {
-    string input = Console.ReadLine();
+    string? input = Console.ReadLine();
 
     if (string.Equals(input, "up", StringComparison.InvariantCultureIgnoreCase))
     {
