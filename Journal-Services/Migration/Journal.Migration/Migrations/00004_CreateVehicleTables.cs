@@ -112,10 +112,9 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
 
         var records = csv.GetRecords<VehicleBrandDTO>();
 
+        var insertTable = Insert.IntoTable("vehicle_brand").InSchema(_settings.Database.SearchPath);
+
         foreach (var r in records)
-        {
-            Insert.IntoTable("vehicle_brand").InSchema(_settings.Database.SearchPath)
-                .Row(r);
-        }
+            insertTable.Row(r);
     }
 }

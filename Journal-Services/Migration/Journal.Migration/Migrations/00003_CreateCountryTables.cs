@@ -52,18 +52,19 @@ public class CreateCountryTables_00003 : FluentMigrator.Migration
 
         var records = csv.GetRecords<CountryCsvDTO>();
 
+        var insertCountry = Insert.IntoTable("country").InSchema(_settings.Database.SearchPath);
+        var insertCountryIn18 = Insert.IntoTable("country_i18n_translation").InSchema(_settings.Database.SearchPath);
+
         foreach (var r in records)
         {
-            Insert.IntoTable("country").InSchema(_settings.Database.SearchPath)
-                .Row(r.Adapt<CountryDTO>());
+            insertCountry.Row(r.Adapt<CountryDTO>());
 
-            Insert.IntoTable("country_i18n_translation").InSchema(_settings.Database.SearchPath)
-                .Row(new CountryI18NTranslationDTO
-                {
-                    country_id = r.country_id,
-                    country_name = r.country_name,
-                    language_id = (short)LanguageCode.English
-                });
+            insertCountryIn18.Row(new CountryI18NTranslationDTO
+            {
+                country_id = r.country_id,
+                country_name = r.country_name,
+                language_id = (short)LanguageCode.English
+            });
         }
     }
 
