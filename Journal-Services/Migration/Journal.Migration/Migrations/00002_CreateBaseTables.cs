@@ -11,6 +11,20 @@ public class CreateBaseTables_00002 : FluentMigrator.Migration{
 
     public override void Up()
     {
+        InternalCreateTables();
+        InternalPopulateTables();
+    }
+
+    #region Tables_Creation
+    private void InternalCreateTables()
+    {
+        InternalCreateLanguageTable();
+        InternalCreateUserTypeTable();
+        InternalCreateUserTable();
+    }
+
+    private void InternalCreateLanguageTable()
+    {
         Create.Table("language").InSchema(_settings.Database.SearchPath)
             .WithColumn("language_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("language_code_2_letters").AsString(2).NotNullable()
@@ -20,11 +34,43 @@ public class CreateBaseTables_00002 : FluentMigrator.Migration{
         Create.ForeignKey()
             .FromTable("language").InSchema(_settings.Database.SearchPath).ForeignColumn("base_language_id")
             .ToTable("language").InSchema(_settings.Database.SearchPath).PrimaryColumn("language_id");
-
-        PopulateLanguageTable();
     }
 
-    private void PopulateLanguageTable()
+    private void InternalCreateUserTypeTable()
+    {
+        Create.Table("user_type").InSchema(_settings.Database.SearchPath)
+            .WithColumn("user_type_id").AsInt16().NotNullable().PrimaryKey()
+            .WithColumn("user_type_desc").AsString(255).NotNullable();
+    }
+
+    private void InternalCreateUserTable()
+    {
+        Create.Table("app_user").InSchema(_settings.Database.SearchPath)
+            .WithColumn("app_user_id").AsInt32().NotNullable().PrimaryKey().Identity()
+            .WithColumn("app_user_name").AsString(255).NotNullable()
+            .WithColumn("app_user_nickname").AsString(30).NotNullable()
+            .WithColumn("app_user_email").AsString(60).NotNullable()
+            .WithColumn("app_user_email_confirmed").AsBoolean().NotNullable()
+            .WithColumn("app_user_phone").AsString(60).Nullable()
+            .WithColumn("app_user_phone_confirmed").AsBoolean().NotNullable()
+            .WithColumn("app_user_password").AsString(60).NotNullable()
+            .WithColumn("app_user_type_id").AsInt16().NotNullable();
+
+        Create.ForeignKey()
+            .FromTable("app_user").InSchema(_settings.Database.SearchPath).ForeignColumn("app_user_type_id")
+            .ToTable("user_type").InSchema(_settings.Database.SearchPath).PrimaryColumn("user_type_id");
+    }
+    #endregion Tables_Creation
+
+    #region Tables_Population
+
+    private void InternalPopulateTables()
+    {
+        InternalPopulateLanguageTable();
+        InternalPopulateUserTypeTable();
+    }
+
+    private void InternalPopulateLanguageTable()
     {
         Insert.IntoTable("language").InSchema(_settings.Database.SearchPath)
             .Row(new LanguageDTO
@@ -47,8 +93,26 @@ public class CreateBaseTables_00002 : FluentMigrator.Migration{
             });
     }
 
+    private void InternalPopulateUserTypeTable()
+    {
+        Insert.IntoTable("user_type").InSchema(_settings.Database.SearchPath)
+            .Row(new UserTypeDTO
+            {
+                user_type_id = 1,
+                user_type_desc = "Standard"
+            })
+            .Row(new UserTypeDTO
+            {
+                user_type_id = 2,
+                user_type_desc = "Premium"
+            });
+    }
+    #endregion Tables_Population
+
     public override void Down()
     {
+        Delete.Table("app_user").InSchema(_settings.Database.SearchPath);
+        Delete.Table("user_type").InSchema(_settings.Database.SearchPath);
         Delete.Table("language").InSchema(_settings.Database.SearchPath);
     }
 }

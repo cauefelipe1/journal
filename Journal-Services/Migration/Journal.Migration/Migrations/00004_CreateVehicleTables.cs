@@ -16,8 +16,7 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
     public override void Up()
     {
         InternalCreateTables();
-        PopulateVehicleType();
-        PopulateVehicleBrand();
+        InternalPopulateTables();
     }
 
     #region Tables_Creation
@@ -31,7 +30,7 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
     private void InternalCreateVehicleTypeTable()
     {
         Create.Table("vehicle_type").InSchema(_settings.Database.SearchPath)
-            .WithColumn("vehicle_type_id").AsInt32().NotNullable().PrimaryKey().Identity()
+            .WithColumn("vehicle_type_id").AsInt16().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_type_name").AsString(50).NotNullable()
             .WithColumn("is_active").AsBoolean().NotNullable();
     }
@@ -39,13 +38,18 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
     private void InternalCreateVehicleBrandTable()
     {
         Create.Table("vehicle_brand").InSchema(_settings.Database.SearchPath)
-            .WithColumn("vehicle_brand_id").AsInt32().NotNullable().PrimaryKey().Identity()
+            .WithColumn("vehicle_brand_id").AsInt16().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_brand_name").AsString(50).NotNullable()
-            .WithColumn("country_id").AsInt32().NotNullable();
+            .WithColumn("country_id").AsInt16().NotNullable();
 
         Create.ForeignKey()
             .FromTable("vehicle_brand").InSchema(_settings.Database.SearchPath).ForeignColumn("country_id")
             .ToTable("country").InSchema(_settings.Database.SearchPath).PrimaryColumn("country_id");
+
+        Create.Index("idx_brand_name")
+            .OnTable("vehicle_brand").InSchema(_settings.Database.SearchPath)
+            .OnColumn("vehicle_brand_name").Ascending()
+            .WithOptions().NonClustered();
     }
 
     private void InternalCreateVehicleTable()
@@ -53,8 +57,8 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
         Create.Table("vehicle").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_name").AsString(50).NotNullable()
-            .WithColumn("vehicle_type_id").AsInt32().NotNullable()
-            .WithColumn("vehicle_brand_id").AsInt32().NotNullable();
+            .WithColumn("vehicle_type_id").AsInt16().NotNullable()
+            .WithColumn("vehicle_brand_id").AsInt16().NotNullable();
 
         Create.ForeignKey()
             .FromTable("vehicle").InSchema(_settings.Database.SearchPath).ForeignColumn("vehicle_type_id")
@@ -68,6 +72,12 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
     #endregion Tables_Creation
 
     #region Tables_Population
+    private void InternalPopulateTables()
+    {
+        PopulateVehicleType();
+        PopulateVehicleBrand();
+    }
+
     private void PopulateVehicleType()
     {
         Insert.IntoTable("vehicle_type").InSchema(_settings.Database.SearchPath)
