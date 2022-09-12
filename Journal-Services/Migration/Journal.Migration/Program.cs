@@ -59,6 +59,12 @@ do
 
 } while (!validInput);
 
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("Migration finished.");
+Console.ResetColor();
+Console.WriteLine("Press any key to quit.");
+Console.ReadLine();
+
 
 #region SupportMethods
 void ShowInformDirectionMessage()

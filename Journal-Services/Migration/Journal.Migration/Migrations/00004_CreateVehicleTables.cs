@@ -15,18 +15,29 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
 
     public override void Up()
     {
-        CreateTables();
+        InternalCreateTables();
         PopulateVehicleType();
         PopulateVehicleBrand();
     }
 
-    private void CreateTables()
+    #region Tables_Creation
+    private void InternalCreateTables()
+    {
+        InternalCreateVehicleTypeTable();
+        InternalCreateVehicleBrandTable();
+        InternalCreateVehicleTable();
+    }
+
+    private void InternalCreateVehicleTypeTable()
     {
         Create.Table("vehicle_type").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_type_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_type_name").AsString(50).NotNullable()
             .WithColumn("is_active").AsBoolean().NotNullable();
+    }
 
+    private void InternalCreateVehicleBrandTable()
+    {
         Create.Table("vehicle_brand").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_brand_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_brand_name").AsString(50).NotNullable()
@@ -35,7 +46,10 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
         Create.ForeignKey()
             .FromTable("vehicle_brand").InSchema(_settings.Database.SearchPath).ForeignColumn("country_id")
             .ToTable("country").InSchema(_settings.Database.SearchPath).PrimaryColumn("country_id");
+    }
 
+    private void InternalCreateVehicleTable()
+    {
         Create.Table("vehicle").InSchema(_settings.Database.SearchPath)
             .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_name").AsString(50).NotNullable()
@@ -51,13 +65,9 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
             .ToTable("vehicle_brand").InSchema(_settings.Database.SearchPath).PrimaryColumn("vehicle_brand_id");
     }
 
-    public override void Down()
-    {
-        Delete.Table("vehicle").InSchema(_settings.Database.SearchPath);
-        Delete.Table("vehicle_brand").InSchema(_settings.Database.SearchPath);
-        Delete.Table("vehicle_type").InSchema(_settings.Database.SearchPath);
-    }
+    #endregion Tables_Creation
 
+    #region Tables_Population
     private void PopulateVehicleType()
     {
         Insert.IntoTable("vehicle_type").InSchema(_settings.Database.SearchPath)
@@ -116,5 +126,13 @@ public class CreateVehicleTables_00004 : FluentMigrator.Migration
 
         foreach (var r in records)
             insertTable.Row(r);
+    }
+    #endregion Tables_Population
+
+    public override void Down()
+    {
+        Delete.Table("vehicle").InSchema(_settings.Database.SearchPath);
+        Delete.Table("vehicle_brand").InSchema(_settings.Database.SearchPath);
+        Delete.Table("vehicle_type").InSchema(_settings.Database.SearchPath);
     }
 }
