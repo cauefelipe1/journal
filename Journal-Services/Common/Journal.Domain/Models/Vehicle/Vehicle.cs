@@ -6,10 +6,16 @@ public class VehicleBrand
 
     public string Name { get; set; } = default!;
 
-    public string Nickname { get; set; } = default!;
+    public int CountryId { get; set; } = default!;
 }
 
 public class Vehicle
 {
+    public int Id { get; set; }
 
+    public string Name { get; set; } = default!;
+
+    public int TypeId { get; set; }
+
+    public int BrandId { get; set; }
 }

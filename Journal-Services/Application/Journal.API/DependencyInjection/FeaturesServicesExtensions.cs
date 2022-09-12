@@ -1,4 +1,5 @@
 using Journal.Infrastructure.Features.HealthCheck;
+using Journal.Infrastructure.Features.Vehicle;
 
 namespace Journal.API.DependencyInjection;
 
@@ -14,5 +15,6 @@ public static class FeaturesServicesExtensions
     public static void AddFeatures(this IServiceCollection services)
     {
          services.AddSingleton<IHealthCheckRepository, HealthCheckRepository>();
+         services.AddSingleton<IVehicleRepository, VehicleRepository>();
     }
 }

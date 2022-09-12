@@ -4,5 +4,5 @@ namespace Journal.Infrastructure.Features.Vehicle;
 
 public interface IVehicleRepository
 {
-    List<VehicleBrand> GetAllBrands();
+    IList<VehicleBrand> GetAllBrands();
 }
