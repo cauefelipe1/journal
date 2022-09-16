@@ -1,5 +1,6 @@
 using System.Reflection;
 using Journal.Infrastructure.Database;
+using Microsoft.OpenApi.Models;
 
 namespace Journal.API.DependencyInjection;
 
@@ -16,7 +17,35 @@ public static class GeneralServicesExtensions
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(x =>
+        {
+            x.SwaggerDoc("v1", new OpenApiInfo { Title = "Journal API", Version = "V1" });
+            x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Description = "Inform a valid JWT token",
+                Name = "Authorization",
+                BearerFormat = "JWT",
+                Scheme = "Bearer"
+            });
+
+            x.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+
+        });
     }
 
     /// <summary>

@@ -5,13 +5,15 @@ using MediatR;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddAdditionalConfigFiles();
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllers();
 
 builder.Services.AddSwagger();
 
-builder.Services.AddSharedSettings(builder.Configuration);
+var settingsData = builder.Services.AddSharedSettings(configuration);
+builder.Services.AddIdentityConfiguration(configuration);
 builder.Services.AddDatabase();
 builder.Services.AddFeatures();
 
