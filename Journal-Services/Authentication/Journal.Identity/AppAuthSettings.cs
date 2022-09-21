@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace Journal.Infrastructure.Features.Authentication;
+namespace Journal.Identity;
 
 /// <summary>
 /// Defines the settings to handle the application authentication.

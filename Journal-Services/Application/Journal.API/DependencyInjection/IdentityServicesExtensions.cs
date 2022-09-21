@@ -1,6 +1,5 @@
 using System.Text;
-using Journal.Infrastructure.Features.Authentication;
-using Journal.SharedSettings;
+using Journal.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,9 +11,12 @@ public static class IdentityServicesExtensions
     /// Adds the all identity services dependencies into the <see cref="IServiceCollection"/>.
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
+    /// <param name="configuration">Application configurations.</param>
     public static void AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         var authSettings = new AppAuthSettings(configuration);
+
+        services.AddSingleton(authSettings);
 
         services
             .AddAuthentication(x =>
@@ -37,7 +39,5 @@ public static class IdentityServicesExtensions
                     ValidateLifetime = true
                 };
             });
-
-
     }
 }
