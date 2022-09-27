@@ -1,9 +1,8 @@
-using System.Text;
+using Journal.Identity.Database;
 using Journal.Identity.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Journal.Identity.Extensions;
 
@@ -14,9 +13,9 @@ public static class IdentityExtensions
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
     /// <param name="configuration">Application configurations.</param>
-    public static void AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
+    public static void AddApplicationIdentity(this IServiceCollection services, IConfiguration configuration)
     {
-
+        services.AddSingleton<IdentityDatabaseContext>();
         var builder = services.AddIdentityCore<AppUserModel>(q =>
         {
             //Password
@@ -30,8 +29,7 @@ public static class IdentityExtensions
         });
 
         builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
-        //builder.AddEntityFrameworkStores();
-        //.AddDefaultTokenProviders();
+        builder.AddEntityFrameworkStores<IdentityDatabaseContext>();
 
     }
 }

@@ -1,5 +1,6 @@
 using System.Text;
 using Journal.Identity;
+using Journal.Identity.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,6 +14,12 @@ public static class IdentityServicesExtensions
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
     /// <param name="configuration">Application configurations.</param>
     public static void AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddApplicationIdentity(configuration);
+        InternalAddJwtToken(services, configuration);
+    }
+
+    private static void InternalAddJwtToken(IServiceCollection services, IConfiguration configuration)
     {
         var authSettings = new AppAuthSettings(configuration);
 

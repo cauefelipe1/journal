@@ -1,11 +1,14 @@
+using JetBrains.Annotations;
 using MediatR;
 
 namespace Journal.Infrastructure.Features.HealthCheck;
 
+[UsedImplicitly]
 public class HealthCheckMediator
 {
     public class HealthCheckQuery : IRequest<bool> { }
 
+    [UsedImplicitly]
     public class HealthCheckHandler : IRequestHandler<HealthCheckQuery, bool>
     {
         private readonly IHealthCheckRepository _repo;

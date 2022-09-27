@@ -1,14 +1,17 @@
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using JetBrains.Annotations;
 using Journal.Identity.Models.Registration;
 using Journal.Identity.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Journal.Identity.Feature.UserRegistration;
+namespace Journal.Identity.Features.UserRegistration;
 
+[UsedImplicitly]
 public class UserRegistrationMediator
 {
     public class UserRegistrationQuery : IRequest<UserRegistrationResult>
@@ -18,6 +21,7 @@ public class UserRegistrationMediator
         public UserRegistrationQuery(AppUserRegistrationInput input) => Input = input;
     }
 
+    [UsedImplicitly]
     public class UserRegistrationHandler : IRequestHandler<UserRegistrationQuery, UserRegistrationResult>
     {
         private readonly UserManager<AppUserModel> _userManager;
@@ -43,9 +47,8 @@ public class UserRegistrationMediator
 
             var userModel = new AppUserModel
             {
-                FullName = userInput.FullName,
-                Nickname = userInput.FullName,
-                Email = userInput.Email
+                Email = userInput.Email,
+                UserName = userInput.Email
             };
 
             var userCreationResult = await _userManager.CreateAsync(userModel, userInput.Password);
@@ -55,7 +58,7 @@ public class UserRegistrationMediator
             return result;
         }
 
-        private UserRegistrationResult HandleUserCreationResult(IdentityResult identityResult, AppUserModel userModel)
+        private UserRegistrationResult HandleUserCreationResult(IdentityResult identityResult, AppUserModel appUserModel)
         {
             var result = new UserRegistrationResult
             {
@@ -68,14 +71,14 @@ public class UserRegistrationMediator
             }
             else
             {
-                result.Token = GenerateToken(userModel);
+                result.Token = GenerateToken(appUserModel);
             }
 
             return result;
         }
 
         //TODO: Move it to a proper mediator class
-        private string GenerateToken(AppUserModel userModel)
+        private string GenerateToken(AppUserModel appUserModel)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(_authSettings.JwtSecret);
@@ -83,7 +86,7 @@ public class UserRegistrationMediator
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Email, userModel.Email),
+                    new Claim(JwtRegisteredClaimNames.Email, appUserModel.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),

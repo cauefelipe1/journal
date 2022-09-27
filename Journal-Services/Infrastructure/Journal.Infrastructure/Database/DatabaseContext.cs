@@ -6,7 +6,7 @@ using Npgsql;
 
 namespace Journal.Infrastructure.Database;
 
-public partial class DatabaseContext : DbContext
+public sealed partial class DatabaseContext : DbContext
 {
     private readonly SettingsData _settingsData;
 

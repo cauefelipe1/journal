@@ -16,7 +16,9 @@ public class SetupDatabase_00001 : FluentMigrator.Migration
     {
         string getOperation() => direction is MigrationDirection.Up ? "CREATE" : "DROP";
 
-        string SQL = $"{getOperation()} SCHEMA {_settings.Database.SearchPath};";
+        string SQL = @$"
+            {getOperation()} SCHEMA {_settings.Database.SearchPath};
+            {getOperation()} SCHEMA identity;";
 
         Execute.Sql(SQL);
     }

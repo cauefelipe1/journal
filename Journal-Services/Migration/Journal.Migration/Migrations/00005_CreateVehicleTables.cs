@@ -6,12 +6,12 @@ using Mapster;
 
 namespace Journal.Migration.Migrations;
 
-[ Migration(00004)]
-public class CreateVehicleTables_00004 : FluentMigrator.Migration
+[ Migration(00005)]
+public class CreateVehicleTables_00005 : FluentMigrator.Migration
 {
     private readonly SettingsData _settings;
 
-    public CreateVehicleTables_00004(SettingsData settings) => _settings = settings;
+    public CreateVehicleTables_00005(SettingsData settings) => _settings = settings;
 
     public override void Up()
     {

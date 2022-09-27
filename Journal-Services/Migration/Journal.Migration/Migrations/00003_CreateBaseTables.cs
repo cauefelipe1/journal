@@ -2,12 +2,13 @@ using Journal.Migration.Migrations.DTOs;
 
 namespace Journal.Migration.Migrations;
 
-[Migration(00002)]
-public class CreateBaseTables_00002 : FluentMigrator.Migration{
+[Migration(00003)]
+public class CreateBaseTables_00003 : FluentMigrator.Migration
+{
 
     private readonly SettingsData _settings;
 
-    public CreateBaseTables_00002(SettingsData settings) => _settings = settings;
+    public CreateBaseTables_00003(SettingsData settings) => _settings = settings;
 
     public override void Up()
     {

@@ -8,12 +8,12 @@ using Mapster;
 
 namespace Journal.Migration.Migrations;
 
-[ Migration(00003)]
-public class CreateCountryTables_00003 : FluentMigrator.Migration
+[ Migration(00004)]
+public class CreateCountryTables_00004 : FluentMigrator.Migration
 {
     private readonly SettingsData _settings;
 
-    public CreateCountryTables_00003 (SettingsData settings) => _settings = settings;
+    public CreateCountryTables_00004(SettingsData settings) => _settings = settings;
 
     public override void Up()
     {

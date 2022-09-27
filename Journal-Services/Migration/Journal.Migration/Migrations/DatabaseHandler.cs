@@ -1,5 +1,4 @@
 using Dapper;
-using Journal.Migration.Extensions;
 using Npgsql;
 
 namespace Journal.Migration.Migrations;
@@ -12,7 +11,7 @@ public class DatabaseHandler {
 
     public void CheckOrCreateDatabase()
     {
-        using var con = new NpgsqlConnection(_settingsData.GetMasterDatabaseConnectionString());
+        using var con = new NpgsqlConnection(_settingsData.Database.MasterConnectionString);
 
         con.Open();
 
@@ -45,7 +44,7 @@ public class DatabaseHandler {
 
     private void DestroyDatabase()
     {
-        using var con = new NpgsqlConnection(_settingsData.GetMasterDatabaseConnectionString());
+        using var con = new NpgsqlConnection(_settingsData.Database.MasterConnectionString);
         con.Open();
 
         bool dbExist = InternalCheckIfDatabaseExists(con);

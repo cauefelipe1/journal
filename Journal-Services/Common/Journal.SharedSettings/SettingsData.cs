@@ -57,6 +57,8 @@ public class DatabaseSettings
 
     private string _connectionString = default!;
 
+    private string _masterConnectionString = default!;
+
     /// <summary>
     /// Formatted connection string the driver will use to connect to the database.
     /// </summary>
@@ -71,6 +73,23 @@ public class DatabaseSettings
             }
 
             return _connectionString;
+        }
+    }
+
+    /// <summary>
+    /// Formatted connection string the driver will use to connect to the master database.
+    /// </summary>
+    public string MasterConnectionString
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_masterConnectionString))
+            {
+                _masterConnectionString =
+                    $"Username={User};Password={Password};Host={Host};Port={Port};Database=postgres";
+            }
+
+            return _masterConnectionString;
         }
     }
 
