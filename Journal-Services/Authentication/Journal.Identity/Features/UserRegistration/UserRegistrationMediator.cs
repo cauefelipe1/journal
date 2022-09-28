@@ -48,7 +48,7 @@ public class UserRegistrationMediator
             var userModel = new AppUserModel
             {
                 Email = userInput.Email,
-                UserName = userInput.Email
+                UserName = userInput.UserName
             };
 
             var userCreationResult = await _userManager.CreateAsync(userModel, userInput.Password);
