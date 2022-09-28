@@ -21,7 +21,6 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
     {
         InternalCreateLanguageTable();
         InternalCreateUserTypeTable();
-        InternalCreateUserTable();
     }
 
     private void InternalCreateLanguageTable()
@@ -42,24 +41,6 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
         Create.Table("user_type").InSchema(_settings.Database.SearchPath)
             .WithColumn("user_type_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("user_type_desc").AsString(255).NotNullable();
-    }
-
-    private void InternalCreateUserTable()
-    {
-        Create.Table("app_user").InSchema(_settings.Database.SearchPath)
-            .WithColumn("app_user_id").AsInt32().NotNullable().PrimaryKey().Identity()
-            .WithColumn("app_user_name").AsString(255).NotNullable()
-            .WithColumn("app_user_nickname").AsString(30).NotNullable()
-            .WithColumn("app_user_email").AsString(60).NotNullable()
-            .WithColumn("app_user_email_confirmed").AsBoolean().NotNullable()
-            .WithColumn("app_user_phone").AsString(60).Nullable()
-            .WithColumn("app_user_phone_confirmed").AsBoolean().NotNullable()
-            .WithColumn("app_user_password").AsString(60).NotNullable()
-            .WithColumn("app_user_type_id").AsInt16().NotNullable();
-
-        Create.ForeignKey()
-            .FromTable("app_user").InSchema(_settings.Database.SearchPath).ForeignColumn("app_user_type_id")
-            .ToTable("user_type").InSchema(_settings.Database.SearchPath).PrimaryColumn("user_type_id");
     }
     #endregion Tables_Creation
 
