@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Journal.API.DependencyInjection;
 
+/// <summary>
+/// Defines extension methods to add the identity structure into the services collection.
+/// </summary>
 public static class IdentityServicesExtensions
 {
     /// <summary>

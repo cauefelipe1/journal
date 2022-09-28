@@ -13,6 +13,9 @@ public class SettingsData
     /// </summary>
     public DatabaseSettings Database { get; }
 
+    /// <summary>
+    /// Class constructor.
+    /// </summary>
     public SettingsData(IConfiguration configuration)
     {
         var dbSection = configuration.GetSection(nameof(Database));
@@ -93,6 +96,9 @@ public class DatabaseSettings
         }
     }
 
+    /// <summary>
+    /// Class constructor.
+    /// </summary>
     public DatabaseSettings(IConfigurationSection configuration)
     {
         if (configuration is not null)

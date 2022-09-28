@@ -22,7 +22,7 @@ public class AppUserRegistrationInput
     /// <summary>
     /// The user name the user can use to login into the application.
     /// </summary>
-    /// <example>falcon</example>
+    /// <example>funnyUserName</example>
     public string UserName { get; set; } = string.Empty;
 
     /// <summary>

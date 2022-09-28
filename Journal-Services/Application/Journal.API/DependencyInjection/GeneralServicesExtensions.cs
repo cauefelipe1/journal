@@ -17,10 +17,10 @@ public static class GeneralServicesExtensions
     {
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(x =>
+        services.AddSwaggerGen(options =>
         {
-            x.SwaggerDoc("v1", new OpenApiInfo { Title = "Journal API", Version = "V1" });
-            x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Journal API", Version = "V1" });
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
@@ -30,7 +30,7 @@ public static class GeneralServicesExtensions
                 Scheme = "Bearer"
             });
 
-            x.AddSecurityRequirement(new OpenApiSecurityRequirement
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -44,6 +44,17 @@ public static class GeneralServicesExtensions
                     Array.Empty<string>()
                 }
             });
+
+            // Include XML Doc in Swagger
+            string path = AppContext.BaseDirectory;
+            string modelsXml = Path.Combine(path, "Journal.Identity.xml");
+
+            if (File.Exists(modelsXml))
+                options.IncludeXmlComments(modelsXml);
+
+            string apiXml = Path.Combine(path, $"{ Assembly.GetEntryAssembly()!.GetName().Name }.xml");
+            if (File.Exists(apiXml))
+                options.IncludeXmlComments(apiXml);
 
         });
     }

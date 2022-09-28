@@ -3,6 +3,7 @@ using Journal.Infrastructure.Database;
 
 namespace Journal.Infrastructure.Features.HealthCheck;
 
+/// <inheritdoc/>
 public class HealthCheckRepository : IHealthCheckRepository
 {
     private readonly DatabaseContext _dbContext;
@@ -10,6 +11,8 @@ public class HealthCheckRepository : IHealthCheckRepository
     public HealthCheckRepository(DatabaseContext dbContext) => _dbContext = dbContext;
 
     private const string DB_ALIVE_QUERY = "SELECT 1 AS DB_ALIVE";
+
+    /// <inheritdoc/>
     public bool IsDatabaseAlive()
     {
         try
