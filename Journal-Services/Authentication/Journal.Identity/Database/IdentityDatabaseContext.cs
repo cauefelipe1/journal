@@ -1,11 +1,12 @@
 using Journal.Identity.Models.User;
 using Journal.SharedSettings;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Journal.Identity.Database;
 
-public class IdentityDatabaseContext : IdentityDbContext<AppUserModel>
+public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, string>
 {
     private readonly SettingsData _settingsData;
 
@@ -14,19 +15,34 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("identity");
+        builder.HasDefaultSchema("auth");
 
         builder.Entity<AppUserModel>(b =>
         {
-            b.Property(l => l.SecondaryId).UseIdentityColumn();
+            b.Property(p => p.SecondaryId).UseIdentityColumn();
+
+            b.ToTable("app_user");
         });
+
+        builder.Entity<Role>(b =>
+        {
+            b.Property(p => p.SecondaryId).UseIdentityColumn();
+
+            b.ToTable("role");
+        });
+
+        builder.Entity<IdentityUserToken<string>>(b => b.ToTable("app_user_tokens"));
+        builder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("role_claims"));
+        builder.Entity<IdentityUserClaim<string>>(b => b.ToTable("app_user_claims"));
+        builder.Entity<IdentityUserLogin<string>>(b => b.ToTable("app_user_logins"));
+        builder.Entity<IdentityUserRole<string>>(b => b.ToTable("app_user_roles"));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
             .UseNpgsql(_settingsData.Database.ConnectionString,
-                x => x.MigrationsAssembly("Journal.Migration"));
-        //.UseSnakeCaseNamingConvention();
+                x => x.MigrationsAssembly("Journal.Migration"))
+        .UseSnakeCaseNamingConvention();
     }
 }

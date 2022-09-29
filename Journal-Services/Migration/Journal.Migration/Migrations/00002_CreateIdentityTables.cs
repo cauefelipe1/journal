@@ -10,86 +10,86 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 
     private void InternalCreateIdentityTables()
     {
-        Create.Table("AspNetRoles").InSchema("identity")
-            .WithColumn("Id").AsString().PrimaryKey("PK_AspNetRoles").NotNullable()
-            .WithColumn("ConcurrencyStamp").AsString().Nullable()
-            .WithColumn("Name").AsString(256).NotNullable()
-            .WithColumn("NormalizedName").AsString(256).Nullable()
-                .Indexed("RoleNameIndex");
+        Create.Table("role").InSchema("auth")
+            .WithColumn("id").AsString().PrimaryKey("pk_role").NotNullable()
+            .WithColumn("concurrency_stamp").AsString().Nullable()
+            .WithColumn("name").AsString(256).NotNullable()
+            .WithColumn("normalized_name").AsString(256).Nullable()
+                .Indexed("role_name_index");
 
 
-        Create.Table("AspNetUserTokens").InSchema("identity")
-            .WithColumn("UserId").AsString().PrimaryKey("PK_AspNetUserTokens").NotNullable()
-            .WithColumn("LoginProvider").AsString()
-            .WithColumn("Name").AsString()
-            .WithColumn("Value").AsString();
+        Create.Table("app_user_tokens").InSchema("auth")
+            .WithColumn("user_id").AsString().PrimaryKey("pk_asp_net_user_tokens").NotNullable()
+            .WithColumn("login_provider").AsString()
+            .WithColumn("name").AsString()
+            .WithColumn("value").AsString();
 
-        Create.Table("AspNetUsers").InSchema("identity")
-           .WithColumn("Id").AsString().NotNullable().PrimaryKey("PK_AspNetUsers")
-           .WithColumn("SecondaryId").AsInt32().Identity()
-           .WithColumn("AccessFailedCount").AsInt32().NotNullable()
-           .WithColumn("ConcurrencyStamp").AsString().Nullable()
-           .WithColumn("Email").AsString(256).Nullable()
-           .WithColumn("EmailConfirmed").AsBoolean().NotNullable()
-           .WithColumn("LockoutEnabled").AsBoolean().NotNullable()
-           .WithColumn("LockoutEnd").AsDateTimeOffset().Nullable()
-           .WithColumn("NormalizedEmail").AsString().Nullable()
-           .WithColumn("NormalizedUserName").AsString().Nullable()
-           .WithColumn("PasswordHash").AsString().Nullable()
-           .WithColumn("PhoneNumber").AsString().Nullable()
-           .WithColumn("PhoneNumberConfirmed").AsBoolean().NotNullable()
-           .WithColumn("SecurityStamp").AsString().Nullable()
-           .WithColumn("TwoFactorEnabled").AsBoolean().NotNullable()
-           .WithColumn("UserName").AsString(256).Nullable();
+        Create.Table("app_user").InSchema("auth")
+           .WithColumn("id").AsString().NotNullable().PrimaryKey("pk_asp_net_users")
+           .WithColumn("secondary_id").AsInt32().Identity()
+           .WithColumn("access_failed_count").AsInt32().NotNullable()
+           .WithColumn("concurrency_stamp").AsString().Nullable()
+           .WithColumn("email").AsString(256).Nullable()
+           .WithColumn("email_confirmed").AsBoolean().NotNullable()
+           .WithColumn("lockout_enabled").AsBoolean().NotNullable()
+           .WithColumn("lockout_end").AsDateTimeOffset().Nullable()
+           .WithColumn("normalized_email").AsString().Nullable()
+           .WithColumn("normalized_user_name").AsString().Nullable()
+           .WithColumn("password_hash").AsString().Nullable()
+           .WithColumn("phone_number").AsString().Nullable()
+           .WithColumn("phone_number_confirmed").AsBoolean().NotNullable()
+           .WithColumn("security_stamp").AsString().Nullable()
+           .WithColumn("two_factor_enabled").AsBoolean().NotNullable()
+           .WithColumn("user_name").AsString(256).Nullable();
 
 
-        Create.Table("AspNetRoleClaims").InSchema("identity")
-            .WithColumn("Id").AsInt32().PrimaryKey("PK_AspNetRoleClaims").Identity()
-            .WithColumn("ClaimType").AsString().Nullable()
-            .WithColumn("ClaimValue").AsString().Nullable()
-            .WithColumn("RoleId").AsString().NotNullable().Indexed("IX_AspNetRoleClaims_RoleId")
-                                 .ForeignKey("FK_AspNetRoleClaims_AspNetRoles_RoleId", "identity", "AspNetRoles", "Id");
+        Create.Table("role_claims").InSchema("auth")
+            .WithColumn("id").AsInt32().PrimaryKey("pk_asp_net_role_claims").Identity()
+            .WithColumn("claim_type").AsString().Nullable()
+            .WithColumn("claim_value").AsString().Nullable()
+            .WithColumn("role_id").AsString().NotNullable().Indexed("ix_asp_net_role_claims_role_id")
+                                 .ForeignKey("fk_asp_net_role_claims_asp_net_roles_role_id", "auth", "role", "id");
 
-        Create.Table("AspNetUserClaims").InSchema("identity")
-          .WithColumn("Id").AsInt32().PrimaryKey("PK_AspNetUserClaims").Identity()
-          .WithColumn("ClaimType").AsString().Nullable()
-          .WithColumn("ClaimValue").AsString().Nullable()
-          .WithColumn("UserId").AsString().NotNullable().Indexed("IX_AspNetUserClaims_UserId")
-                               .ForeignKey("FK_AspNetUserClaims_AspNetUsers_UserId", "identity", "AspNetUsers", "Id")
+        Create.Table("app_user_claims").InSchema("auth")
+          .WithColumn("id").AsInt32().PrimaryKey("pk_asp_net_user_claims").Identity()
+          .WithColumn("claim_type").AsString().Nullable()
+          .WithColumn("claim_value").AsString().Nullable()
+          .WithColumn("user_id").AsString().NotNullable().Indexed("ix_asp_net_user_claims_user_id")
+                               .ForeignKey("fk_asp_net_user_claims_asp_net_users_user_id", "auth", "app_user", "id")
                                .OnDelete(System.Data.Rule.Cascade);
 
-        Create.Table("AspNetUserLogins").InSchema("identity")
-          .WithColumn("LoginProvider").AsString().NotNullable().PrimaryKey("PK_AspNetUserLogins")
-          .WithColumn("ProviderKey").AsString().NotNullable().PrimaryKey("PK_AspNetUserLogins")
-          .WithColumn("ProviderDisplayName").AsString().Nullable()
-          .WithColumn("UserId").AsString()
+        Create.Table("app_user_logins").InSchema("auth")
+          .WithColumn("login_provider").AsString().NotNullable().PrimaryKey("pk_asp_net_user_logins")
+          .WithColumn("provider_key").AsString().NotNullable().PrimaryKey("pk_asp_net_user_logins")
+          .WithColumn("provider_display_name").AsString().Nullable()
+          .WithColumn("user_id").AsString()
                                .NotNullable()
-                               .Indexed("IX_AspNetUserLogins_UserId")
-                               .ForeignKey("FK_AspNetUserLogins_AspNetUsers_UserId", "identity", "AspNetUsers", "Id")
+                               .Indexed("ix_asp_net_user_logins_user_id")
+                               .ForeignKey("fk_asp_net_user_logins_asp_net_users_user_id", "auth", "app_user", "id")
                                .OnDelete(System.Data.Rule.Cascade);
 
 
-        Create.Table("AspNetUserRoles").InSchema("identity")
-          .WithColumn("UserId").AsString()
-                               .PrimaryKey("PK_AspNetUserRoles")
-                               .Indexed("IX_AspNetUserRoles_UserId")
-                               .ForeignKey("FK_AspNetUserRoles_AspNetUsers_UserId", "identity", "AspNetUsers", "Id")
+        Create.Table("app_user_roles").InSchema("auth")
+          .WithColumn("user_id").AsString()
+                               .PrimaryKey("pk_asp_net_user_roles")
+                               .Indexed("ix_asp_net_user_roles_user_id")
+                               .ForeignKey("fk_asp_net_user_roles_asp_net_users_user_id", "auth", "app_user", "id")
 
-          .WithColumn("RoleId").AsString()
-                               .PrimaryKey("PK_AspNetUserRoles")
-                               .Indexed("IX_AspNetUserRoles_RoleId")
-                               .ForeignKey("FK_AspNetUserRoles_AspNetRoles_RoleId", "identity", "AspNetRoles", "Id")
+          .WithColumn("role_id").AsString()
+                               .PrimaryKey("pk_Asp_net_user_roles")
+                               .Indexed("ix_asp_net_user_roles_role_id")
+                               .ForeignKey("fk_asp_net_user_roles_asp_net_roles_role_id", "auth", "role", "id")
                                .OnDelete(System.Data.Rule.Cascade);
     }
 
     public override void Down()
     {
-        Delete.Table("AspNetUserRoles");
-        Delete.Table("AspNetUserLogins");
-        Delete.Table("AspNetUserClaims");
-        Delete.Table("AspNetRoleClaims");
-        Delete.Table("AspNetUsers");
-        Delete.Table("AspNetUserTokens");
-        Delete.Table("AspNetRoles");
+        Delete.Table("app_user_roles");
+        Delete.Table("app_user_logins");
+        Delete.Table("app_user_claims");
+        Delete.Table("role_claims");
+        Delete.Table("app_user");
+        Delete.Table("app_user_tokens");
+        Delete.Table("role");
     }
 }
