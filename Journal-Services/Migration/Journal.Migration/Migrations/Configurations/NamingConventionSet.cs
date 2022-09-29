@@ -47,7 +47,8 @@ public class ForeignKeyNameConvention : IForeignKeyConvention
 
     private string GetForeignKeyName(ForeignKeyDefinition foreignKey)
     {
-        string keyName = $"fk_{foreignKey.ForeignTable}_{foreignKey.PrimaryTable}";
+        //It seems be inverted, so yeah it is weird.
+        string keyName = $"fk_{foreignKey.PrimaryTable}_{foreignKey.ForeignTable}";
 
         return keyName;
     }

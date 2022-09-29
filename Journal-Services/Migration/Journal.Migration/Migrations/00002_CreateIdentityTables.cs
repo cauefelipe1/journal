@@ -17,7 +17,6 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
             .WithColumn("normalized_name").AsString(256).Nullable()
                 .Indexed("role_name_index");
 
-
         Create.Table("app_user_tokens").InSchema("auth")
             .WithColumn("user_id").AsString().PrimaryKey().NotNullable()
             .WithColumn("login_provider").AsString()
@@ -47,37 +46,53 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
             .WithColumn("id").AsInt32().PrimaryKey().Identity()
             .WithColumn("claim_type").AsString().Nullable()
             .WithColumn("claim_value").AsString().Nullable()
-            .WithColumn("role_id").AsString().NotNullable().Indexed("ix_asp_net_role_claims_role_id")
-                                 .ForeignKey("fk_asp_net_role_claims_asp_net_roles_role_id", "auth", "role", "id");
+            .WithColumn("role_id").AsString().NotNullable().Indexed("ix_asp_net_role_claims_role_id");
+
+        Create.ForeignKey()
+            .FromTable("role_claims").InSchema("auth").ForeignColumn("role_id")
+            .ToTable("role").InSchema("auth").PrimaryColumn("id");
 
         Create.Table("app_user_claims").InSchema("auth")
-          .WithColumn("id").AsInt32().PrimaryKey().Identity()
-          .WithColumn("claim_type").AsString().Nullable()
-          .WithColumn("claim_value").AsString().Nullable()
-          .WithColumn("user_id").AsString().NotNullable().Indexed("ix_asp_net_user_claims_user_id")
-                               .ForeignKey("fk_asp_net_user_claims_asp_net_users_user_id", "auth", "app_user", "id")
-                               .OnDelete(System.Data.Rule.Cascade);
+            .WithColumn("id").AsInt32().PrimaryKey().Identity()
+            .WithColumn("claim_type").AsString().Nullable()
+            .WithColumn("claim_value").AsString().Nullable()
+            .WithColumn("user_id").AsString().NotNullable().Indexed("ix_asp_net_user_claims_user_id");
+
+        Create.ForeignKey()
+            .FromTable("app_user_claims").InSchema("auth").ForeignColumn("user_id")
+            .ToTable("app_user").InSchema("auth").PrimaryColumn("id")
+            .OnDelete(System.Data.Rule.Cascade);
 
         Create.Table("app_user_logins").InSchema("auth")
-          .WithColumn("login_provider").AsString().NotNullable().PrimaryKey()
-          .WithColumn("provider_key").AsString().NotNullable().PrimaryKey()
-          .WithColumn("provider_display_name").AsString().Nullable()
-          .WithColumn("user_id").AsString()
-                               .NotNullable()
-                               .Indexed("ix_asp_net_user_logins_user_id")
-                               .ForeignKey("fk_asp_net_user_logins_asp_net_users_user_id", "auth", "app_user", "id")
-                               .OnDelete(System.Data.Rule.Cascade);
+            .WithColumn("login_provider").AsString().NotNullable().PrimaryKey()
+            .WithColumn("provider_key").AsString().NotNullable().PrimaryKey()
+            .WithColumn("provider_display_name").AsString().Nullable()
+            .WithColumn("user_id").AsString()
+            .NotNullable()
+            .Indexed("ix_asp_net_user_logins_user_id");
+
+        Create.ForeignKey()
+            .FromTable("app_user_logins").InSchema("auth").ForeignColumn("user_id")
+            .ToTable("app_user").InSchema("auth").PrimaryColumn("id")
+            .OnDelete(System.Data.Rule.Cascade);
 
 
         Create.Table("app_user_roles").InSchema("auth")
-          .WithColumn("user_id").AsString().PrimaryKey()
-                               .Indexed("ix_asp_net_user_roles_user_id")
-                               .ForeignKey("fk_asp_net_user_roles_asp_net_users_user_id", "auth", "app_user", "id")
+            .WithColumn("user_id").AsString().PrimaryKey()
+                .Indexed("ix_asp_net_user_roles_user_id")
 
-          .WithColumn("role_id").AsString().PrimaryKey()
-                               .Indexed("ix_asp_net_user_roles_role_id")
-                               .ForeignKey("fk_asp_net_user_roles_asp_net_roles_role_id", "auth", "role", "id")
-                               .OnDelete(System.Data.Rule.Cascade);
+            .WithColumn("role_id").AsString().PrimaryKey()
+                .Indexed("ix_asp_net_user_roles_role_id");
+
+        Create.ForeignKey()
+            .FromTable("app_user_roles").InSchema("auth").ForeignColumn("user_id")
+            .ToTable("app_user").InSchema("auth").PrimaryColumn("id")
+            .OnDelete(System.Data.Rule.Cascade);
+
+        Create.ForeignKey()
+            .FromTable("app_user_roles").InSchema("auth").ForeignColumn("role_id")
+            .ToTable("role").InSchema("auth").PrimaryColumn("id");
+
     }
 
     public override void Down()
