@@ -18,7 +18,7 @@ public class SetupDatabase_00001 : FluentMigrator.Migration
 
         string SQL = @$"
             {getOperation()} SCHEMA {_settings.Database.SearchPath};
-            {getOperation()} SCHEMA auth;";
+            {getOperation()} SCHEMA {Journal.Identity.Constants.IDENTITY_DB_SCHEMA};";
 
         Execute.Sql(SQL);
     }

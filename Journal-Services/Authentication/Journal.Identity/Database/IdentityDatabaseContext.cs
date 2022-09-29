@@ -15,7 +15,7 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.HasDefaultSchema("auth");
+        builder.HasDefaultSchema(Constants.IDENTITY_DB_SCHEMA);
 
         builder.Entity<AppUserModel>(b =>
         {
