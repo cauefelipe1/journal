@@ -11,7 +11,7 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
     private void InternalCreateIdentityTables()
     {
         Create.Table("role").InSchema("auth")
-            .WithColumn("id").AsString().PrimaryKey("pk_role").NotNullable()
+            .WithColumn("id").AsString().PrimaryKey()
             .WithColumn("concurrency_stamp").AsString().Nullable()
             .WithColumn("name").AsString(256).NotNullable()
             .WithColumn("normalized_name").AsString(256).Nullable()
@@ -19,13 +19,13 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 
 
         Create.Table("app_user_tokens").InSchema("auth")
-            .WithColumn("user_id").AsString().PrimaryKey("pk_asp_net_user_tokens").NotNullable()
+            .WithColumn("user_id").AsString().PrimaryKey().NotNullable()
             .WithColumn("login_provider").AsString()
             .WithColumn("name").AsString()
             .WithColumn("value").AsString();
 
         Create.Table("app_user").InSchema("auth")
-           .WithColumn("id").AsString().NotNullable().PrimaryKey("pk_asp_net_users")
+           .WithColumn("id").AsString().NotNullable().PrimaryKey()
            .WithColumn("secondary_id").AsInt32().Identity()
            .WithColumn("access_failed_count").AsInt32().NotNullable()
            .WithColumn("concurrency_stamp").AsString().Nullable()
@@ -44,14 +44,14 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 
 
         Create.Table("role_claims").InSchema("auth")
-            .WithColumn("id").AsInt32().PrimaryKey("pk_asp_net_role_claims").Identity()
+            .WithColumn("id").AsInt32().PrimaryKey().Identity()
             .WithColumn("claim_type").AsString().Nullable()
             .WithColumn("claim_value").AsString().Nullable()
             .WithColumn("role_id").AsString().NotNullable().Indexed("ix_asp_net_role_claims_role_id")
                                  .ForeignKey("fk_asp_net_role_claims_asp_net_roles_role_id", "auth", "role", "id");
 
         Create.Table("app_user_claims").InSchema("auth")
-          .WithColumn("id").AsInt32().PrimaryKey("pk_asp_net_user_claims").Identity()
+          .WithColumn("id").AsInt32().PrimaryKey().Identity()
           .WithColumn("claim_type").AsString().Nullable()
           .WithColumn("claim_value").AsString().Nullable()
           .WithColumn("user_id").AsString().NotNullable().Indexed("ix_asp_net_user_claims_user_id")
@@ -59,8 +59,8 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
                                .OnDelete(System.Data.Rule.Cascade);
 
         Create.Table("app_user_logins").InSchema("auth")
-          .WithColumn("login_provider").AsString().NotNullable().PrimaryKey("pk_asp_net_user_logins")
-          .WithColumn("provider_key").AsString().NotNullable().PrimaryKey("pk_asp_net_user_logins")
+          .WithColumn("login_provider").AsString().NotNullable().PrimaryKey()
+          .WithColumn("provider_key").AsString().NotNullable().PrimaryKey()
           .WithColumn("provider_display_name").AsString().Nullable()
           .WithColumn("user_id").AsString()
                                .NotNullable()
@@ -70,13 +70,11 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 
 
         Create.Table("app_user_roles").InSchema("auth")
-          .WithColumn("user_id").AsString()
-                               .PrimaryKey("pk_asp_net_user_roles")
+          .WithColumn("user_id").AsString().PrimaryKey()
                                .Indexed("ix_asp_net_user_roles_user_id")
                                .ForeignKey("fk_asp_net_user_roles_asp_net_users_user_id", "auth", "app_user", "id")
 
-          .WithColumn("role_id").AsString()
-                               .PrimaryKey("pk_Asp_net_user_roles")
+          .WithColumn("role_id").AsString().PrimaryKey()
                                .Indexed("ix_asp_net_user_roles_role_id")
                                .ForeignKey("fk_asp_net_user_roles_asp_net_roles_role_id", "auth", "role", "id")
                                .OnDelete(System.Data.Rule.Cascade);
