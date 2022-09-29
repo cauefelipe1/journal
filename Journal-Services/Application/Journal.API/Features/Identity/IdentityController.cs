@@ -1,5 +1,4 @@
-using Journal.Identity.Features.UserRegistration;
-using Journal.Identity.Models.Registration;
+using Journal.Identity.Features.User;
 using Journal.Identity.Models.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -30,13 +29,30 @@ public class IdentityController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("registerUser")]
-    public async Task<ActionResult<UserRegistrationResult>> RegisterUser(AppUserRegistrationInput userInput)
+    public async Task<ActionResult<UserRegistrationResult>> RegisterUser([FromBody] AppUserRegistrationInput userInput)
     {
         if (!ModelState.IsValid)
             return BadRequest();
 
-        var registrationResult = await _mediator.Send(new UserRegistrationMediator.UserRegistrationQuery(userInput));
+        var registrationResult = await _mediator.Send(new UserMediator.UserRegistrationQuery(userInput));
 
         return Ok(registrationResult);
+    }
+
+    /// <summary>
+    /// Attempt to login an user.
+    /// </summary>
+    /// <param name="loginInput"><see cref="AppUserRegistrationInput"/> instance with the user provided values.</param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<ActionResult<UserRegistrationResult>> RegisterUser([FromBody] UserLoginInput loginInput)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest();
+
+        var loginResult = await _mediator.Send(new UserMediator.UserLoginQuery(loginInput));
+
+        return Ok(loginResult);
     }
 }

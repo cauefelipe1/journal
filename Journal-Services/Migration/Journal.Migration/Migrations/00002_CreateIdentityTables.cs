@@ -5,10 +5,7 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 {
     private const string DB_SCHEMA = Journal.Identity.Constants.IDENTITY_DB_SCHEMA;
 
-    public override void Up()
-    {
-        InternalCreateIdentityTables();
-    }
+    public override void Up() => InternalCreateIdentityTables();
 
     private void InternalCreateIdentityTables()
     {
@@ -42,7 +39,6 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
            .WithColumn("security_stamp").AsString().Nullable()
            .WithColumn("two_factor_enabled").AsBoolean().NotNullable()
            .WithColumn("user_name").AsString(256).Nullable();
-
 
         Create.Table("role_claims").InSchema(DB_SCHEMA)
             .WithColumn("id").AsInt32().PrimaryKey().Identity()
@@ -94,7 +90,6 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
         Create.ForeignKey()
             .FromTable("app_user_roles").InSchema(DB_SCHEMA).ForeignColumn("role_id")
             .ToTable("role").InSchema(DB_SCHEMA).PrimaryColumn("id");
-
     }
 
     public override void Down()

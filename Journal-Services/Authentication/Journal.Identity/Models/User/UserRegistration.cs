@@ -1,4 +1,4 @@
-namespace Journal.Identity.Models.Registration;
+namespace Journal.Identity.Models.User;
 
 /// <summary>
 /// Defines the result of a User registration attempt.

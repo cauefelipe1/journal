@@ -37,3 +37,21 @@ public class AppUserRegistrationInput
     /// <example>This is a secret, you cannot know it.</example>
     public string Password { get; set; } = string.Empty;
 }
+
+/// <summary>
+/// Defines the input for the user login request.
+/// </summary>
+public class UserLoginInput
+{
+    /// <summary>
+    /// The user's email.
+    /// </summary>
+    /// <example>user@server.com</example>
+    public string Email { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The user's password.
+    /// </summary>
+    /// <example>This is a secret, you cannot know it.</example>
+    public string Password { get; set; } = string.Empty;
+}
