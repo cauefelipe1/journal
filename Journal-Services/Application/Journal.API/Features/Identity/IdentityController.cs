@@ -40,7 +40,7 @@ public class IdentityController : ControllerBase
     }
 
     /// <summary>
-    /// Attempt to login an user.
+    /// Attempts to login an user.
     /// </summary>
     /// <param name="loginInput"><see cref="AppUserRegistrationInput"/> instance with the user provided values.</param>
     /// <returns></returns>
