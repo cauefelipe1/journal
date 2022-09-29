@@ -1,5 +1,6 @@
 using Journal.Infrastructure.Features.HealthCheck;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Journal.API.Features.HealthCheck;
@@ -8,6 +9,11 @@ namespace Journal.API.Features.HealthCheck;
 /// Defines the controller to handle the health check endpoints.
 /// </summary>
 [ApiController]
+[Produces("application/json")]
+[Authorize]
+[Route("api/health_heck/")]
+[ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class HealthCheckController : ControllerBase
 {
     private readonly IMediator _mediator;

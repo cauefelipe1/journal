@@ -1,6 +1,7 @@
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Vehicle;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Journal.API.Features.Vehicle;
@@ -9,7 +10,11 @@ namespace Journal.API.Features.Vehicle;
 /// Defines the controller to handle the vehicle endpoints.
 /// </summary>
 [ApiController]
+[Produces("application/json")]
+[Authorize]
 [Route("api/vehicle")]
+[ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class VehicleController : ControllerBase
 {
     private readonly IMediator _mediator;

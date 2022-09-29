@@ -2,6 +2,7 @@ using Journal.Identity.Features.UserRegistration;
 using Journal.Identity.Models.Registration;
 using Journal.Identity.Models.User;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Journal.API.Features.Identity;
@@ -10,6 +11,10 @@ namespace Journal.API.Features.Identity;
 /// Defines the controller to handle the system identity.
 /// </summary>
 [ApiController]
+[Produces("application/json")]
+[Authorize]
+[ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
 [Route("api/identity")]
 public class IdentityController : ControllerBase
 {
@@ -23,6 +28,7 @@ public class IdentityController : ControllerBase
     /// </summary>
     /// <param name="userInput"><see cref="AppUserRegistrationInput"/> instance with the user provided values.</param>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpPost("registerUser")]
     public async Task<ActionResult<UserRegistrationResult>> RegisterUser(AppUserRegistrationInput userInput)
     {
