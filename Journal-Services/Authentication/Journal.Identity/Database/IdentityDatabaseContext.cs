@@ -14,6 +14,8 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        //More information regarding the tables customization:
+        //https://learn.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-6.0
         base.OnModelCreating(builder);
         builder.HasDefaultSchema(Constants.IDENTITY_DB_SCHEMA);
 
