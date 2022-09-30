@@ -8,7 +8,7 @@ namespace Journal.Identity.Features.User;
 
 public partial class UserMediator
 {
-    public class UserLoginQuery : IRequest<UserRegistrationResult>
+    public class UserLoginQuery : IRequest<UserLoginResult>
     {
         public UserLoginInput Input { get; }
 
@@ -16,7 +16,7 @@ public partial class UserMediator
     }
 
     [UsedImplicitly]
-    public class UserLoginHandler : IRequestHandler<UserLoginQuery, UserRegistrationResult>
+    public class UserLoginHandler : IRequestHandler<UserLoginQuery, UserLoginResult>
     {
         private readonly UserManager<AppUserModel> _userManager;
         private readonly IMediator _mediator;
@@ -29,7 +29,7 @@ public partial class UserMediator
             _mediator = mediator;
         }
 
-        public async Task<UserRegistrationResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
+        public async Task<UserLoginResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
         {
             const string ERROR_MESSAGE = "User or password invalid.";
             var userInput = query.Input;
@@ -50,19 +50,19 @@ public partial class UserMediator
                 throw new Exception(ERROR_MESSAGE);
             }
 
-            var result = await HandleUserCreationResult(user);
+            var result = await GetLoginResult(user);
 
             return result;
         }
 
-        private async Task<UserRegistrationResult> HandleUserCreationResult(AppUserModel appUserModel)
+        private async Task<UserLoginResult> GetLoginResult(AppUserModel appUserModel)
         {
-            var result = new UserRegistrationResult
-            {
-                Success = true
-            };
+            string token = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(appUserModel));
 
-            result.Token = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(appUserModel));
+            var result = new UserLoginResult
+            {
+                Token = token
+            };
 
             return result;
         }

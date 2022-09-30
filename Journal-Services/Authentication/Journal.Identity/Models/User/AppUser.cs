@@ -55,3 +55,10 @@ public class UserLoginInput
     /// <example>This is a secret, you cannot know it.</example>
     public string Password { get; set; } = string.Empty;
 }
+
+public class UserLoginResult
+{
+    public string Token { get; set; } = string.Empty;
+
+    public string RefreshToken { get; set; } = string.Empty;
+}

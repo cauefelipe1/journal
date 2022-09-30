@@ -1,8 +1,11 @@
+using System.Text;
 using Journal.Identity.Database;
 using Journal.Identity.Models.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Journal.Identity.Extensions;
 
@@ -14,6 +17,12 @@ public static class IdentityExtensions
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
     /// <param name="configuration">Application configurations.</param>
     public static void AddApplicationIdentity(this IServiceCollection services, IConfiguration configuration)
+    {
+        InternalAddIdentityCore(services, configuration);
+        InternalAddJwtToken(services, configuration);
+    }
+
+    private static void InternalAddIdentityCore(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IdentityDatabaseContext>();
         var builder = services.AddIdentityCore<AppUserModel>(q =>
@@ -30,6 +39,38 @@ public static class IdentityExtensions
 
         builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), services);
         builder.AddEntityFrameworkStores<IdentityDatabaseContext>();
-
     }
+
+    private static void InternalAddJwtToken(IServiceCollection services, IConfiguration configuration)
+    {
+        var authSettings = new AppAuthSettings(configuration);
+        var tokenValidationParameters = GetTokenValidationParameters(authSettings);
+
+        services.AddSingleton(authSettings);
+        services.AddSingleton(tokenValidationParameters);
+
+        services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.SaveToken = true;
+                x.TokenValidationParameters = tokenValidationParameters;
+            });
+    }
+
+    private static TokenValidationParameters GetTokenValidationParameters(AppAuthSettings authSettings) =>
+        new()
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings.JwtSecret)),
+            //TODO: Fix that after the user registration and token generator is ready.
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            RequireExpirationTime = false,
+            ValidateLifetime = true
+        };
 }

@@ -46,7 +46,7 @@ public class IdentityController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<UserRegistrationResult>> RegisterUser([FromBody] UserLoginInput loginInput)
+    public async Task<ActionResult<UserLoginResult>> RegisterUser([FromBody] UserLoginInput loginInput)
     {
         if (!ModelState.IsValid)
             return BadRequest();

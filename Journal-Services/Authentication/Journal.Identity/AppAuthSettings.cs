@@ -14,11 +14,20 @@ public class AppAuthSettings
     /// <example>It is a secret, you cannot know it.</example>
     public string JwtSecret { get; } = default!;
 
+    /// <summary>
+    /// The JWT lifetime.
+    /// </summary>
+    /// <example>00:01:00</example>
+    public TimeSpan JwtLifetime { get; }
+
     public AppAuthSettings(IConfiguration configuration)
     {
         if (configuration is not null)
         {
-            JwtSecret = configuration["JwtSettings:JwtSecret"];
+            var configSection = configuration.GetSection(Constants.JWT_SETTINGS_SECTION);
+
+            JwtSecret = configSection[nameof(JwtSecret)];
+            JwtLifetime = TimeSpan.Parse(configSection[nameof(JwtLifetime)]);
         }
     }
 }

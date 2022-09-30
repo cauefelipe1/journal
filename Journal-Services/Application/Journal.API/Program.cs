@@ -1,4 +1,5 @@
 using Journal.API.DependencyInjection;
+using Journal.Identity.Extensions;
 using Journal.SharedSettings;
 using MediatR;
 
@@ -13,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwagger();
 
 var settingsData = builder.Services.AddSharedSettings(configuration);
-builder.Services.AddIdentityConfiguration(configuration);
+builder.Services.AddApplicationIdentity(configuration);
 builder.Services.AddDatabase();
 builder.Services.AddFeatures();
 
