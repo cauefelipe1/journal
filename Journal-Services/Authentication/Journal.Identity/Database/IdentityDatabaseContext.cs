@@ -1,3 +1,4 @@
+using Journal.Identity.Features.Jwt;
 using Journal.Identity.Models.User;
 using Journal.SharedSettings;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,8 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
     private readonly SettingsData _settingsData;
 
     public IdentityDatabaseContext(SettingsData settingsData) => _settingsData = settingsData;
+
+    public DbSet<RefreshTokenDTO> RefreshToken { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -39,6 +42,9 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
         builder.Entity<IdentityUserClaim<string>>(b => b.ToTable("app_user_claims"));
         builder.Entity<IdentityUserLogin<string>>(b => b.ToTable("app_user_logins"));
         builder.Entity<IdentityUserRole<string>>(b => b.ToTable("app_user_roles"));
+
+        builder.Entity<RefreshTokenDTO>()
+            .HasKey(c => c.JwtToken);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

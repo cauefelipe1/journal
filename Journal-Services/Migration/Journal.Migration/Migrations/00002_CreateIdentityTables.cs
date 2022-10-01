@@ -5,9 +5,13 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 {
     private const string DB_SCHEMA = Journal.Identity.Constants.IDENTITY_DB_SCHEMA;
 
-    public override void Up() => InternalCreateIdentityTables();
+    public override void Up()
+    {
+        InternalCreateIdentityFrameworkTables();
+        InternalCreateRefreshTokenTable();
+    }
 
-    private void InternalCreateIdentityTables()
+    private void InternalCreateIdentityFrameworkTables()
     {
         Create.Table("role").InSchema(DB_SCHEMA)
             .WithColumn("id").AsString().PrimaryKey()
@@ -92,8 +96,26 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
             .ToTable("role").InSchema(DB_SCHEMA).PrimaryColumn("id");
     }
 
+    private void InternalCreateRefreshTokenTable()
+    {
+        Create.Table("refresh_token").InSchema(DB_SCHEMA)
+            .WithColumn("jwt_token").AsString().PrimaryKey()
+            .WithColumn("jwt_id").AsString()
+            .WithColumn("creation_date").AsDateTimeOffset()
+            .WithColumn("expiration_date").AsDateTimeOffset()
+            .WithColumn("used").AsBoolean()
+            .WithColumn("invalidated").AsBoolean()
+            .WithColumn("user_id").AsString();
+
+        Create.ForeignKey()
+            .FromTable("refresh_token").InSchema(DB_SCHEMA).ForeignColumn("user_id")
+            .ToTable("app_user").InSchema(DB_SCHEMA).PrimaryColumn("id")
+            .OnDelete(System.Data.Rule.Cascade);
+    }
+
     public override void Down()
     {
+        Delete.Table("refresh_token").InSchema(DB_SCHEMA);
         Delete.Table("app_user_roles").InSchema(DB_SCHEMA);
         Delete.Table("app_user_logins").InSchema(DB_SCHEMA);
         Delete.Table("app_user_claims").InSchema(DB_SCHEMA);
