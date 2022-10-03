@@ -1,3 +1,4 @@
+using Journal.Identity.Features.Jwt;
 using Journal.Identity.Features.User;
 using Journal.Identity.Models.User;
 using MediatR;
@@ -42,7 +43,7 @@ public class IdentityController : ControllerBase
     /// <summary>
     /// Attempts to login an user.
     /// </summary>
-    /// <param name="loginInput"><see cref="AppUserRegistrationInput"/> instance with the user provided values.</param>
+    /// <param name="loginInput"><see cref="UserLoginInput"/> instance with the user provided values.</param>
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("login")]
@@ -52,6 +53,23 @@ public class IdentityController : ControllerBase
             return BadRequest();
 
         var loginResult = await _mediator.Send(new UserMediator.UserLoginQuery(loginInput));
+
+        return Ok(loginResult);
+    }
+
+    /// <summary>
+    /// Attempts to refresh an user token.
+    /// </summary>
+    /// <param name="refreshInput"><see cref="RefreshTokenInput"/> instance with the user provided values.</param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    [HttpPost("refreshToken")]
+    public async Task<ActionResult<UserLoginResult>> RegisterUser([FromBody] RefreshTokenInput refreshInput)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest();
+
+        var loginResult = await _mediator.Send(new JwtMediator.RefreshTokenQuery(refreshInput));
 
         return Ok(loginResult);
     }

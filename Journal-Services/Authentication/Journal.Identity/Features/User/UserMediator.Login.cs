@@ -50,19 +50,7 @@ public partial class UserMediator
                 throw new Exception(ERROR_MESSAGE);
             }
 
-            var result = await GetLoginResult(user);
-
-            return result;
-        }
-
-        private async Task<UserLoginResult> GetLoginResult(AppUserModel appUserModel)
-        {
-            string token = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(appUserModel));
-
-            var result = new UserLoginResult
-            {
-                Token = token
-            };
+            var result = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(user), cancellationToken);
 
             return result;
         }

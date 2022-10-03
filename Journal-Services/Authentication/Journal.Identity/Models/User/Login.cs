@@ -43,3 +43,22 @@ public class UserLoginResult
     /// </summary>
     public IEnumerable<string>? Errors { get; set; }
 }
+
+
+/// <summary>
+/// Defines the input for an user refresh token attempt.
+/// </summary>
+public class RefreshTokenInput
+{
+    /// <summary>
+    /// The JWT token.
+    /// </summary>
+    /// <example>xxxxx.yyyyy.zzzzz</example>
+    public string Token { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The refresh token.
+    /// </summary>
+    /// <example>ererererjkejrejooosklksdlaklejksrjsoisorise</example>
+    public string RefreshToken { get; set; } = string.Empty;
+}

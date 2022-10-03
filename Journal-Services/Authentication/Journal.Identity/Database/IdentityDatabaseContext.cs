@@ -44,7 +44,7 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
         builder.Entity<IdentityUserRole<string>>(b => b.ToTable("app_user_roles"));
 
         builder.Entity<RefreshTokenDTO>()
-            .HasKey(c => c.JwtToken);
+            .HasKey(c => c.Token);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

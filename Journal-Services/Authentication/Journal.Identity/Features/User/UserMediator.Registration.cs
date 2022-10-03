@@ -67,7 +67,8 @@ public partial class UserMediator
             }
             else
             {
-                result.Token = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(appUserModel));
+                var userLogin = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(appUserModel));
+                result.Token = userLogin.Token;
             }
 
             return result;

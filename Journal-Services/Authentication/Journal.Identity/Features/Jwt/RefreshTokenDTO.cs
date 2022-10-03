@@ -2,7 +2,7 @@ namespace Journal.Identity.Features.Jwt;
 
 public class RefreshTokenDTO
 {
-    public string JwtToken { get; set; } = default!;
+    public string Token { get; set; } = default!;
 
     public string JwtId { get; set; } = default!;
 

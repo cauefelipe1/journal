@@ -1,5 +1,6 @@
 using System.Text;
 using Journal.Identity.Database;
+using Journal.Identity.Features.Jwt;
 using Journal.Identity.Models.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,11 +21,13 @@ public static class IdentityExtensions
     {
         InternalAddIdentityCore(services, configuration);
         InternalAddJwtToken(services, configuration);
+
+        services.AddScoped<IJwtRepository, JwtRepository>();
     }
 
     private static void InternalAddIdentityCore(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IdentityDatabaseContext>();
+        services.AddScoped<IdentityDatabaseContext>();
         var builder = services.AddIdentityCore<AppUserModel>(q =>
         {
             //Password
@@ -62,8 +65,9 @@ public static class IdentityExtensions
             });
     }
 
-    private static TokenValidationParameters GetTokenValidationParameters(AppAuthSettings authSettings) =>
-        new()
+    private static TokenValidationParameters GetTokenValidationParameters(AppAuthSettings authSettings)
+    {
+        var result = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authSettings.JwtSecret)),
@@ -73,4 +77,13 @@ public static class IdentityExtensions
             RequireExpirationTime = false,
             ValidateLifetime = true
         };
+
+#if DEBUG
+        result.ClockSkew = TimeSpan.Zero;
+#endif
+
+        return result;
+    }
+
+
 }
