@@ -6,7 +6,7 @@ using Mapster;
 
 namespace Journal.Migration.Migrations;
 
-[ Migration(00005)]
+[Migration(00005)]
 public class CreateVehicleTables_00005 : BaseMigration
 {
     public CreateVehicleTables_00005(SettingsData settings) : base(settings) { }
@@ -29,7 +29,7 @@ public class CreateVehicleTables_00005 : BaseMigration
     {
         Create.Table("vehicle_type").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_type_id").AsInt16().NotNullable().PrimaryKey().Identity()
-            .WithColumn("vehicle_type_name").AsString(50).NotNullable()
+            .WithColumn("name").AsString(50).NotNullable()
             .WithColumn("is_active").AsBoolean().NotNullable();
     }
 
@@ -37,16 +37,16 @@ public class CreateVehicleTables_00005 : BaseMigration
     {
         Create.Table("vehicle_brand").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_brand_id").AsInt16().NotNullable().PrimaryKey().Identity()
-            .WithColumn("vehicle_brand_name").AsString(50).NotNullable()
+            .WithColumn("name").AsString(50).NotNullable()
             .WithColumn("country_id").AsInt16().NotNullable();
 
         Create.ForeignKey()
             .FromTable("vehicle_brand").InSchema(Settings.Database.SearchPath).ForeignColumn("country_id")
             .ToTable("country").InSchema(Settings.Database.SearchPath).PrimaryColumn("country_id");
 
-        Create.Index("idx_brand_name")
+        Create.Index("idx_vehicle_brand_name")
             .OnTable("vehicle_brand").InSchema(Settings.Database.SearchPath)
-            .OnColumn("vehicle_brand_name").Ascending()
+            .OnColumn("name").Ascending()
             .WithOptions().NonClustered();
     }
 
@@ -54,7 +54,8 @@ public class CreateVehicleTables_00005 : BaseMigration
     {
         Create.Table("vehicle").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
-            .WithColumn("vehicle_name").AsString(50).NotNullable()
+            .WithColumn("model").AsString(50).NotNullable()
+            .WithColumn("nickname").AsString(50).Nullable()
             .WithColumn("vehicle_type_id").AsInt16().NotNullable()
             .WithColumn("vehicle_brand_id").AsInt16().NotNullable();
 
@@ -82,37 +83,37 @@ public class CreateVehicleTables_00005 : BaseMigration
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 1,
-                vehicle_type_name = "Car",
+                name = "Car",
                 is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 2,
-                vehicle_type_name = "Truck",
+                name = "Truck",
                 is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 3,
-                vehicle_type_name = "Motorcycle",
+                name = "Motorcycle",
                 is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 4,
-                vehicle_type_name = "Boat",
+                name = "Boat",
                 is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 5,
-                vehicle_type_name = "Airplane",
+                name = "Airplane",
                 is_active = true
             })
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 6,
-                vehicle_type_name = "Chooper",
+                name = "Chooper",
                 is_active = true
             });
 

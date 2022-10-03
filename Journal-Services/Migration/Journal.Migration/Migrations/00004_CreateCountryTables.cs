@@ -8,7 +8,7 @@ using Mapster;
 
 namespace Journal.Migration.Migrations;
 
-[ Migration(00004)]
+[Migration(00004)]
 public class CreateCountryTables_00004 : BaseMigration
 {
     public CreateCountryTables_00004(SettingsData settings) : base(settings) { }
