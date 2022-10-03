@@ -3,12 +3,9 @@ using Journal.Migration.Migrations.DTOs;
 namespace Journal.Migration.Migrations;
 
 [Migration(00003)]
-public class CreateBaseTables_00003 : FluentMigrator.Migration
+public class CreateBaseTables_00003 : BaseMigration
 {
-
-    private readonly SettingsData _settings;
-
-    public CreateBaseTables_00003(SettingsData settings) => _settings = settings;
+    public CreateBaseTables_00003(SettingsData settings) : base(settings) { }
 
     public override void Up()
     {
@@ -25,20 +22,20 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
 
     private void InternalCreateLanguageTable()
     {
-        Create.Table("language").InSchema(_settings.Database.SearchPath)
+        Create.Table("language").InSchema(Settings.Database.SearchPath)
             .WithColumn("language_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("language_code_2_letters").AsString(2).NotNullable()
             .WithColumn("language_name").AsString(50).NotNullable()
             .WithColumn("base_language_id").AsInt16().Nullable();
 
         Create.ForeignKey()
-            .FromTable("language").InSchema(_settings.Database.SearchPath).ForeignColumn("base_language_id")
-            .ToTable("language").InSchema(_settings.Database.SearchPath).PrimaryColumn("language_id");
+            .FromTable("language").InSchema(Settings.Database.SearchPath).ForeignColumn("base_language_id")
+            .ToTable("language").InSchema(Settings.Database.SearchPath).PrimaryColumn("language_id");
     }
 
     private void InternalCreateUserTypeTable()
     {
-        Create.Table("user_type").InSchema(_settings.Database.SearchPath)
+        Create.Table("user_type").InSchema(Settings.Database.SearchPath)
             .WithColumn("user_type_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("user_type_desc").AsString(255).NotNullable();
     }
@@ -54,7 +51,7 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
 
     private void InternalPopulateLanguageTable()
     {
-        Insert.IntoTable("language").InSchema(_settings.Database.SearchPath)
+        Insert.IntoTable("language").InSchema(Settings.Database.SearchPath)
             .Row(new LanguageDTO
             {
                 language_id = 1,
@@ -77,7 +74,7 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
 
     private void InternalPopulateUserTypeTable()
     {
-        Insert.IntoTable("user_type").InSchema(_settings.Database.SearchPath)
+        Insert.IntoTable("user_type").InSchema(Settings.Database.SearchPath)
             .Row(new UserTypeDTO
             {
                 user_type_id = 1,
@@ -93,8 +90,8 @@ public class CreateBaseTables_00003 : FluentMigrator.Migration
 
     public override void Down()
     {
-        Delete.Table("app_user").InSchema(_settings.Database.SearchPath);
-        Delete.Table("user_type").InSchema(_settings.Database.SearchPath);
-        Delete.Table("language").InSchema(_settings.Database.SearchPath);
+        Delete.Table("app_user").InSchema(Settings.Database.SearchPath);
+        Delete.Table("user_type").InSchema(Settings.Database.SearchPath);
+        Delete.Table("language").InSchema(Settings.Database.SearchPath);
     }
 }

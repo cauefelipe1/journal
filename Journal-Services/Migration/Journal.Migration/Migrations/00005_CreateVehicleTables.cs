@@ -7,11 +7,9 @@ using Mapster;
 namespace Journal.Migration.Migrations;
 
 [ Migration(00005)]
-public class CreateVehicleTables_00005 : FluentMigrator.Migration
+public class CreateVehicleTables_00005 : BaseMigration
 {
-    private readonly SettingsData _settings;
-
-    public CreateVehicleTables_00005(SettingsData settings) => _settings = settings;
+    public CreateVehicleTables_00005(SettingsData settings) : base(settings) { }
 
     public override void Up()
     {
@@ -29,7 +27,7 @@ public class CreateVehicleTables_00005 : FluentMigrator.Migration
 
     private void InternalCreateVehicleTypeTable()
     {
-        Create.Table("vehicle_type").InSchema(_settings.Database.SearchPath)
+        Create.Table("vehicle_type").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_type_id").AsInt16().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_type_name").AsString(50).NotNullable()
             .WithColumn("is_active").AsBoolean().NotNullable();
@@ -37,36 +35,36 @@ public class CreateVehicleTables_00005 : FluentMigrator.Migration
 
     private void InternalCreateVehicleBrandTable()
     {
-        Create.Table("vehicle_brand").InSchema(_settings.Database.SearchPath)
+        Create.Table("vehicle_brand").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_brand_id").AsInt16().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_brand_name").AsString(50).NotNullable()
             .WithColumn("country_id").AsInt16().NotNullable();
 
         Create.ForeignKey()
-            .FromTable("vehicle_brand").InSchema(_settings.Database.SearchPath).ForeignColumn("country_id")
-            .ToTable("country").InSchema(_settings.Database.SearchPath).PrimaryColumn("country_id");
+            .FromTable("vehicle_brand").InSchema(Settings.Database.SearchPath).ForeignColumn("country_id")
+            .ToTable("country").InSchema(Settings.Database.SearchPath).PrimaryColumn("country_id");
 
         Create.Index("idx_brand_name")
-            .OnTable("vehicle_brand").InSchema(_settings.Database.SearchPath)
+            .OnTable("vehicle_brand").InSchema(Settings.Database.SearchPath)
             .OnColumn("vehicle_brand_name").Ascending()
             .WithOptions().NonClustered();
     }
 
     private void InternalCreateVehicleTable()
     {
-        Create.Table("vehicle").InSchema(_settings.Database.SearchPath)
+        Create.Table("vehicle").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("vehicle_name").AsString(50).NotNullable()
             .WithColumn("vehicle_type_id").AsInt16().NotNullable()
             .WithColumn("vehicle_brand_id").AsInt16().NotNullable();
 
         Create.ForeignKey()
-            .FromTable("vehicle").InSchema(_settings.Database.SearchPath).ForeignColumn("vehicle_type_id")
-            .ToTable("vehicle_type").InSchema(_settings.Database.SearchPath).PrimaryColumn("vehicle_type_id");
+            .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("vehicle_type_id")
+            .ToTable("vehicle_type").InSchema(Settings.Database.SearchPath).PrimaryColumn("vehicle_type_id");
 
         Create.ForeignKey()
-            .FromTable("vehicle").InSchema(_settings.Database.SearchPath).ForeignColumn("vehicle_brand_id")
-            .ToTable("vehicle_brand").InSchema(_settings.Database.SearchPath).PrimaryColumn("vehicle_brand_id");
+            .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("vehicle_brand_id")
+            .ToTable("vehicle_brand").InSchema(Settings.Database.SearchPath).PrimaryColumn("vehicle_brand_id");
     }
 
     #endregion Tables_Creation
@@ -80,7 +78,7 @@ public class CreateVehicleTables_00005 : FluentMigrator.Migration
 
     private void PopulateVehicleType()
     {
-        Insert.IntoTable("vehicle_type").InSchema(_settings.Database.SearchPath)
+        Insert.IntoTable("vehicle_type").InSchema(Settings.Database.SearchPath)
             .Row(new VehicleTypeDTO
             {
                 vehicle_type_id = 1,
@@ -132,7 +130,7 @@ public class CreateVehicleTables_00005 : FluentMigrator.Migration
 
         var records = csv.GetRecords<VehicleBrandDTO>();
 
-        var insertTable = Insert.IntoTable("vehicle_brand").InSchema(_settings.Database.SearchPath);
+        var insertTable = Insert.IntoTable("vehicle_brand").InSchema(Settings.Database.SearchPath);
 
         foreach (var r in records)
             insertTable.Row(r);
@@ -141,8 +139,8 @@ public class CreateVehicleTables_00005 : FluentMigrator.Migration
 
     public override void Down()
     {
-        Delete.Table("vehicle").InSchema(_settings.Database.SearchPath);
-        Delete.Table("vehicle_brand").InSchema(_settings.Database.SearchPath);
-        Delete.Table("vehicle_type").InSchema(_settings.Database.SearchPath);
+        Delete.Table("vehicle").InSchema(Settings.Database.SearchPath);
+        Delete.Table("vehicle_brand").InSchema(Settings.Database.SearchPath);
+        Delete.Table("vehicle_type").InSchema(Settings.Database.SearchPath);
     }
 }

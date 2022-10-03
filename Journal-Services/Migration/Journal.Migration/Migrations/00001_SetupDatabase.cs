@@ -1,11 +1,9 @@
 namespace Journal.Migration.Migrations;
 
 [Migration(00001)]
-public class SetupDatabase_00001 : FluentMigrator.Migration
+public class SetupDatabase_00001 : BaseMigration
 {
-    private readonly SettingsData _settings;
-
-    public SetupDatabase_00001(SettingsData settings) => _settings = settings;
+    public SetupDatabase_00001(SettingsData settings) : base(settings) { }
 
     public override void Up()
     {
@@ -17,7 +15,7 @@ public class SetupDatabase_00001 : FluentMigrator.Migration
         string getOperation() => direction is MigrationDirection.Up ? "CREATE" : "DROP";
 
         string SQL = @$"
-            {getOperation()} SCHEMA {_settings.Database.SearchPath};
+            {getOperation()} SCHEMA {Settings.Database.SearchPath};
             {getOperation()} SCHEMA {Journal.Identity.Constants.IDENTITY_DB_SCHEMA};";
 
         Execute.Sql(SQL);
