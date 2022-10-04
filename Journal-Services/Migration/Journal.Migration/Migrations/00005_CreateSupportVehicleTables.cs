@@ -120,7 +120,6 @@ public class CreateSupportVehicleTables_00005 : BaseMigration
 
     public override void Down()
     {
-        Delete.Table("vehicle").InSchema(Settings.Database.SearchPath);
         Delete.Table("vehicle_brand").InSchema(Settings.Database.SearchPath);
         Delete.Table("vehicle_type").InSchema(Settings.Database.SearchPath);
     }

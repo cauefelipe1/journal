@@ -74,7 +74,7 @@ public class DatabaseSettings
                 _connectionString =
                     $"Username={User};Password={Password};Host={Host};Port={Port};Database={DatabaseName};SearchPath={SearchPath}";
 #if DEBUG
-                _masterConnectionString += ";IncludeErrorDetail=true";
+                _connectionString += ";IncludeErrorDetail=true";
 #endif
             }
 
