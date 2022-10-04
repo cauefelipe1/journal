@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-
 var config = BuildConfiguration();
 var builder = GetHostBuilder(config);
 var server = builder.Build();
@@ -84,7 +83,7 @@ IHostBuilder GetHostBuilder(IConfigurationRoot rootConfig)
         services
             .AddFluentMigratorCore()
             .ConfigureRunner(rb =>
-                rb.AddPostgres()
+                rb.AddPostgres11_0()
                     .WithGlobalConnectionString(settings.Database.ConnectionString)
                     .ScanIn(AppDomain.CurrentDomain.GetAssemblies()).For.Migrations())
 

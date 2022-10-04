@@ -1,4 +1,5 @@
 using Journal.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Journal.Infrastructure.Features.Vehicle;
 
@@ -13,7 +14,10 @@ public class VehicleRepository : IVehicleRepository
     public IList<VehicleBrandDTO> GetAllBrands()
     {
         var brands =
-            _dbContext.VehicleBrand.ToList();
+            _dbContext.VehicleBrand
+                .Where(brand => brand.VehicleBrandId > 0)
+                .AsNoTracking()
+                .ToList();
 
         return brands;
     }

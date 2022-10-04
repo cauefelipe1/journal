@@ -52,19 +52,19 @@ public class CreateBaseTables_00003 : BaseMigration
     private void InternalPopulateLanguageTable()
     {
         Insert.IntoTable("language").InSchema(Settings.Database.SearchPath)
-            .Row(new LanguageDTO
+            .Row(new
             {
                 language_id = 1,
                 language_code_2_letters = "pt",
                 language_name = "Português"
             })
-            .Row(new LanguageDTO
+            .Row(new
             {
                 language_id = 2,
                 language_code_2_letters = "en",
                 language_name = "English"
             })
-            .Row(new LanguageDTO
+            .Row(new
             {
                 language_id = 3,
                 language_code_2_letters = "es",
@@ -75,12 +75,12 @@ public class CreateBaseTables_00003 : BaseMigration
     private void InternalPopulateUserTypeTable()
     {
         Insert.IntoTable("user_type").InSchema(Settings.Database.SearchPath)
-            .Row(new UserTypeDTO
+            .Row(new
             {
                 user_type_id = 1,
                 user_type_desc = "Standard"
             })
-            .Row(new UserTypeDTO
+            .Row(new
             {
                 user_type_id = 2,
                 user_type_desc = "Premium"

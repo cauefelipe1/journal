@@ -3,15 +3,6 @@
 // ReSharper disable ClassNeverInstantiated.Global
 namespace Journal.Migration.Migrations.DTOs;
 
-public class VehicleTypeDTO
-{
-    public int vehicle_type_id { get; set; }
-
-    public string? name { get; set; }
-
-    public bool is_active { get; set; }
-}
-
 public class VehicleBrandDTO
 {
     public int vehicle_brand_id { get; set; }

@@ -73,6 +73,9 @@ public class DatabaseSettings
             {
                 _connectionString =
                     $"Username={User};Password={Password};Host={Host};Port={Port};Database={DatabaseName};SearchPath={SearchPath}";
+#if DEBUG
+                _masterConnectionString += ";IncludeErrorDetail=true";
+#endif
             }
 
             return _connectionString;
@@ -90,6 +93,9 @@ public class DatabaseSettings
             {
                 _masterConnectionString =
                     $"Username={User};Password={Password};Host={Host};Port={Port};Database=postgres";
+#if DEBUG
+                _masterConnectionString += ";IncludeErrorDetail=true";
+#endif
             }
 
             return _masterConnectionString;

@@ -1,15 +1,16 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using FluentMigrator.Postgres;
 using Journal.Migration.Migrations.DTOs;
 using Mapster;
 
 namespace Journal.Migration.Migrations;
 
 [Migration(00005)]
-public class CreateVehicleTables_00005 : BaseMigration
+public class CreateSupportVehicleTables_00005 : BaseMigration
 {
-    public CreateVehicleTables_00005(SettingsData settings) : base(settings) { }
+    public CreateSupportVehicleTables_00005(SettingsData settings) : base(settings) { }
 
     public override void Up()
     {
@@ -22,13 +23,12 @@ public class CreateVehicleTables_00005 : BaseMigration
     {
         InternalCreateVehicleTypeTable();
         InternalCreateVehicleBrandTable();
-        InternalCreateVehicleTable();
     }
 
     private void InternalCreateVehicleTypeTable()
     {
         Create.Table("vehicle_type").InSchema(Settings.Database.SearchPath)
-            .WithColumn("vehicle_type_id").AsInt16().NotNullable().PrimaryKey().Identity()
+            .WithColumn("vehicle_type_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("name").AsString(50).NotNullable()
             .WithColumn("is_active").AsBoolean().NotNullable();
     }
@@ -36,7 +36,7 @@ public class CreateVehicleTables_00005 : BaseMigration
     private void InternalCreateVehicleBrandTable()
     {
         Create.Table("vehicle_brand").InSchema(Settings.Database.SearchPath)
-            .WithColumn("vehicle_brand_id").AsInt16().NotNullable().PrimaryKey().Identity()
+            .WithColumn("vehicle_brand_id").AsInt16().NotNullable().PrimaryKey()
             .WithColumn("name").AsString(50).NotNullable()
             .WithColumn("country_id").AsInt16().NotNullable();
 
@@ -49,25 +49,6 @@ public class CreateVehicleTables_00005 : BaseMigration
             .OnColumn("name").Ascending()
             .WithOptions().NonClustered();
     }
-
-    private void InternalCreateVehicleTable()
-    {
-        Create.Table("vehicle").InSchema(Settings.Database.SearchPath)
-            .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
-            .WithColumn("model").AsString(50).NotNullable()
-            .WithColumn("nickname").AsString(50).Nullable()
-            .WithColumn("vehicle_type_id").AsInt16().NotNullable()
-            .WithColumn("vehicle_brand_id").AsInt16().NotNullable();
-
-        Create.ForeignKey()
-            .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("vehicle_type_id")
-            .ToTable("vehicle_type").InSchema(Settings.Database.SearchPath).PrimaryColumn("vehicle_type_id");
-
-        Create.ForeignKey()
-            .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("vehicle_brand_id")
-            .ToTable("vehicle_brand").InSchema(Settings.Database.SearchPath).PrimaryColumn("vehicle_brand_id");
-    }
-
     #endregion Tables_Creation
 
     #region Tables_Population
@@ -80,43 +61,42 @@ public class CreateVehicleTables_00005 : BaseMigration
     private void PopulateVehicleType()
     {
         Insert.IntoTable("vehicle_type").InSchema(Settings.Database.SearchPath)
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 1,
                 name = "Car",
                 is_active = true
             })
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 2,
                 name = "Truck",
-                is_active = true
+                is_active = false
             })
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 3,
                 name = "Motorcycle",
-                is_active = true
+                is_active = false
             })
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 4,
                 name = "Boat",
-                is_active = true
+                is_active = false,
             })
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 5,
                 name = "Airplane",
-                is_active = true
+                is_active = false
             })
-            .Row(new VehicleTypeDTO
+            .Row(new
             {
                 vehicle_type_id = 6,
                 name = "Chooper",
-                is_active = true
+                is_active = false
             });
-
     }
 
     private void PopulateVehicleBrand()
