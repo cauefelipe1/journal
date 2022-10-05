@@ -1,3 +1,4 @@
+using Journal.API.Extensions;
 using Journal.Domain.Models.Driver;
 using Journal.Infrastructure.Features.Driver;
 using MediatR;
@@ -39,18 +40,27 @@ public class DriverController : ControllerBase
         return Ok(driver);
     }
 
-
     /// <summary>
     /// Gets a driver based on its ID.
     /// </summary>
-    /// <param name="model">The driver model to be saved.</param>
-    /// <returns>The id of the driver saved.</returns>
-    [HttpPost()]
-    public async Task<ActionResult<int>> CreateDriver(DriverModel model)
+    /// <param name="input">The input for creating a new driver.</param>
+    /// <returns>The ID of the driver saved.</returns>
+    [HttpPost]
+    public async Task<ActionResult<int>> CreateDriver(CreateDriverInput input)
     {
-        var driver = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
+        if (!ModelState.IsValid)
+            return BadRequest();
 
+        var model = new DriverModel
+        {
+            FirstName = input.FirstName,
+            LastName = input.LastName,
+            CountryId = input.CountryId,
+            UserId = this.GetUserSecondaryId()
+        };
 
-        return Ok(driver);
+        int driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
+
+        return Ok(driverId);
     }
 }

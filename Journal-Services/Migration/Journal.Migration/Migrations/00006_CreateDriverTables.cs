@@ -21,11 +21,16 @@ public class CreateDriverTables_00006 : BaseMigration {
             .WithColumn("driver_id").AsInt32().NotNullable().PrimaryKey().Identity()
             .WithColumn("first_name").AsString(200).NotNullable()
             .WithColumn("last_name").AsString(100).NotNullable()
+            .WithColumn("country_id").AsInt16().Nullable()
             .WithColumn("user_id")
             .AsInt32()
             .NotNullable()
             .WithDefaultValue(0)
             .WithColumnDescription($"It refers to the SecondaryId column on {Identity.Constants.IDENTITY_DB_SCHEMA}.app_user");
+
+        Create.ForeignKey()
+            .FromTable("driver").InSchema(Settings.Database.SearchPath).ForeignColumn("country_id")
+            .ToTable("country").InSchema(Settings.Database.SearchPath).PrimaryColumn("country_id");
 
         Create.Index("idx_driver_user_id").OnTable("driver").InSchema(Settings.Database.SearchPath)
             .OnColumn("user_id")

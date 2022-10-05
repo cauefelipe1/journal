@@ -5,9 +5,9 @@ BEGIN
 
     /* BEGIN: Driver 1 */
     insert into $(Schema).driver
-        (first_name, last_name, user_id)
+        (first_name, last_name, country_id, user_id)
     values
-        ('Dominic', 'Toretto', 1)
+        ('Dominic', 'Toretto', 224, 1)
     returning driver_id into l_driver_id;
 
     insert into $(Schema).vehicle
@@ -19,9 +19,9 @@ BEGIN
 
     /* BEGIN: Driver 2 */
     insert into $(Schema).driver
-    (first_name, last_name, user_id)
+    (first_name, last_name, country_id, user_id)
     values
-        ('Brian', 'O''Conner', 2)
+        ('Brian', 'O''Conner', 224, 2)
         returning driver_id into l_driver_id;
 
     insert into $(Schema).vehicle

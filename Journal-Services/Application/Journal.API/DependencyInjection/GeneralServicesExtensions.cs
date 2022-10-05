@@ -1,6 +1,7 @@
 using System.Reflection;
 using Journal.Infrastructure.Database;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Journal.API.DependencyInjection;
 
@@ -45,18 +46,30 @@ public static class GeneralServicesExtensions
                 }
             });
 
-            // Include XML Doc in Swagger
-            string path = AppContext.BaseDirectory;
-            string modelsXml = Path.Combine(path, "Journal.Identity.xml");
-
-            if (File.Exists(modelsXml))
-                options.IncludeXmlComments(modelsXml);
-
-            string apiXml = Path.Combine(path, $"{ Assembly.GetEntryAssembly()!.GetName().Name }.xml");
-            if (File.Exists(apiXml))
-                options.IncludeXmlComments(apiXml);
+            options.AddXmlDocumentation();
 
         });
+    }
+
+    private static void AddXmlDocumentation(this SwaggerGenOptions options)
+    {
+        string path = AppContext.BaseDirectory;
+        string[] xmlsToAdd =
+        {
+            $"{Assembly.GetEntryAssembly()!.GetName().Name}.xml",
+            "Journal.Domain.xml",
+            "Journal.Identity.xml"
+        };
+
+        foreach (string xml in xmlsToAdd)
+        {
+            string additional = Path.Combine(path, xml);
+
+            if (File.Exists(additional))
+            {
+                options.IncludeXmlComments(additional);
+            }
+        }
     }
 
     /// <summary>

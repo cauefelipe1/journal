@@ -31,6 +31,12 @@ public class DriverModel
     public string FullName { get; set; } = default!;
 
     /// <summary>
+    /// The country id of the driver.
+    /// </summary>
+    /// <example>1</example>
+    public int CountryId { get; set; }
+
+    /// <summary>
     /// The user id associated with the driver.
     /// </summary>
     /// <example>1</example>
