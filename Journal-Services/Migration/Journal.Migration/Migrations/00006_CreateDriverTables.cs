@@ -66,7 +66,7 @@ public class CreateDriverTables_00006 : BaseMigration {
     private void SeedData()
     {
         Execute.Script(
-            $"Migrations/SqlScripts/{GetCurrentFileName()}.sql",
+            $"{ ROOT_PATH_SQL_SCRIPTS }{GetCurrentFileName()}.sql",
             new Dictionary<string, string>() { { "Schema", Settings.Database.SearchPath } });
     }
 

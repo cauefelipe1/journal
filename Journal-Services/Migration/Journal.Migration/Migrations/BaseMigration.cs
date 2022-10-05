@@ -4,6 +4,7 @@ namespace Journal.Migration.Migrations;
 
 public abstract class BaseMigration: FluentMigrator.Migration
 {
+    protected const string ROOT_PATH_SQL_SCRIPTS = "Migrations/SqlScripts/";
     protected SettingsData Settings { get; }
 
     protected BaseMigration(SettingsData settings) => Settings = settings;
