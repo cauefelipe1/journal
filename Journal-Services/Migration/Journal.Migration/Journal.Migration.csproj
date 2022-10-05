@@ -37,6 +37,9 @@
       <None Update="Data\Vehicles\brand.csv">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Migrations\SqlScripts\00006_CreateDriverTables.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
