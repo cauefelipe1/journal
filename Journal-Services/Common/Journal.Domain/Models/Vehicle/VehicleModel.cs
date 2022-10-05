@@ -6,7 +6,7 @@ namespace Journal.Domain.Models.Vehicle;
 /// Defines a Vehicle Brand.
 /// </summary>
 [UsedImplicitly]
-public class VehicleBrand
+public class VehicleBrandModel
 {
     /// <summary>
     /// The vehicle brand unique identifier.
@@ -30,7 +30,7 @@ public class VehicleBrand
 /// <summary>
 /// Defines a Vehicle.
 /// </summary>
-public class Vehicle
+public class VehicleModel
 {
     /// <summary>
     /// The vehicle brand unique identifier.
@@ -57,7 +57,7 @@ public class Vehicle
     public int TypeId { get; set; }
 
     /// <summary>
-    /// The unique identifier for a <see cref="VehicleBrand"/>.
+    /// The unique identifier for a <see cref="VehicleBrandModel"/>.
     /// </summary>
     /// <example>3</example>
     public int BrandId { get; set; }

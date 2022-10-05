@@ -1,0 +1,32 @@
+using Journal.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
+
+namespace Journal.Infrastructure.Features.Driver;
+
+/// <inheritdoc/>
+public class DriverRepository : IDriverRepository
+{
+    private readonly DatabaseContext _dbContext;
+
+    public DriverRepository(DatabaseContext dbContext) => _dbContext = dbContext;
+
+    /// <inheritdoc/>
+    public DriverDTO? GetDriverById(int driverId)
+    {
+        var driver =
+            _dbContext.Driver
+                .Where(d => d.DriverId == driverId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+        return driver;
+    }
+
+    public int InsertDriver(DriverDTO dto)
+    {
+        _dbContext.Driver.Add(dto);
+        _dbContext.SaveChanges();
+
+        return dto.DriverId;
+    }
+}

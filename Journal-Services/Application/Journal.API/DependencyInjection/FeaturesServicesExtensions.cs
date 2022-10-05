@@ -1,3 +1,4 @@
+using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.HealthCheck;
 using Journal.Infrastructure.Features.Vehicle;
 
@@ -16,5 +17,6 @@ public static class FeaturesServicesExtensions
     {
          services.AddSingleton<IHealthCheckRepository, HealthCheckRepository>();
          services.AddSingleton<IVehicleRepository, VehicleRepository>();
+         services.AddScoped<IDriverRepository, DriverRepository>();
     }
 }

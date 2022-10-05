@@ -1,3 +1,4 @@
+using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.Vehicle;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,9 @@ public partial class DatabaseContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<VehicleBrandDTO>()
-            .HasKey(c => c.VehicleBrandId);
+            .HasKey(e => e.VehicleBrandId);
+
+        modelBuilder.Entity<DriverDTO>()
+            .HasKey(e => e.DriverId);
     }
 }

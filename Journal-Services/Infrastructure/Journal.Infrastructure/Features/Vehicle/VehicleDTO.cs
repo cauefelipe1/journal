@@ -8,7 +8,7 @@ namespace Journal.Infrastructure.Features.Vehicle;
 public class VehicleBrandDTO
 {
     //[Key]
-    [AdaptMember(nameof(VehicleBrand.Id))]
+    [AdaptMember(nameof(VehicleBrandModel.Id))]
     public int VehicleBrandId { get; set; }
 
     public string Name { get; set; } = default!;

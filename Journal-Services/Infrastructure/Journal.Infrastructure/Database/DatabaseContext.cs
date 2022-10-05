@@ -1,4 +1,5 @@
 using System.Data;
+using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.Vehicle;
 using Journal.SharedSettings;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ public sealed partial class DatabaseContext : DbContext
     public DatabaseContext(SettingsData settingsData) => _settingsData = settingsData;
 
     public DbSet<VehicleBrandDTO> VehicleBrand { get; set; } = null!;
+
+    public DbSet<DriverDTO> Driver { get; set; } = null!;
 
     public IDbConnection GetConnection() => new NpgsqlConnection(_settingsData.Database.ConnectionString);
 }

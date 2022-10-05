@@ -24,7 +24,7 @@ public enum LanguageCode
 /// <summary>
 /// Describes the Language info
 /// </summary>
-public class Language
+public class LanguageModel
 {
     /// <summary>
     /// Language's code.

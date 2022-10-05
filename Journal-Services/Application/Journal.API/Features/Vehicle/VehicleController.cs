@@ -25,9 +25,9 @@ public class VehicleController : ControllerBase
     /// <summary>
     /// Get all vehicle brands.
     /// </summary>
-    /// <returns>A collection of <see cref="VehicleBrand"/></returns>
+    /// <returns>A collection of <see cref="VehicleBrandModel"/></returns>
     [HttpGet("getAllBrands")]
-    public async Task<ActionResult<IList<VehicleBrand>>> GetAllBrands()
+    public async Task<ActionResult<IList<VehicleBrandModel>>> GetAllBrands()
     {
         var brands = await _mediator.Send(new VehicleMediator.AllVehicleBrandQuery());
 
