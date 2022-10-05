@@ -13,5 +13,9 @@
         "User": "[USER HERE]",
         "Password": "[PASSWORD HERE]",
         "SearchPath": "[SEARCH PATH HERE]"
+    },
+    "JwtSettings": {
+        "JwtSecret": "[PUT YOUR SECRET HERE]",
+        "JwtLifetime": "[PUT THE LIFETIME TIME SPAN HERE]"
     }
 }
