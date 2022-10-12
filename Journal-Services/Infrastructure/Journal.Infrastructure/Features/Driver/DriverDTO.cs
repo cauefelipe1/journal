@@ -11,5 +11,7 @@ public class DriverDTO
 
     public string LastName { get; set; } = default!;
 
+    public int CountryId { get; set; }
+
     public int UserId { get; set; }
 }

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Journal.Domain.Models.Driver;
 
 namespace Journal.Domain.Models.Vehicle;
 
@@ -33,10 +34,17 @@ public class VehicleBrandModel
 public class VehicleModel
 {
     /// <summary>
-    /// The vehicle brand unique identifier.
+    /// The unique identifier for a vehicle.
     /// </summary>
     /// <example>1</example>
     public int Id { get; set; }
+
+    /// <summary>
+    /// The secondary unique identifier for a vehicle.
+    /// It is a GUID given when the vehicle is create when the client application is offline.
+    /// </summary>
+    /// <example>cbf41093-b360-459a-9b09-ec223fbbe2ed</example>
+    public string? SecondaryId { get; set; }
 
     /// <summary>
     /// The vehicle model name.
@@ -51,6 +59,12 @@ public class VehicleModel
     public string Nickname { get; set; } = default!;
 
     /// <summary>
+    /// The vehicle model year.
+    /// </summary>
+    /// <example>1997</example>
+    public int ModelYear { get; set; }
+
+    /// <summary>
     /// The unique identifier for the vehicle type.
     /// </summary>
     /// <example>2</example>
@@ -61,4 +75,10 @@ public class VehicleModel
     /// </summary>
     /// <example>3</example>
     public int BrandId { get; set; }
+
+    /// <summary>
+    /// The unique identifier for the main <see cref="DriverModel"/>.
+    /// </summary>
+    /// <example>1</example>
+    public int MainDriverId { get; set; }
 }

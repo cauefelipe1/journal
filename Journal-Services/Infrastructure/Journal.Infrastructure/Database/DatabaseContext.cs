@@ -17,5 +17,7 @@ public sealed partial class DatabaseContext : DbContext
 
     public DbSet<DriverDTO> Driver { get; set; } = null!;
 
+    public DbSet<VehicleDTO> Vehicle { get; set; } = null!;
+
     public IDbConnection GetConnection() => new NpgsqlConnection(_settingsData.Database.ConnectionString);
 }

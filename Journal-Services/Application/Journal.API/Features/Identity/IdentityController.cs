@@ -71,6 +71,6 @@ public class IdentityController : ControllerBase
 
         var loginResult = await _mediator.Send(new JwtMediator.RefreshTokenQuery(refreshInput));
 
-        return Ok(loginResult);
+        return Created(loginResult);
     }
 }

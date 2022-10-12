@@ -11,6 +11,27 @@ public class VehicleRepository : IVehicleRepository
     public VehicleRepository(DatabaseContext dbContext) => _dbContext = dbContext;
 
     /// <inheritdoc/>
+    public int InsertVehicle(VehicleDTO dto)
+    {
+        _dbContext.Vehicle.Add(dto);
+        _dbContext.SaveChanges();
+
+        return dto.VehicleId;
+    }
+
+    /// <inheritdoc/>
+    public IList<VehicleDTO> GetVehicleByMainDriverId(int mainDriverId)
+    {
+        var vehicles =
+            _dbContext.Vehicle
+                .Where(vehicle => vehicle.MainDriverId == mainDriverId)
+                .AsNoTracking()
+                .ToList();
+
+        return vehicles;
+    }
+
+    /// <inheritdoc/>
     public IList<VehicleBrandDTO> GetAllBrands()
     {
         var brands =

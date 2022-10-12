@@ -20,5 +20,8 @@ public partial class DatabaseContext
 
         modelBuilder.Entity<DriverDTO>()
             .HasKey(e => e.DriverId);
+
+        modelBuilder.Entity<VehicleDTO>()
+            .HasKey(e => e.VehicleId);
     }
 }

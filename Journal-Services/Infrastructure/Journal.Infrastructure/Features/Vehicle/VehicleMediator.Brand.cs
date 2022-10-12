@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Journal.Infrastructure.Features.Vehicle;
 
-public partial class VehicleMediator
+public abstract partial class VehicleMediator
 {
     public class AllVehicleBrandQuery : IRequest<IList<VehicleBrandModel>> { }
 

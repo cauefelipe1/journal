@@ -39,6 +39,7 @@ public abstract partial class DriverMediator
                 DriverId = dto.DriverId,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
+                CountryId = dto.CountryId,
                 FullName = $"{dto.FirstName} {dto.LastName}",
                 UserId = dto.UserId
             };

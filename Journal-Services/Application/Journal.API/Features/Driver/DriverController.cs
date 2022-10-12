@@ -41,7 +41,7 @@ public class DriverController : ControllerBase
     }
 
     /// <summary>
-    /// Gets a driver based on its ID.
+    /// Creates a new driver in the application.
     /// </summary>
     /// <param name="input">The input for creating a new driver.</param>
     /// <returns>The ID of the driver saved.</returns>
@@ -61,6 +61,6 @@ public class DriverController : ControllerBase
 
         int driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
 
-        return Ok(driverId);
+        return Created(driverId);
     }
 }
