@@ -46,7 +46,7 @@ public class VehicleController : ControllerBase
 
         int vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model));
 
-        return Created(vehicleId);
+        return Created(string.Empty, vehicleId);
     }
 
     /// <summary>
@@ -66,6 +66,7 @@ public class VehicleController : ControllerBase
     /// </summary>
     /// <returns>A collection of <see cref="VehicleBrandModel"/></returns>
     [HttpGet("brands")]
+    [AllowAnonymous]
     public async Task<ActionResult<IList<VehicleBrandModel>>> GetAllBrands()
     {
         var brands = await _mediator.Send(new VehicleMediator.AllVehicleBrandQuery());

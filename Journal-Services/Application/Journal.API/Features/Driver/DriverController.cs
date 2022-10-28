@@ -61,6 +61,6 @@ public class DriverController : ControllerBase
 
         int driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
 
-        return Created(driverId);
+        return Created(string.Empty, driverId);
     }
 }

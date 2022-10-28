@@ -1,40 +1,10 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Journal';
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        // Here we define the application theme.
-        primarySwatch: Colors.indigo,
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const LoginPage(title: _title),
-      ),
-    );
-  }
-}
+import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
+import 'package:journal_mobile_app/models/identity.dart';
+import 'package:journal_mobile_app/models/vehicle.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -48,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
+    VehicleBrandModel? abs;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ListView(
@@ -56,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
             child: const Text(
-              'Journal App',
+              'Journal App', //TODO: Translate
               style: TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.w500,
@@ -67,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
             child: const Text(
-              'Sign In',
+              'Sign In', //TODO: Translate
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -77,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: emailController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Email',
+                labelText: 'Email', //TODO: Translate
               ),
             ),
           ),
@@ -88,26 +59,36 @@ class _LoginPageState extends State<LoginPage> {
               controller: passwordController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'Password',
+                labelText: 'Password', //TODO: Translate
               ),
             ),
           ),
-          TextButton(onPressed: () {}, child: const Text('Forgot Password')),
+          TextButton(
+            onPressed: () {},
+            child: const Text('Forgot Password'), //TODO: Translate
+          ),
           Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: ElevatedButton(
-              child: const Text('Login'),
-              onPressed: () => _dialogBuilder(context, emailController.text),
+              child: const Text('Login'), //TODO: Translate
+              onPressed: () async {
+                var loginInput = UserLoginInput(
+                    email: emailController.text,
+                    password: passwordController.text);
+
+                var loginResult = await IdentityDataService().login(loginInput);
+                debugPrint(loginResult.toJson().toString());
+              },
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text('Does not have an account?'),
+              const Text('Does not have an account?'), //TODO: Translate
               TextButton(
                 child: const Text(
-                  'Sign Up',
+                  'Sign Up', //TODO: Translate
                   style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
@@ -119,27 +100,5 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
-  }
-
-  Future<void> _dialogBuilder(BuildContext context, String name) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Login dialog'),
-            content: Text(name),
-            actions: <Widget>[
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: const Text('Got it'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
   }
 }
