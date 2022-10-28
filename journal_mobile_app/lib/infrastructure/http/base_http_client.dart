@@ -35,7 +35,9 @@ abstract class BaseHttpClient {
 
       return result;
     } catch (e) {
-      if (kDebugMode) rethrow;
+      if (kDebugMode) {
+        rethrow;
+      }
 
       return null;
     }
