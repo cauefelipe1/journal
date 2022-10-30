@@ -31,3 +31,16 @@ class UserLoginResult {
 
   Map<String, dynamic> toJson() => _$UserLoginResultToJson(this);
 }
+
+@JsonSerializable()
+class RefreshTokenInput {
+  String? token;
+  String? refreshToken;
+
+  RefreshTokenInput({this.token, this.refreshToken});
+
+  factory RefreshTokenInput.fromJson(Map<String, dynamic> json) =>
+      _$RefreshTokenInputFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RefreshTokenInputToJson(this);
+}

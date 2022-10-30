@@ -32,3 +32,15 @@ Map<String, dynamic> _$UserLoginResultToJson(UserLoginResult instance) =>
       'refreshToken': instance.refreshToken,
       'errors': instance.errors,
     };
+
+RefreshTokenInput _$RefreshTokenInputFromJson(Map<String, dynamic> json) =>
+    RefreshTokenInput(
+      token: json['token'] as String?,
+      refreshToken: json['refreshToken'] as String?,
+    );
+
+Map<String, dynamic> _$RefreshTokenInputToJson(RefreshTokenInput instance) =>
+    <String, dynamic>{
+      'token': instance.token,
+      'refreshToken': instance.refreshToken,
+    };

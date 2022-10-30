@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
+import 'package:journal_mobile_app/features/vehicle/vehicle_data_service.dart';
 import 'package:journal_mobile_app/models/identity.dart';
-import 'package:journal_mobile_app/models/vehicle.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    VehicleBrandModel? abs;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ListView(
@@ -79,6 +78,9 @@ class _LoginPageState extends State<LoginPage> {
 
                 var loginResult = await IdentityDataService().login(loginInput);
                 debugPrint(loginResult.toJson().toString());
+
+                var brands = await VehicleDataService().getAllBrands();
+                debugPrint(brands.toString());
               },
             ),
           ),
