@@ -8,7 +8,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract class AuthenticatedHttpClient extends BaseHttpClient {
   final String _jwtTokenKey = "user_jwt_token";
-  final String _refreshTokenKey = "user_jwt_token";
+  final String _refreshTokenKey = "jwt_refresh_token";
 
   late Map<String, String> _defaultHeader;
 
@@ -40,7 +40,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
     if (requestResult != null) {
       var loginResult = UserLoginResult.fromJson(requestResult);
 
-      storeTokens(loginResult);
+      await storeTokens(loginResult);
 
       return loginResult;
     }
@@ -48,7 +48,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
     return null;
   }
 
-  void storeTokens(UserLoginResult loginResult) async {
+  Future<void> storeTokens(UserLoginResult loginResult) async {
     if (loginResult.token != null && loginResult.refreshToken != null) {
       var saveJwtFuture =
           _secureStorage.write(key: _jwtTokenKey, value: loginResult.token);
@@ -90,7 +90,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
     }
 
     var result = UserLoginResult.fromJson(requestResult);
-    storeTokens(result);
+    await storeTokens(result);
 
     return result.token;
   }

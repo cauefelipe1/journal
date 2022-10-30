@@ -1,5 +1,6 @@
 class ApiConstants {
   static const String baseUrl = 'https://localhost:7043/api';
+  //static const String baseUrl = 'https://10.0.2.2:7043/api';
 
   static final IdentityEndpoints identity = IdentityEndpoints();
   static final VehicleEndpoints vehicle = VehicleEndpoints();

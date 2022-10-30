@@ -9,10 +9,12 @@ class VehicleDataService extends AuthenticatedHttpClient {
     if (requestResult == null) {
       return [];
     }
+    
+    var brands = <VehicleBrandModel>[];
+    for (var p in requestResult) {
+      brands.add(VehicleBrandModel.fromJson(p));
+    }
 
-    var result =
-        requestResult.map((brand) => VehicleBrandModel.fromJson(brand));
-
-    return result;
+    return brands;
   }
 }
