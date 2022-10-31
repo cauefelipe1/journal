@@ -102,7 +102,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
     String? token = await tokenFuture;
 
     if (token != null) {
-      headers[HttpHeaders.authorizationHeader] = 'Bearer $token}';
+      headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }
 
     return headers;
