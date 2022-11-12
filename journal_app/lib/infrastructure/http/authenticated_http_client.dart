@@ -62,7 +62,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
   Future<String?> _getJwtToken() async {
     String? token = await _secureStorage.read(key: _jwtTokenKey);
 
-    if (token == null) {
+    if (token == null || token.isEmpty) {
       return null;
     }
 

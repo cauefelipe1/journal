@@ -31,23 +31,25 @@ public partial class UserMediator
 
         public async Task<UserLoginResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
         {
+            //TODO: Translate it
             const string ERROR_MESSAGE = "User or password invalid.";
+
+            UserLoginResult GetLoginFailedResult() => new() { Errors = new[] { ERROR_MESSAGE } };
+
             var userInput = query.Input;
 
             var user = await _userManager.FindByEmailAsync(userInput.Email);
 
             if (user is null)
             {
-                //TODO: Set a proper result and message (also translate it)
-                throw new Exception(ERROR_MESSAGE);
+                return GetLoginFailedResult();
             }
 
             bool isPasswordValid = await _userManager.CheckPasswordAsync(user, userInput.Password);
 
             if (!isPasswordValid)
             {
-                //TODO: Set a proper result and message (also translate it)
-                throw new Exception(ERROR_MESSAGE);
+                return GetLoginFailedResult();
             }
 
             var result = await _mediator.Send(new JwtMediator.GenerateJwtTokenQuery(user), cancellationToken);

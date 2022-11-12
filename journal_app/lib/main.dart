@@ -17,7 +17,9 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main() {
-  if (kDebugMode) HttpOverrides.global = MyHttpOverrides();
+  if (kDebugMode) {
+    HttpOverrides.global = MyHttpOverrides();
+  }
 
   runApp(const MyApp());
 }
@@ -33,22 +35,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: _title,
-      theme: ThemeData(
+      theme: _getThemeData(),
+      home: const LoginPage(title: ""),
+    );
+  }
+
+  ThemeData _getThemeData() => ThemeData(
         primarySwatch: Colors.indigo,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(5.0),
               ),
             ),
           ),
         ),
-      ),
-      home: const Scaffold(
-        //appBar: AppBar(),
-        body: LoginPage(title: ""),
-      ),
-    );
-  }
+      );
 }
