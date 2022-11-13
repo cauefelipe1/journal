@@ -26,20 +26,27 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: Column(
             children: <Widget>[
-              const Text(
-                'Journal App', //TODO: Translate
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30),
+              const SizedBox(height: 70),
+              const Icon(
+                Icons.car_repair,
+                size: 150,
               ),
+              const Text(
+                'Journal', //TODO: Translate
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 35,
+                ),
+              ),
+              const SizedBox(height: 20),
               const Text(
                 'Sign In', //TODO: Translate
                 style: TextStyle(fontSize: 30),
               ),
+              const SizedBox(height: 20),
               //Username field
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
                 child: TextField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -60,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               //Password field
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
                 child: TextField(
                   onChanged: (value) {
                     setState(() {
@@ -105,13 +112,18 @@ class _LoginPageState extends State<LoginPage> {
               //Login button
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints.tightFor(
-                      width: double.infinity, height: 50),
+                      width: double.infinity, height: 60),
                   child: ElevatedButton(
                     onPressed: _loginUser,
-                    child: const Text('Login'),
+                    child: const Text(
+                      'Login', //TODO: Translate
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                 ),
               ),

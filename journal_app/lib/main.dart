@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   }
 
   ThemeData _getThemeData() => ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.teal,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             shape: MaterialStatePropertyAll(
