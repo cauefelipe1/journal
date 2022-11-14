@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
-import 'package:journal_mobile_app/features/vehicle/vehicle_data_service.dart';
+import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
 class LoginPage extends StatefulWidget {
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                   constraints: const BoxConstraints.tightFor(
                       width: double.infinity, height: 60),
                   child: ElevatedButton(
-                    onPressed: _loginUser,
+                    onPressed: () => _loginUser(context),
                     child: const Text(
                       'Login', //TODO: Translate
                       style: TextStyle(
@@ -150,7 +150,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> _loginUser() async {
+  Future<void> _loginUser(BuildContext context) async {
+    var nv = Navigator.of(context);
+
     var loginInput = UserLoginInput(
         email: emailController.text, password: passwordController.text);
 
@@ -163,8 +165,9 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    var brands = await VehicleDataService().getAllBrands();
-    debugPrint(brands.toString());
+    nv.push(MaterialPageRoute(builder: (context) => const HomePage()));
+    //var brands = await VehicleDataService().getAllBrands();
+    //debugPrint(brands.toString());
   }
 
   Future<void> _showLoginErrorDialog(String errorMessage) async {
