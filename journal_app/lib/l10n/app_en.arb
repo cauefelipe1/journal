@@ -1,0 +1,58 @@
+{
+    "appName": "Journal",
+    "ok": "Ok",
+    "@ok": {
+      "description": "Just a simple Ok."
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+      "description": "Just a simple Cancel."
+    },
+    "yes": "Yes",
+    "@yes": {
+      "description": "Just a simple yes."
+    },
+    "no": "No",
+    "@no": {
+      "description": "Just a simple No."
+    },
+    "not": "Not",
+    "@not": {
+      "description": "Just a simple Not."
+    },
+    "@appName": {
+      "description": "The app name."
+    },
+    "loginButton": "Log in",
+    "@loginButton": {
+      "description": "Text used in the login button."
+    },
+    "loginPageHeader": "Welcome!",
+    "@loginPageHeader": {
+      "description": "Text used in the login page header"
+    },
+    "usernameTextFieldHint": "Username / Email",
+    "@usernameTextFieldHint": {
+      "description": "Text used in the hint for Username field inside the login and sign up page."
+    },
+    "passwordTextFieldHint": "Password",
+    "@passwordTextFieldHint": {
+      "description": "Text used in the hint for password field inside the login and sign up page."
+    },
+    "forgotPasswordButton": "Forgot Password",
+    "@forgotPasswordButton": {
+      "description": "Text used in the forgot password button in the login pagex."
+    },
+    "doesNotHaveAccountText": "Does not have an account?",
+    "@doesNotHaveAccountText": {
+      "description": "Text used near the sign up button in the login page."
+    },
+    "signUpButton": "Sign Up",
+    "@signUpButton": {
+      "description": "Text used in the sign up button."
+    },
+    "notAbleToLogin": "Not able to log in",
+    "@signUpButton": {
+      "description": "Text used in the login error dialog title."
+    }
+}

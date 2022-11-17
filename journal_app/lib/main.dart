@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'gui/identity/login_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:journal_mobile_app/gui/identity/login_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -33,8 +34,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: _title,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
       home: const LoginPage(title: ""),
     );

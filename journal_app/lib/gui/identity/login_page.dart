@@ -3,6 +3,8 @@ import 'package:journal_mobile_app/features/identity/identity_data_service.dart'
 import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
 
@@ -20,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -31,17 +35,17 @@ class _LoginPageState extends State<LoginPage> {
                 Icons.car_repair,
                 size: 150,
               ),
-              const Text(
-                'Journal', //TODO: Translate
-                style: TextStyle(
+              Text(
+                l10n.appName,
+                style: const TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 35,
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Sign In', //TODO: Translate
-                style: TextStyle(fontSize: 30),
+              Text(
+                l10n.loginPageHeader,
+                style: const TextStyle(fontSize: 30),
               ),
               const SizedBox(height: 20),
               //Username field
@@ -61,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(color: Colors.white),
                     ),
-                    hintText: "Username / Email", //TODO: Translate
+                    hintText: l10n.usernameTextFieldHint,
                   ),
                 ),
               ),
@@ -101,13 +105,13 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(color: Colors.white),
                     ),
-                    hintText: "Password", //TODO: Translate
+                    hintText: l10n.passwordTextFieldHint,
                   ),
                 ),
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text('Forgot Password'), //TODO: Translate
+                child: Text(l10n.forgotPasswordButton),
               ),
               //Login button
 
@@ -118,9 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                       width: double.infinity, height: 60),
                   child: ElevatedButton(
                     onPressed: () => _loginUser(context),
-                    child: const Text(
-                      'Login', //TODO: Translate
-                      style: TextStyle(
+                    child: Text(
+                      l10n.loginButton,
+                      style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
@@ -131,11 +135,11 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const Text('Does not have an account?'), //TODO: Translate
+                  Text(l10n.doesNotHaveAccountText),
                   TextButton(
-                    child: const Text(
-                      'Sign Up', //TODO: Translate
-                      style: TextStyle(fontSize: 20),
+                    child: Text(
+                      l10n.signUpButton,
+                      style: const TextStyle(fontSize: 20),
                     ),
                     onPressed: () {
                       //Call the registration page
@@ -176,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Not able to login'), //TODO: Translate
+          title: Text(AppLocalizations.of(context)!.notAbleToLogin),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -186,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Ok'),
+              child: Text(AppLocalizations.of(context)!.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },

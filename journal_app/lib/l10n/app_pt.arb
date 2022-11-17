@@ -1,0 +1,16 @@
+{
+    "appName": "Journal",
+    "loginButton": "Entrar",
+    "loginPageHeader": "Bem vindo!",
+    "usernameTextFieldHint": "Usuário / Email",
+    "passwordTextFieldHint": "Senha",
+    "forgotPasswordButton": "Esqueci a senha",
+    "doesNotHaveAccountText": "Ainda não possui uma conta?",
+    "signUpButton": "Inscreva-se",
+    "notAbleToLogin": "Erro ao tentar entrar",
+    "ok": "Ok",
+    "cancel": "Cancelar",
+    "yes": "Sim",
+    "no": "Não",
+    "not": "Não"
+}
