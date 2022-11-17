@@ -1,16 +1,20 @@
-# journal_app
+# Jornal Mobile Applicaton
 
-A new Flutter project.
+The Journal mobile app.
+
+## Overview
+
+This is mobile application developed using Flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This section describes what is necessary fot running the project locally.
 
-A few resources to get you started if this is your first Flutter project:
+### Mandatory tools:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- NPM - Latest LTS version
+- Visual Studio Code
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Localization/Internationalization
+
+All strings must be added in the **app_*[languages]*.arb** files located under the directory **lib/l10n**.
