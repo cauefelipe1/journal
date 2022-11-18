@@ -169,7 +169,8 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    nv.push(MaterialPageRoute(builder: (context) => const HomePage()));
+    nv.pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomePage()));
     //var brands = await VehicleDataService().getAllBrands();
     //debugPrint(brands.toString());
   }
