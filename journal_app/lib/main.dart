@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,8 +10,7 @@ class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
     var client = super.createHttpClient(context);
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
+    client.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
 
     return client;
   }
@@ -20,6 +20,8 @@ void main() {
   if (kDebugMode) {
     HttpOverrides.global = MyHttpOverrides();
   }
+
+  setupLocator();
 
   //As the application is using the Riverpod, it must be wraped in a ProviderScope
   runApp(const ProviderScope(child: Application()));

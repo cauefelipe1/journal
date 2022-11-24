@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
 import 'package:journal_mobile_app/gui/home/home_page.dart';
+import 'package:journal_mobile_app/locator.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -85,9 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     suffixIcon: Visibility(
                       visible: _showPasswordButtonVisible,
                       child: IconButton(
-                        icon: _passwordVisible
-                            ? const Icon(Icons.visibility_off)
-                            : const Icon(Icons.visibility),
+                        icon: _passwordVisible ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
                         onPressed: () {
                           setState(() {
                             _passwordVisible = !_passwordVisible;
@@ -118,8 +117,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints.tightFor(
-                      width: double.infinity, height: 60),
+                  constraints: const BoxConstraints.tightFor(width: double.infinity, height: 60),
                   child: ElevatedButton(
                     onPressed: () => _loginUser(context),
                     child: Text(
@@ -157,10 +155,10 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _loginUser(BuildContext context) async {
     var nv = Navigator.of(context);
 
-    var loginInput = UserLoginInput(
-        email: emailController.text, password: passwordController.text);
+    var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
 
-    var loginResult = await IdentityDataService().login(loginInput);
+    var identityDS = locator<IIdentityDataService>();
+    var loginResult = await identityDS.login(loginInput);
 
     if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
       String? error = loginResult.errors?.join("/n");
@@ -169,8 +167,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    nv.pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()));
+    nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
     //var brands = await VehicleDataService().getAllBrands();
     //debugPrint(brands.toString());
   }
