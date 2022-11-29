@@ -12,5 +12,8 @@
     "cancel": "Cancelar",
     "yes": "Sí",
     "no": "No",
-    "not": "No"
+    "not": "No",
+    "newVehiclePageHeader": "Adicionar veículo",
+    "newVehicleYearField": "Año",
+    "newVehicleModelField": "Modelo"
 }

@@ -52,7 +52,19 @@
       "description": "Text used in the sign up button."
     },
     "notAbleToLogin": "Not able to log in",
-    "@signUpButton": {
+    "@notAbleToLogin": {
       "description": "Text used in the login error dialog title."
+    },
+    "newVehiclePageHeader": "Add vehicle",
+    "@newVehiclePageHeader": {
+      "description": "Text used in the new vehicle app bar."
+    },
+    "newVehicleYearField": "Year",
+    "@newVehicleYearField": {
+      "description": "Text used in the new vehicle year field."
+    },
+    "newVehicleModelField": "Model",
+    "@newVehicleModelField": {
+      "description": "Text used in the new vehicle model field."
     }
 }
