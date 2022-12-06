@@ -18,13 +18,13 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void _initializeAppConfigs() async {
+Future<AppConfig> _initializeAppConfigs() async {
   const String env = String.fromEnvironment(
     "ENVIRIONMENT",
     defaultValue: "local",
   );
 
-  var _ = await AppConfig.forEnvironment(env);
+  return AppConfig.forEnvironment(env);
 }
 
 void main() async {
@@ -34,7 +34,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  _initializeAppConfigs();
+  var _ = await _initializeAppConfigs();
 
   setupLocator();
 
