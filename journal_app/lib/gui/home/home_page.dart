@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/config/app_config.dart';
 
 import 'package:journal_mobile_app/gui/base/base_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
-class HomePage extends BasePage {
+class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  //@override
+  //State<StatefulWidget> createState() => _HomePageState();
+
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Vehicle's life"), //TODO Translate
+        ),
+        body: Column(
+          children: [
+            Text(AppConfig.instance.apiUrl),
+            ElevatedButton(
+              onPressed: () => {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewVehiclePage())),
+              },
+              child: const Text(
+                "New vehicle",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
 }
 
 class _HomePageState extends BasePageState<HomePage> {

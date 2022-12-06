@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
+import 'package:journal_mobile_app/features/identity/identity_service.dart';
 import 'package:journal_mobile_app/gui/base/base_page.dart';
 import 'package:journal_mobile_app/gui/home/home_page.dart';
-import 'package:journal_mobile_app/locator.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -158,8 +157,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
 
     var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
 
-    var identityDS = locator<IIdentityDataService>();
-    var loginResult = await identityDS.login(loginInput);
+    var identityDS = IdentityService();
+    var loginResult = await identityDS.loginUser(loginInput);
 
     if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
       String? error = loginResult.errors?.join("/n");

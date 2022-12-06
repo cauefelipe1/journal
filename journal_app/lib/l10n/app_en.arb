@@ -1,5 +1,8 @@
 {
     "appName": "Journal",
+    "@appName": {
+      "description": "The application's name."
+    },
     "ok": "Ok",
     "@ok": {
       "description": "Just a simple Ok."
@@ -66,5 +69,9 @@
     "newVehicleModelField": "Model",
     "@newVehicleModelField": {
       "description": "Text used in the new vehicle model field."
-    }
+    },
+    "newVehicleTypeField": "Type",
+    "@newVehicleTypeField": {
+      "description": "Text used in the new vehicle type field."
+    }    
 }

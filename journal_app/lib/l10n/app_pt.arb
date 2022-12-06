@@ -15,5 +15,6 @@
     "not": "Não",
     "newVehiclePageHeader": "Adicionar veículo",
     "newVehicleYearField": "Ano",
-    "newVehicleModelField": "Modelo"
+    "newVehicleModelField": "Modelo",
+    "newVehicleTypeField": "Tipo"
 }

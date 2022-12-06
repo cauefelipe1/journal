@@ -2,22 +2,14 @@ import 'package:journal_mobile_app/infrastructure/http/authenticated_http_client
 import 'package:journal_mobile_app/models/identity.dart';
 
 abstract class IIdentityDataService {
-  Future<UserLoginResult> login(UserLoginInput input);
+  Future<UserLoginResult?> login(UserLoginInput input);
 }
 
 class IdentityDataService extends AuthenticatedHttpClient implements IIdentityDataService {
   @override
-  Future<UserLoginResult> login(UserLoginInput input) async {
+  Future<UserLoginResult?> login(UserLoginInput input) async {
     var result = await loginUser(input);
 
-    if (result != null) {
-      return result;
-    } else {
-      return UserLoginResult(
-        token: null,
-        refreshToken: null,
-        errors: ["Error when attempting to login."],
-      ); //TODO: Translate
-    }
+    return result;
   }
 }

@@ -24,6 +24,7 @@ class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
   Widget _getPageBody(BuildContext context, AppLocalizations l10n) {
     return Column(
       children: [
+        _getVehicleTypeField(context, l10n),
         TextField(
           controller: TextEditingController(),
           decoration: InputDecoration(
@@ -58,6 +59,25 @@ class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _getVehicleTypeField(BuildContext context, AppLocalizations l10n) {
+    return TextField(
+      controller: TextEditingController(),
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.person_outline),
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.white),
+        ),
+        hintText: l10n.newVehicleTypeField,
+      ),
     );
   }
 }

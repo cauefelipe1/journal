@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:journal_mobile_app/config/app_config.dart';
 
 abstract class BaseHttpClient {
   String jsonMimeType = 'application/json; charset=UTF-8';
@@ -25,12 +26,10 @@ abstract class BaseHttpClient {
   }
 
   @protected
-  Future<dynamic> executePost(
-      String path, Object? body, Map<String, String>? headers) async {
+  Future<dynamic> executePost(String path, Object? body, Map<String, String>? headers) async {
     try {
-      var url = Uri.parse(path);
-      var response =
-          await http.post(url, headers: headers, body: json.encode(body));
+      var url = Uri.parse("${AppConfig.instance.apiUrl}/$path");
+      var response = await http.post(url, headers: headers, body: json.encode(body));
 
       var result = _internalGetRequestResult(response);
 
