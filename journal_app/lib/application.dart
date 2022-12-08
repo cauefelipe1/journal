@@ -22,6 +22,7 @@ class Application extends StatelessWidget {
   }
 
   ThemeData _getThemeData() => ThemeData(
+        fontFamily: 'OpenSans',
         primarySwatch: Colors.teal,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(

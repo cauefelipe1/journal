@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:journal_mobile_app/config/app_config.dart';
 
 import 'locator.dart';
@@ -27,6 +28,13 @@ Future<AppConfig> _initializeAppConfigs() async {
   return AppConfig.forEnvironment(env);
 }
 
+Future _addFontsLicense() async {
+  LicenseRegistry.addLicense(() async* {
+    final String license = await rootBundle.loadString('assets/fonts/open_sasns/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['open_sans_font'], license);
+  });
+}
+
 void main() async {
   if (kDebugMode) {
     HttpOverrides.global = MyHttpOverrides();
@@ -34,7 +42,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  var _ = await _initializeAppConfigs();
+  await Future.wait([_initializeAppConfigs(), _addFontsLicense()]);
 
   setupLocator();
 
