@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/gui/home/my_vehicle_card_component.dart';
 
 class MyVehiclesComponent extends ConsumerWidget {
   const MyVehiclesComponent({Key? key}) : super(key: key);
@@ -11,62 +12,46 @@ class MyVehiclesComponent extends ConsumerWidget {
 
   Widget _getBody(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: 210,
+      height: 190,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Row(
-              children: const [
-                Text(
-                  "My Vehicles", //TODO: Translate
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+          Row(
+            children: const [
+              Text(
+                "My Vehicles", //TODO: Translate
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                Spacer(),
-                Text(
-                  "See all", //TODO: Translate
-                  style: TextStyle(
-                    color: Colors.teal,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Spacer(),
+              Text(
+                "See all", //TODO: Translate
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.motorcycle,
-                              size: 100,
-                            ),
-                            Text(
-                              "I'm a card",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                MyVehicleCardComponent(name: "Skyline", type: 1),
+                MyVehicleCardComponent(name: "Mustang", type: 1),
+                MyVehicleCardComponent(name: "Corsa", type: 1),
+                MyVehicleCardComponent(name: "Vectra", type: 1),
+                MyVehicleCardComponent(name: "Viper", type: 1),
+                MyVehicleCardComponent(name: "RX 7", type: 1),
+                MyVehicleCardComponent(name: "Eclipse", type: 1),
+                MyVehicleCardComponent(name: "Supra", type: 1),
+              ],
             ),
           )
         ],

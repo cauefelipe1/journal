@@ -10,16 +10,34 @@ class WelcomeComponent extends ConsumerWidget {
   }
 
   Widget _getBody(BuildContext context, WidgetRef ref) {
-    return const SizedBox(
-      height: 200,
+    return Container(
       width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text("Hello Brian!"),
-          ),
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      decoration: BoxDecoration(
+        color: Colors.teal[300],
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Good morning,",
+              style: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 30,
+              ),
+            ),
+            Text(
+              "Brian!",
+              style: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 25,
+              ),
+            ),
+          ],
         ),
       ),
     );

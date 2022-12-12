@@ -30,8 +30,12 @@ Future<AppConfig> _initializeAppConfigs() async {
 
 Future _addFontsLicense() async {
   LicenseRegistry.addLicense(() async* {
-    final String license = await rootBundle.loadString('assets/fonts/open_sasns/OFL.txt');
-    yield LicenseEntryWithLineBreaks(['open_sans_font'], license);
+    final openSansLicense = rootBundle.loadString('assets/fonts/open_sasns/OFL.txt');
+    final montserratLicense = rootBundle.loadString('assets/fonts/montserrat/OFL.txt');
+    var licenses = await Future.wait([openSansLicense, montserratLicense]);
+
+    yield LicenseEntryWithLineBreaks(['open_sans_font'], licenses[0]);
+    yield LicenseEntryWithLineBreaks(['montserrat_font'], licenses[1]);
   });
 }
 

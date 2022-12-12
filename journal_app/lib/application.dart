@@ -17,12 +17,13 @@ class Application extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
-      home: const LoginPage(title: ""),
+      home: const LoginPage(),
     );
   }
 
   ThemeData _getThemeData() => ThemeData(
         fontFamily: 'OpenSans',
+        primaryColor: Colors.teal[300],
         primarySwatch: Colors.teal,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(

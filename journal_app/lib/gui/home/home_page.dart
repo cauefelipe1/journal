@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:journal_mobile_app/gui/home/my_vehicles_component.dart';
+import 'package:journal_mobile_app/gui/home/welcome_component.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
 class HomePage extends ConsumerWidget {
@@ -16,25 +17,45 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text(
-      //     "Hello Brian", //TODO: Translate and get the User nama/nickname here
+      //     "Hello Brian", //TODO: Translate and get the User name/nickname here
       //     style: TextStyle(color: Colors.black),
       //   ),
       //   backgroundColor: Colors.transparent,
       //   shadowColor: Colors.transparent,
       // ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Hello Brian!",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                ),
+      backgroundColor: Colors.grey[200],
+      body: Column(
+        children: [
+          const WelcomeComponent(),
+          const Padding(
+            padding: EdgeInsets.all(15),
+            child: MyVehiclesComponent(),
+          ),
+          ElevatedButton(
+            onPressed: () => {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewVehiclePage())),
+            },
+            child: const Text(
+              "New vehicle",
+              style: TextStyle(
+                fontSize: 20,
               ),
             ),
+          ),
+        ],
+      ),
+
+      /*body: SafeArea(
+        child: Column(
+          children: [
+            WelcomeComponent(),
+            // const Padding(
+            //   padding: EdgeInsets.all(10.0),
+            //   child: SizedBox(
+            //     width: double.infinity,
+            //     child: WelcomeComponent(),
+            //   ),
+            // ),
             const MyVehiclesComponent(),
             ElevatedButton(
               onPressed: () => {
@@ -49,7 +70,7 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-      ),
+      ),*/
     );
   }
 }

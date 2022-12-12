@@ -7,9 +7,7 @@ import 'package:journal_mobile_app/models/identity.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends BasePage {
-  const LoginPage({super.key, required this.title});
-
-  final String title;
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
