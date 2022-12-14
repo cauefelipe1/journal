@@ -14,6 +14,33 @@ class VehicleBrandModel extends Serializable {
   @override
   Map<String, dynamic> toJson() => _$VehicleBrandModelToJson(this);
 
-  factory VehicleBrandModel.fromJson(Map<String, dynamic> json) =>
-      _$VehicleBrandModelFromJson(json);
+  factory VehicleBrandModel.fromJson(Map<String, dynamic> json) => _$VehicleBrandModelFromJson(json);
+}
+
+@JsonSerializable()
+class VehicleModel extends Serializable {
+  int? id;
+  String? secondaryId;
+  String? modelName;
+  String? nickname;
+  int? modelYear;
+  int? typeId;
+  int? brandId;
+  int? mianDriverId;
+
+  VehicleModel({
+    this.id,
+    this.secondaryId,
+    this.modelName,
+    this.nickname,
+    this.modelYear,
+    this.typeId,
+    this.brandId,
+    this.mianDriverId,
+  });
+
+  @override
+  Map<String, dynamic> toJson() => _$VehicleModelToJson(this);
+
+  factory VehicleModel.fromJson(Map<String, dynamic> json) => _$VehicleModelFromJson(json);
 }

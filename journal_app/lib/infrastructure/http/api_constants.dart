@@ -16,4 +16,5 @@ class VehicleEndpoints {
 
   static const String _basePath = "vehicle";
   final String allBrands = "$_basePath/brands";
+  final String driverVehicles = "$_basePath/by_main_driver";
 }

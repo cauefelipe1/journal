@@ -6,7 +6,7 @@ import 'package:journal_mobile_app/infrastructure/http/base_http_client.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-abstract class AuthenticatedHttpClient extends BaseHttpClient {
+class AuthenticatedHttpClient extends BaseHttpClient {
   final String _jwtTokenKey = "user_jwt_token";
   final String _refreshTokenKey = "jwt_refresh_token";
 
@@ -34,8 +34,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
 
   Future<UserLoginResult?> loginUser(UserLoginInput input) async {
     var headers = await _getHttpHeaders();
-    var requestResult =
-        await executePost(ApiConstants.identity.login, input, headers);
+    var requestResult = await executePost(ApiConstants.identity.login, input, headers);
 
     if (requestResult != null) {
       var loginResult = UserLoginResult.fromJson(requestResult);
@@ -50,10 +49,8 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
 
   Future<void> storeTokens(UserLoginResult loginResult) async {
     if (loginResult.token != null && loginResult.refreshToken != null) {
-      var saveJwtFuture =
-          _secureStorage.write(key: _jwtTokenKey, value: loginResult.token);
-      var saveRefreshTokenFuture = _secureStorage.write(
-          key: _refreshTokenKey, value: loginResult.refreshToken);
+      var saveJwtFuture = _secureStorage.write(key: _jwtTokenKey, value: loginResult.token);
+      var saveRefreshTokenFuture = _secureStorage.write(key: _refreshTokenKey, value: loginResult.refreshToken);
 
       await Future.wait([saveJwtFuture, saveRefreshTokenFuture]);
     }
@@ -82,8 +79,7 @@ abstract class AuthenticatedHttpClient extends BaseHttpClient {
 
     var input = RefreshTokenInput(token: jwtToken, refreshToken: refreshToken);
 
-    var requestResult = await executePost(
-        ApiConstants.identity.refreshToken, input, _defaultHeader);
+    var requestResult = await executePost(ApiConstants.identity.refreshToken, input, _defaultHeader);
 
     if (requestResult == null) {
       return null;

@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyVehicleCardComponent extends ConsumerWidget {
-  final String name;
+  static const double _CARD_WIDGET = 160;
+  final String? name;
   final int type; //TODO: Change by an enum
+  final double? width;
 
   const MyVehicleCardComponent({
     Key? key,
     required this.name,
     required this.type,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -18,7 +21,7 @@ class MyVehicleCardComponent extends ConsumerWidget {
 
   Widget _getBody(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      width: 160,
+      width: width ?? _CARD_WIDGET,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -33,7 +36,7 @@ class MyVehicleCardComponent extends ConsumerWidget {
                 size: 100,
               ),
               Text(
-                name,
+                name!,
                 style: const TextStyle(
                   fontSize: 18,
                 ),

@@ -10,7 +10,7 @@ abstract class BaseHttpClient {
   @protected
   Future<dynamic> executeGet(String path, Map<String, String>? headers) async {
     try {
-      var url = Uri.parse(path);
+      var url = Uri.parse("${AppConfig.instance.apiUrl}/$path");
       var response = await http.get(url, headers: headers);
 
       var result = _internalGetRequestResult(response);

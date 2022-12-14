@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/features/vehicle/vehicle_repository.dart';
 import 'package:journal_mobile_app/gui/home/my_vehicle_card_component.dart';
+import 'package:journal_mobile_app/models/vehicle.dart';
+
+var myVehiclesProvider = FutureProvider.autoDispose((ref) => VehicleRepository().getDriverVehicles(2));
 
 class MyVehiclesComponent extends ConsumerWidget {
   const MyVehiclesComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return _getBody(context, ref);
+    var vehicles = ref.watch(myVehiclesProvider);
+
+    return vehicles.when(
+      data: (data) => _getBody(context, ref, data),
+      loading: () => const CircularProgressIndicator(),
+      error: (error, stackTrace) => Text(error.toString()),
+    );
   }
 
-  Widget _getBody(BuildContext context, WidgetRef ref) {
+  Widget _getBody(BuildContext context, WidgetRef ref, List<VehicleModel> vehicles) {
     return SizedBox(
       height: 190,
       child: Column(
@@ -40,22 +50,34 @@ class MyVehiclesComponent extends ConsumerWidget {
             height: 10,
           ),
           Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                MyVehicleCardComponent(name: "Skyline", type: 1),
-                MyVehicleCardComponent(name: "Mustang", type: 1),
-                MyVehicleCardComponent(name: "Corsa", type: 1),
-                MyVehicleCardComponent(name: "Vectra", type: 1),
-                MyVehicleCardComponent(name: "Viper", type: 1),
-                MyVehicleCardComponent(name: "RX 7", type: 1),
-                MyVehicleCardComponent(name: "Eclipse", type: 1),
-                MyVehicleCardComponent(name: "Supra", type: 1),
-              ],
-            ),
-          )
+            child: _getListOrCard(context, ref, vehicles),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _getListOrCard(BuildContext context, WidgetRef ref, List<VehicleModel> vehicles) {
+    if (vehicles.length > 1) {
+      return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: vehicles.length,
+          itemExtent: 160,
+          itemBuilder: (context, index) {
+            final vehicle = vehicles[index];
+
+            return MyVehicleCardComponent(
+              name: vehicle.nickname ?? vehicle.modelName,
+              type: vehicle.typeId!,
+            );
+          });
+    }
+
+    final vehicle = vehicles[0];
+    return MyVehicleCardComponent(
+      name: vehicle.nickname ?? vehicle.modelName,
+      type: vehicle.typeId!,
+      width: double.infinity,
     );
   }
 }
