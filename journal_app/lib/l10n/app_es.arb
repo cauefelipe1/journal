@@ -16,5 +16,7 @@
     "newVehiclePageHeader": "Adicionar veículo",
     "newVehicleYearField": "Año",
     "newVehicleModelField": "Modelo",
-    "newVehicleTypeField": "Tipo"
+    "newVehicleTypeField": "Tipo",
+    "myVehiclesText": "Mis Vehículos",
+    "seeAllText": "Ver todo"
 }

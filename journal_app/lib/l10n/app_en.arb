@@ -73,5 +73,13 @@
     "newVehicleTypeField": "Type",
     "@newVehicleTypeField": {
       "description": "Text used in the new vehicle type field."
-    }    
+    },
+    "myVehiclesText": "My Vehicles",
+    "@myVehiclesText": {
+      "myVehiclesText": "Text to be used in headers/titles."
+    },
+    "seeAllText": "See all",
+    "@seeAllText": {
+      "seeAllText": "Text to be used in headers/titles."
+    }
 }

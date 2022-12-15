@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:journal_mobile_app/gui/home/my_vehicles_component.dart';
 import 'package:journal_mobile_app/gui/home/welcome_component.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return _getPageBody(context, ref);
+  Widget build(BuildContext context) {
+    return _getPageBody(context);
   }
 
-  Widget _getPageBody(BuildContext context, WidgetRef ref) {
+  Widget _getPageBody(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text(

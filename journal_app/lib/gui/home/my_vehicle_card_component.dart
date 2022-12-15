@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
 
-class MyVehicleCardComponent extends ConsumerWidget {
+class MyVehicleCardComponent extends StatelessWidget {
   static const double _CARD_WIDGET = 160;
   final String? name;
   final VehicleType type;
@@ -16,35 +15,40 @@ class MyVehicleCardComponent extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return _getBody(context, ref);
+  Widget build(BuildContext context) {
+    return _getBody(context);
   }
 
-  Widget _getBody(BuildContext context, WidgetRef ref) {
+  Widget _getBody(BuildContext context) {
     return SizedBox(
       width: width ?? _CARD_WIDGET,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage(_getCardIconPath()),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                name!,
-                style: const TextStyle(
-                  fontSize: 18,
+        child: InkWell(
+          onTap: () {
+            debugPrint("$name was clicked.");
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(_getCardIconPath()),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  name!,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
