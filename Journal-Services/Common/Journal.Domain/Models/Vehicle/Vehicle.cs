@@ -4,6 +4,42 @@ using Journal.Domain.Models.Driver;
 namespace Journal.Domain.Models.Vehicle;
 
 /// <summary>
+/// Defines the possible types of vehicles handled by the application
+/// </summary>
+public enum VehicleType : byte
+{
+    /// <summary>
+    /// Car
+    /// </summary>
+    Car = 1,
+
+    /// <summary>
+    /// Truck
+    /// </summary>
+    Truck = 2,
+
+    /// <summary>
+    /// Motorcycle (aka Bike)
+    /// </summary>
+    Motorcycle = 3,
+
+    /// <summary>
+    /// Boat
+    /// </summary>
+    Boat = 4,
+
+    /// <summary>
+    /// Airplane (aka Plane)
+    /// </summary>
+    Airplane = 5,
+
+    /// <summary>
+    /// Helicopter (aka Chopper)
+    /// </summary>
+    Helicopter = 6
+}
+
+/// <summary>
 /// Defines a Vehicle Brand.
 /// </summary>
 [UsedImplicitly]
@@ -65,10 +101,10 @@ public class VehicleModel
     public int ModelYear { get; set; }
 
     /// <summary>
-    /// The unique identifier for the vehicle type.
+    /// The <see cref="VehicleType"/> of the vehicle.
     /// </summary>
-    /// <example>2</example>
-    public int TypeId { get; set; }
+    /// <example>Car</example>
+    public VehicleType Type { get; set; }
 
     /// <summary>
     /// The unique identifier for a <see cref="VehicleBrandModel"/>.
@@ -81,4 +117,12 @@ public class VehicleModel
     /// </summary>
     /// <example>1</example>
     public int MainDriverId { get; set; }
+
+    /// <summary>
+    /// The name to be shown in the UI.
+    /// If the <see cref="Nickname"/> is different from null or empty the property will contain it.
+    /// Otherwise it will contain the <see cref="ModelName"/> value.
+    /// </summary>
+    /// <example>My ride</example>
+    public string DisplayName { get; set; } = default!;
 }

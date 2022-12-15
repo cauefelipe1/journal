@@ -33,17 +33,19 @@ public abstract partial class VehicleMediator
 
         private VehicleDTO BuildDTO(VehicleModel model)
         {
-            return new()
+            var dto = new VehicleDTO
             {
                 VehicleId = model.Id,
                 SecondaryId = model.SecondaryId,
                 Model = model.ModelName,
                 Nickname = model.Nickname,
                 ModelYear = model.ModelYear,
-                VehicleTypeId = model.TypeId,
+                VehicleTypeId = (int)model.Type,
                 VehicleBrandId = model.BrandId,
                 MainDriverId = model.MainDriverId
             };
+
+            return dto;
         }
     }
 }

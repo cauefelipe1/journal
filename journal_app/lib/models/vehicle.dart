@@ -3,6 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'generated/vehicle.g.dart';
 
+enum VehicleType {
+  @JsonValue(1)
+  car,
+  @JsonValue(2)
+  truck,
+  @JsonValue(3)
+  motorcycle,
+  @JsonValue(4)
+  boat,
+  @JsonValue(5)
+  airplane,
+  @JsonValue(6)
+  helicopter,
+}
+
 @JsonSerializable()
 class VehicleBrandModel extends Serializable {
   int? id;
@@ -24,9 +39,10 @@ class VehicleModel extends Serializable {
   String? modelName;
   String? nickname;
   int? modelYear;
-  int? typeId;
+  VehicleType? type;
   int? brandId;
   int? mianDriverId;
+  String? displayName;
 
   VehicleModel({
     this.id,
@@ -34,9 +50,10 @@ class VehicleModel extends Serializable {
     this.modelName,
     this.nickname,
     this.modelYear,
-    this.typeId,
+    this.type,
     this.brandId,
     this.mianDriverId,
+    this.displayName,
   });
 
   @override

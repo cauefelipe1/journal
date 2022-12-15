@@ -27,10 +27,27 @@ public abstract partial class VehicleMediator
         {
             var vehicleDTOs = _repo.GetVehicleByMainDriverId(request.MainDriverId);
 
-            var vehicles = vehicleDTOs.Adapt<IList<VehicleModel>>();
+            IList<VehicleModel> vehicles = vehicleDTOs.Select(dto => BuildModel(dto)).ToList();
 
             return vehicles;
         }, cancellationToken);
-    }
 
+        private VehicleModel BuildModel(VehicleDTO dto)
+        {
+            var model = new VehicleModel
+            {
+                Id = dto.VehicleId,
+                SecondaryId = dto.SecondaryId,
+                BrandId = dto.VehicleBrandId,
+                MainDriverId = dto.MainDriverId,
+                ModelName = dto.Model,
+                ModelYear = dto.ModelYear,
+                Nickname = dto.Nickname ?? string.Empty,
+                Type = (VehicleType)dto.VehicleTypeId, //TODO: change to appropriated conversion
+                DisplayName = string.IsNullOrEmpty(dto.Nickname) ? dto.Model : dto.Nickname
+            };
+
+            return model;
+        }
+    }
 }

@@ -39,7 +39,7 @@ public class VehicleController : ControllerBase
             ModelName = input.ModelName,
             Nickname = input.Nickname,
             ModelYear = input.ModelYear,
-            TypeId = input.TypeId,
+            Type = (VehicleType)input.TypeId, //TODO: change the input model to accomodate the enum
             BrandId = input.BrandId,
             MainDriverId = input.MainDriverId
         };

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/models/vehicle.dart';
 
 class MyVehicleCardComponent extends ConsumerWidget {
   static const double _CARD_WIDGET = 160;
   final String? name;
-  final int type; //TODO: Change by an enum
+  final VehicleType type;
   final double? width;
 
   const MyVehicleCardComponent({
@@ -27,13 +28,15 @@ class MyVehicleCardComponent extends ConsumerWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.car_repair,
-                size: 100,
+              Image(
+                image: AssetImage(_getCardIconPath()),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               Text(
                 name!,
@@ -46,5 +49,25 @@ class MyVehicleCardComponent extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String _getCardIconPath() {
+    const String basePath = "assets/images/vehicle_icons";
+
+    switch (type) {
+      case VehicleType.car:
+        return "$basePath/car_1.png";
+
+      case VehicleType.truck:
+        return "$basePath/truck_1.png";
+
+      case VehicleType.motorcycle:
+        return "$basePath/motorcycle_1.png";
+
+      case VehicleType.boat:
+      case VehicleType.airplane:
+      case VehicleType.helicopter:
+        return "$basePath/car_1.png";
+    }
   }
 }

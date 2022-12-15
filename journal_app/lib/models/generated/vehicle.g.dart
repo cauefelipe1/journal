@@ -26,9 +26,10 @@ VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) => VehicleModel(
       modelName: json['modelName'] as String?,
       nickname: json['nickname'] as String?,
       modelYear: json['modelYear'] as int?,
-      typeId: json['typeId'] as int?,
+      type: $enumDecodeNullable(_$VehicleTypeEnumMap, json['type']),
       brandId: json['brandId'] as int?,
       mianDriverId: json['mianDriverId'] as int?,
+      displayName: json['displayName'] as String?,
     );
 
 Map<String, dynamic> _$VehicleModelToJson(VehicleModel instance) =>
@@ -38,7 +39,17 @@ Map<String, dynamic> _$VehicleModelToJson(VehicleModel instance) =>
       'modelName': instance.modelName,
       'nickname': instance.nickname,
       'modelYear': instance.modelYear,
-      'typeId': instance.typeId,
+      'type': _$VehicleTypeEnumMap[instance.type],
       'brandId': instance.brandId,
       'mianDriverId': instance.mianDriverId,
+      'displayName': instance.displayName,
     };
+
+const _$VehicleTypeEnumMap = {
+  VehicleType.car: 1,
+  VehicleType.truck: 2,
+  VehicleType.motorcycle: 3,
+  VehicleType.boat: 4,
+  VehicleType.airplane: 5,
+  VehicleType.helicopter: 6,
+};

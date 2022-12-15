@@ -67,16 +67,17 @@ class MyVehiclesComponent extends ConsumerWidget {
             final vehicle = vehicles[index];
 
             return MyVehicleCardComponent(
-              name: vehicle.nickname ?? vehicle.modelName,
-              type: vehicle.typeId!,
+              name: vehicle.displayName,
+              type: vehicle.type!,
             );
           });
     }
 
     final vehicle = vehicles[0];
+
     return MyVehicleCardComponent(
-      name: vehicle.nickname ?? vehicle.modelName,
-      type: vehicle.typeId!,
+      name: vehicle.displayName,
+      type: vehicle.type!,
       width: double.infinity,
     );
   }
