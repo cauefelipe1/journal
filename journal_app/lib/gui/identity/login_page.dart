@@ -166,14 +166,12 @@ class _LoginPageState extends BasePageState<LoginPage> {
     }
 
     nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
-    //var brands = await VehicleDataService().getAllBrands();
-    //debugPrint(brands.toString());
   }
 
   Future<void> _showLoginErrorDialog(String errorMessage) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.notAbleToLogin),

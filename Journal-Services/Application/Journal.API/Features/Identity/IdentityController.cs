@@ -1,3 +1,5 @@
+using Journal.API.Extensions;
+using Journal.Domain.Models.User;
 using Journal.Identity.Features.Jwt;
 using Journal.Identity.Features.User;
 using Journal.Identity.Models.User;
@@ -72,5 +74,25 @@ public class IdentityController : ControllerBase
         var loginResult = await _mediator.Send(new JwtMediator.RefreshTokenQuery(refreshInput));
 
         return Created(string.Empty, loginResult);
+    }
+
+    /// <summary>
+    /// Retrieves the information of the logged int user performing the request.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("userData")]
+    public async Task<ActionResult<UserData>> GetUserData()
+    {
+        if (!ModelState.IsValid)
+            return BadRequest();
+
+        int userId = this.GetUserSecondaryId();
+
+        var userData = await _mediator.Send(new UserMediator.GetUserDataQuery(userId));
+
+        if (userData is null)
+            return NotFound();
+
+        return Ok(userData);
     }
 }

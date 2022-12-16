@@ -39,7 +39,7 @@ public class VehicleController : ControllerBase
             ModelName = input.ModelName,
             Nickname = input.Nickname,
             ModelYear = input.ModelYear,
-            Type = (VehicleType)input.TypeId, //TODO: change the input model to accomodate the enum
+            Type = input.Type,
             BrandId = input.BrandId,
             MainDriverId = input.MainDriverId
         };
@@ -50,8 +50,9 @@ public class VehicleController : ControllerBase
     }
 
     /// <summary>
-    /// Get all vehicle brands.
+    /// Get all vehicles for a provided driver.
     /// </summary>
+    /// <param name="driverId">The id of the driver.</param>
     /// <returns>A collection of <see cref="VehicleBrandModel"/></returns>
     [HttpGet("by_main_driver/{driverId:int}")]
     public async Task<ActionResult<IList<VehicleModel>>> GetVehicleByMainDriverId(int driverId)

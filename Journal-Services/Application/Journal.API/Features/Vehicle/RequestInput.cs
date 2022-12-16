@@ -23,9 +23,9 @@ public class CreateVehicleInput
     /// <example>1997</example>
     public int ModelYear { get; set; }
 
-    /// <see cref="VehicleModel.TypeId"/>
+    /// <see cref="VehicleModel.Type"/>
     /// <example>2</example>
-    public int TypeId { get; set; }
+    public VehicleType Type { get; set; }
 
     /// <see cref="VehicleModel.BrandId"/>
     /// <example>3</example>
