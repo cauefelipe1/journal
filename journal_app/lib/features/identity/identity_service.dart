@@ -1,16 +1,17 @@
-import 'package:journal_mobile_app/features/identity/identity_data_service.dart';
-import 'package:journal_mobile_app/locator.dart';
+import 'package:journal_mobile_app/infrastructure/http/api_constants.dart';
+import 'package:journal_mobile_app/infrastructure/http/authenticated_http_client.dart';
 import 'package:journal_mobile_app/models/identity.dart';
+import 'package:journal_mobile_app/models/user.dart';
 
 class IdentityService {
-  late final IIdentityDataService _dataService;
+  late final AuthenticatedHttpClient _httpClient;
 
   IdentityService() {
-    _dataService = locator<IIdentityDataService>();
+    _httpClient = AuthenticatedHttpClient();
   }
 
   Future<UserLoginResult> loginUser(UserLoginInput input) async {
-    var loginResult = await _dataService.login(input);
+    var loginResult = await _httpClient.loginUser(input);
 
     if (loginResult != null) {
       return loginResult;
@@ -21,5 +22,17 @@ class IdentityService {
         errors: ["Error when attempting to login."],
       ); //TODO: Translate
     }
+  }
+
+  Future<UserData?> getUserData() async {
+    var requestResult = await _httpClient.executeAuthGet(ApiConstants.identity.userData);
+
+    if (requestResult == null) {
+      return null;
+    }
+
+    var userData = UserData.fromJson(requestResult);
+
+    return userData;
   }
 }

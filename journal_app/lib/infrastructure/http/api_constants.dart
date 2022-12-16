@@ -9,6 +9,7 @@ class IdentityEndpoints {
   static const String _basePath = "identity";
   final String login = "$_basePath/login";
   final String refreshToken = "$_basePath/refreshToken";
+  final String userData = "$_basePath/userData";
 }
 
 class VehicleEndpoints {
