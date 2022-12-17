@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_mobile_app/features/identity/identity_service.dart';
 import 'package:journal_mobile_app/gui/base/base_page.dart';
+import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
@@ -137,7 +138,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                         style: const TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        //Call the registration page
+                        //TODO: Call the registration page
                       },
                     )
                   ],
@@ -151,21 +152,27 @@ class _LoginPageState extends BasePageState<LoginPage> {
   }
 
   Future<void> _loginUser(BuildContext context) async {
-    var nv = Navigator.of(context);
+    LoadingOverlay.of(context).show();
 
-    var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
+    try {
+      var nv = Navigator.of(context);
 
-    var identityDS = IdentityService();
-    var loginResult = await identityDS.loginUser(loginInput);
+      var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
 
-    if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
-      String? error = loginResult.errors?.join("/n");
-      await _showLoginErrorDialog(error!);
+      var identityDS = IdentityService();
+      var loginResult = await identityDS.loginUser(loginInput);
 
-      return;
+      if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
+        String? error = loginResult.errors?.join("/n");
+        await _showLoginErrorDialog(error!);
+
+        return;
+      }
+
+      nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+    } finally {
+      LoadingOverlay.of(context).hide();
     }
-
-    nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
   Future<void> _showLoginErrorDialog(String errorMessage) async {

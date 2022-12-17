@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,7 +18,7 @@ class Application extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
-      home: const LoginPage(),
+      home: const LoadingOverlay(child: LoginPage()),
     );
   }
 
