@@ -32,7 +32,7 @@ public partial class UserMediator
         public async Task<UserLoginResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
         {
             //TODO: Translate it
-            const string ERROR_MESSAGE = "User or password invalid.";
+            const string ERROR_MESSAGE = "Username or password is invalid.";
 
             UserLoginResult GetLoginFailedResult() => new() { Errors = new[] { ERROR_MESSAGE } };
 

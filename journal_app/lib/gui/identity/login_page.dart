@@ -19,7 +19,6 @@ class _LoginPageState extends BasePageState<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = false;
   bool _showPasswordButtonVisible = false;
-  String _errorMessage = "";
 
   @override
   Widget widgetBuild(BuildContext context, AppLocalizations l10n) {
@@ -107,19 +106,6 @@ class _LoginPageState extends BasePageState<LoginPage> {
                     ),
                   ),
                 ),
-
-                if (_errorMessage.isNotEmpty)
-                  Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      _errorMessage,
-                      style: const TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
                 //Forgot password
                 TextButton(
                   onPressed: () {},
@@ -167,10 +153,6 @@ class _LoginPageState extends BasePageState<LoginPage> {
   }
 
   Future<void> _loginUser(BuildContext context) async {
-    setState(() {
-      _errorMessage = "";
-    });
-
     var overlay = LoadingOverlay.of(context);
     overlay.show();
 
@@ -189,11 +171,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
 
     if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
       String? error = loginResult.errors?.join("/n");
-      //await _showLoginErrorDialog(error!);
-
-      setState(() {
-        _errorMessage = error!;
-      });
+      await _showLoginErrorDialog(error!);
 
       return;
     }
@@ -201,30 +179,30 @@ class _LoginPageState extends BasePageState<LoginPage> {
     nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
-  // Future<void> _showLoginErrorDialog(String errorMessage) async {
-  //   return showDialog<void>(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text(AppLocalizations.of(context)!.notAbleToLogin),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(errorMessage),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text(AppLocalizations.of(context)!.ok),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  Future<void> _showLoginErrorDialog(String errorMessage) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(AppLocalizations.of(context)!.notAbleToLogin),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(errorMessage),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(AppLocalizations.of(context)!.ok),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

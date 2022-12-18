@@ -18,7 +18,7 @@ class Application extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
-      home: const LoadingOverlay(child: LoginPage()),
+      home: LoadingOverlay(child: const LoginPage()),
     );
   }
 
