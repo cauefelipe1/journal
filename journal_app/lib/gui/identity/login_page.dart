@@ -19,6 +19,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = false;
   bool _showPasswordButtonVisible = false;
+  String _errorMessage = "";
 
   @override
   Widget widgetBuild(BuildContext context, AppLocalizations l10n) {
@@ -106,6 +107,20 @@ class _LoginPageState extends BasePageState<LoginPage> {
                     ),
                   ),
                 ),
+
+                if (_errorMessage.isNotEmpty)
+                  Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      _errorMessage,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                //Forgot password
                 TextButton(
                   onPressed: () {},
                   child: Text(l10n.forgotPasswordButton),
@@ -152,53 +167,64 @@ class _LoginPageState extends BasePageState<LoginPage> {
   }
 
   Future<void> _loginUser(BuildContext context) async {
-    LoadingOverlay.of(context).show();
+    setState(() {
+      _errorMessage = "";
+    });
+
+    var overlay = LoadingOverlay.of(context);
+    overlay.show();
+
+    var nv = Navigator.of(context);
+
+    UserLoginResult loginResult;
 
     try {
-      var nv = Navigator.of(context);
-
       var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
 
       var identityDS = IdentityService();
-      var loginResult = await identityDS.loginUser(loginInput);
-
-      if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
-        String? error = loginResult.errors?.join("/n");
-        await _showLoginErrorDialog(error!);
-
-        return;
-      }
-
-      nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+      loginResult = await identityDS.loginUser(loginInput);
     } finally {
-      LoadingOverlay.of(context).hide();
+      overlay.hide();
     }
+
+    if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
+      String? error = loginResult.errors?.join("/n");
+      //await _showLoginErrorDialog(error!);
+
+      setState(() {
+        _errorMessage = error!;
+      });
+
+      return;
+    }
+
+    nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
-  Future<void> _showLoginErrorDialog(String errorMessage) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.notAbleToLogin),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(errorMessage),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(AppLocalizations.of(context)!.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // Future<void> _showLoginErrorDialog(String errorMessage) async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(AppLocalizations.of(context)!.notAbleToLogin),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(errorMessage),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text(AppLocalizations.of(context)!.ok),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

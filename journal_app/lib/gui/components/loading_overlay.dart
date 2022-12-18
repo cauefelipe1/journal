@@ -43,10 +43,10 @@ class LoadingOverlayState extends State<LoadingOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return Stack(
-        children: [
-          widget.child,
+    return Stack(
+      children: [
+        widget.child,
+        if (_isLoading)
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: const Opacity(
@@ -57,6 +57,7 @@ class LoadingOverlayState extends State<LoadingOverlay> {
               ),
             ),
           ),
+        if (_isLoading)
           Center(
             child: FutureBuilder(
                 future: Future.delayed(widget.delay),
@@ -64,10 +65,7 @@ class LoadingOverlayState extends State<LoadingOverlay> {
                   return snapshot.connectionState == ConnectionState.done ? const CircularProgressIndicator() : const SizedBox();
                 }),
           ),
-        ],
-      );
-    }
-
-    return widget.child;
+      ],
+    );
   }
 }
