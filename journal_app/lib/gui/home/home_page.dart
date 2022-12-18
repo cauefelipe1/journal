@@ -14,14 +14,6 @@ class HomePage extends StatelessWidget {
 
   Widget _getPageBody(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text(
-      //     "Hello Brian", //TODO: Translate and get the User name/nickname here
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      //   backgroundColor: Colors.transparent,
-      //   shadowColor: Colors.transparent,
-      // ),
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [

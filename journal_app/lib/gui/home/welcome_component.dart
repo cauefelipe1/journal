@@ -15,7 +15,7 @@ class WelcomeComponent extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       decoration: BoxDecoration(
         color: Colors.teal[300],
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
       ),
       child: SafeArea(
         bottom: false,
