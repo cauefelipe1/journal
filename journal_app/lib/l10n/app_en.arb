@@ -81,5 +81,18 @@
     "seeAllText": "See all",
     "@seeAllText": {
       "seeAllText": "Text to be used in headers/titles."
+    },
+    "goodMorningText": "Good morning",
+    "@goodMorningText": {
+      "goodMorningText": "Text to be used in greetings."
+    },
+    "goodAfternoonText": "Good afternoon",
+    "@goodAfternoonText": {
+      "goodAfternoonText": "Text to be used in greetings."
+    },
+    "goodEveningText": "Good evening",
+    "@goodEveningText": {
+      "goodEveningText": "Text to be used in greetings."
     }
+
 }

@@ -1,45 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/features/identity/identity_service.dart';
+import 'package:journal_mobile_app/models/user.dart';
+import 'package:shimmer/shimmer.dart';
 
-class WelcomeComponent extends ConsumerWidget {
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+var userInfo = FutureProvider.autoDispose((ref) => IdentityService().getUserData());
+
+class WelcomeComponent extends StatelessWidget {
   const WelcomeComponent({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return _getBody(context, ref);
-  }
+  Widget build(BuildContext context) {
+    var l10n = AppLocalizations.of(context)!;
 
-  Widget _getBody(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       decoration: BoxDecoration(
         color: Colors.teal[300],
-        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+        ),
       ),
       child: SafeArea(
         bottom: false,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Good morning,",
-              style: TextStyle(
-                color: Colors.grey[900],
-                fontSize: 30,
-              ),
-            ),
-            Text(
-              "Brian!",
-              style: TextStyle(
-                color: Colors.grey[900],
-                fontSize: 25,
-              ),
-            ),
-          ],
+        child: Consumer(
+          builder: (context, ref, child) {
+            return ref.watch(userInfo).when(
+                  data: (data) => _getBody(data, l10n),
+                  loading: _getShimmer,
+                  error: (error, stackTrace) => Text(error.toString()),
+                );
+          },
         ),
       ),
     );
+  }
+
+  Widget _getBody(UserData? userData, AppLocalizations l10n) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${_getGreeting(l10n)},",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+          ),
+        ),
+        Text(
+          userData?.displayName ?? "Unknown",
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.teal,
+      highlightColor: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 30,
+            width: 300,
+            color: Colors.grey,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Container(
+            height: 30,
+            width: 200,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getGreeting(AppLocalizations l10n) {
+    var now = DateTime.now(); //TODO: Create a datetime provider to nake this testable
+
+    if (now.hour >= 0 && (now.hour <= 11 && now.minute <= 59)) {
+      return l10n.goodMorningText;
+    } else if (now.hour >= 12 && (now.hour <= 17 && now.minute <= 59)) {
+      return l10n.goodAfternoonText;
+    } else {
+      return l10n.goodEveningText;
+    }
   }
 }

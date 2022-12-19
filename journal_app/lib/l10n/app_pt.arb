@@ -18,5 +18,8 @@
     "newVehicleModelField": "Modelo",
     "newVehicleTypeField": "Tipo",
     "myVehiclesText": "Meus veículos",
-    "seeAllText": "Ver todos"
+    "seeAllText": "Ver todos",
+    "goodMorningText": "Bom dia",
+    "goodAfternoonText": "Boa tarde",
+    "goodEveningText": "Boa tarde"
 }
