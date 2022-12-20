@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Journal.Domain\Journal.Domain.csproj" />
+      <ProjectReference Include="..\..\Common\Journal.Localization\Journal.Localization.csproj" />
       <ProjectReference Include="..\..\Common\Journal.SharedSettings\Journal.SharedSettings.csproj" />
     </ItemGroup>
 

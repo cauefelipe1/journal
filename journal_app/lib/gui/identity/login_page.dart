@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:journal_mobile_app/features/identity/identity_service.dart';
-import 'package:journal_mobile_app/gui/base/base_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/home/home_page.dart';
+import 'package:journal_mobile_app/gui/identity/login_controller.dart';
+import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+class LoginPage extends ConsumerWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-class LoginPage extends BasePage {
-  const LoginPage({super.key});
+  final ValueNotifier<bool> _passwordVisible2 = ValueNotifier(false);
+  final ValueNotifier<bool> _showPasswordButtonVisible2 = ValueNotifier(false);
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends BasePageState<LoginPage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  bool _passwordVisible = false;
-  bool _showPasswordButtonVisible = false;
+  LoginPage({super.key});
 
   @override
-  Widget widgetBuild(BuildContext context, AppLocalizations l10n) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -35,7 +30,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                   size: 150,
                 ),
                 Text(
-                  l10n.appName,
+                  context.l10n.appName,
                   style: const TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 35,
@@ -43,7 +38,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  l10n.loginPageHeader,
+                  context.l10n.loginPageHeader,
                   style: const TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 20),
@@ -63,64 +58,67 @@ class _LoginPageState extends BasePageState<LoginPage> {
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(color: Colors.white),
                       ),
-                      hintText: l10n.usernameTextFieldHint,
+                      hintText: context.l10n.usernameTextFieldHint,
                     ),
                   ),
                 ),
                 //Password field
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                  child: TextField(
-                    keyboardType: TextInputType.visiblePassword,
-                    onChanged: (value) {
-                      setState(() {
-                        _showPasswordButtonVisible = value.isNotEmpty;
-                      });
-                    },
-                    obscureText: !_passwordVisible,
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      suffixIcon: Visibility(
-                        visible: _showPasswordButtonVisible,
-                        child: IconButton(
-                          icon: _passwordVisible ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
+                  child: ValueListenableBuilder<bool>(
+                      valueListenable: _passwordVisible2,
+                      builder: (context, isVisible, child) {
+                        return TextField(
+                          keyboardType: TextInputType.visiblePassword,
+                          onChanged: (value) {
+                            _showPasswordButtonVisible2.value = value.isNotEmpty;
                           },
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.pink),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.white),
-                      ),
-                      hintText: l10n.passwordTextFieldHint,
-                    ),
-                  ),
+                          obscureText: !isVisible,
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.lock_outline),
+                            suffixIcon: ValueListenableBuilder<bool>(
+                                valueListenable: _showPasswordButtonVisible2,
+                                builder: (context, isButtonVisible, child) {
+                                  return Visibility(
+                                    visible: isButtonVisible,
+                                    child: IconButton(
+                                      icon: isVisible ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
+                                      onPressed: () {
+                                        _passwordVisible2.value = !_passwordVisible2.value;
+                                      },
+                                    ),
+                                  );
+                                }),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(color: Colors.pink),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(color: Colors.white),
+                            ),
+                            hintText: context.l10n.passwordTextFieldHint,
+                          ),
+                        );
+                      }),
                 ),
                 //Forgot password
                 TextButton(
                   onPressed: () {},
-                  child: Text(l10n.forgotPasswordButton),
+                  child: Text(context.l10n.forgotPasswordButton),
                 ),
                 //Login button
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints.tightFor(width: double.infinity, height: 60),
                     child: ElevatedButton(
-                      onPressed: () => _loginUser(context),
+                      onPressed: () => _loginUser(ref),
                       child: Text(
-                        l10n.loginButton,
+                        context.l10n.loginButton,
                         style: const TextStyle(
                           fontSize: 20,
                         ),
@@ -132,10 +130,10 @@ class _LoginPageState extends BasePageState<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(l10n.doesNotHaveAccountText),
+                    Text(context.l10n.doesNotHaveAccountText),
                     TextButton(
                       child: Text(
-                        l10n.signUpButton,
+                        context.l10n.signUpButton,
                         style: const TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
@@ -152,7 +150,8 @@ class _LoginPageState extends BasePageState<LoginPage> {
     );
   }
 
-  Future<void> _loginUser(BuildContext context) async {
+  Future<void> _loginUser(WidgetRef ref) async {
+    final context = ref.context;
     var overlay = LoadingOverlay.of(context);
     overlay.show();
 
@@ -161,17 +160,17 @@ class _LoginPageState extends BasePageState<LoginPage> {
     UserLoginResult loginResult;
 
     try {
-      var loginInput = UserLoginInput(email: emailController.text, password: passwordController.text);
-
-      var identityDS = IdentityService();
-      loginResult = await identityDS.loginUser(loginInput);
+      loginResult = await ref.read(loginControllerProvider).loginUser(
+            emailController.text,
+            passwordController.text,
+          );
     } finally {
       overlay.hide();
     }
 
     if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
       String? error = loginResult.errors?.join("/n");
-      await _showLoginErrorDialog(error!);
+      await _showLoginErrorDialog(error!, ref);
 
       return;
     }
@@ -179,13 +178,13 @@ class _LoginPageState extends BasePageState<LoginPage> {
     nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
-  Future<void> _showLoginErrorDialog(String errorMessage) async {
+  Future<void> _showLoginErrorDialog(String errorMessage, WidgetRef ref) async {
     return showDialog<void>(
-      context: context,
+      context: ref.context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.notAbleToLogin),
+          title: Text(context.l10n.notAbleToLogin),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -195,7 +194,7 @@ class _LoginPageState extends BasePageState<LoginPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(AppLocalizations.of(context)!.ok),
+              child: Text(context.l10n.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },

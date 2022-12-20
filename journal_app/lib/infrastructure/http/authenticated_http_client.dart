@@ -1,37 +1,57 @@
 import 'dart:io';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:journal_mobile_app/infrastructure/http/api_constants.dart';
 import 'package:journal_mobile_app/infrastructure/http/base_http_client.dart';
+import 'package:journal_mobile_app/l10n/app_localization_provider.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-class AuthenticatedHttpClient extends BaseHttpClient {
+final httpClientProvider = Provider<IAuthenticatedHttpClient>((ref) {
+  final String locale = ref.watch(appLocalizationsProvider).localeName;
+
+  return AuthenticatedHttpClient(languageCode: locale);
+});
+
+abstract class IAuthenticatedHttpClient {
+  Future<UserLoginResult?> loginUser(UserLoginInput input);
+  Future<dynamic> executeAuthGet(String path);
+  Future<dynamic> executeAuthPost(String path, Object? body);
+}
+
+class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHttpClient {
   final String _jwtTokenKey = "user_jwt_token";
   final String _refreshTokenKey = "jwt_refresh_token";
+  final String languageCode;
 
   late Map<String, String> _defaultHeader;
 
   late final FlutterSecureStorage _secureStorage;
 
-  AuthenticatedHttpClient() {
+  AuthenticatedHttpClient({required this.languageCode}) {
     _secureStorage = const FlutterSecureStorage();
 
-    _defaultHeader = {HttpHeaders.contentTypeHeader: jsonMimeType};
+    _defaultHeader = {
+      HttpHeaders.contentTypeHeader: jsonMimeType,
+      HttpHeaders.acceptLanguageHeader: languageCode,
+    };
   }
 
+  @override
   Future<dynamic> executeAuthGet(String path) async {
     var headers = await _getHttpHeaders();
 
     return super.executeGet(path, headers);
   }
 
+  @override
   Future<dynamic> executeAuthPost(String path, Object? body) async {
     var headers = await _getHttpHeaders();
 
     return super.executePost(path, body, headers);
   }
 
+  @override
   Future<UserLoginResult?> loginUser(UserLoginInput input) async {
     var headers = await _getHttpHeaders();
     var requestResult = await executePost(ApiConstants.identity.login, input, headers);
@@ -39,7 +59,7 @@ class AuthenticatedHttpClient extends BaseHttpClient {
     if (requestResult != null) {
       var loginResult = UserLoginResult.fromJson(requestResult);
 
-      await storeTokens(loginResult);
+      await _storeTokens(loginResult);
 
       return loginResult;
     }
@@ -47,7 +67,7 @@ class AuthenticatedHttpClient extends BaseHttpClient {
     return null;
   }
 
-  Future<void> storeTokens(UserLoginResult loginResult) async {
+  Future<void> _storeTokens(UserLoginResult loginResult) async {
     if (loginResult.token != null && loginResult.refreshToken != null) {
       var saveJwtFuture = _secureStorage.write(key: _jwtTokenKey, value: loginResult.token);
       var saveRefreshTokenFuture = _secureStorage.write(key: _refreshTokenKey, value: loginResult.refreshToken);
@@ -86,7 +106,7 @@ class AuthenticatedHttpClient extends BaseHttpClient {
     }
 
     var result = UserLoginResult.fromJson(requestResult);
-    await storeTokens(result);
+    await _storeTokens(result);
 
     return result.token;
   }

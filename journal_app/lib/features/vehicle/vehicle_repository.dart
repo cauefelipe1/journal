@@ -1,14 +1,25 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/infrastructure/http/api_constants.dart';
 import 'package:journal_mobile_app/infrastructure/http/authenticated_http_client.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
 
-class VehicleRepository {
-  late AuthenticatedHttpClient _httpClient;
+final vehicleRepositoryProvider = Provider<IVehicleRepository>((ref) {
+  return VehicleRepository(httpClient: ref.watch(httpClientProvider));
+});
 
-  VehicleRepository() {
-    _httpClient = AuthenticatedHttpClient();
+abstract class IVehicleRepository {
+  Future<List<VehicleBrandModel>> getAllBrands();
+  Future<List<VehicleModel>> getDriverVehicles(int driverId);
+}
+
+class VehicleRepository implements IVehicleRepository {
+  late IAuthenticatedHttpClient _httpClient;
+
+  VehicleRepository({required IAuthenticatedHttpClient httpClient}) {
+    _httpClient = httpClient;
   }
 
+  @override
   Future<List<VehicleBrandModel>> getAllBrands() async {
     await Future.delayed(const Duration(seconds: 10));
 
@@ -26,6 +37,7 @@ class VehicleRepository {
     return brands;
   }
 
+  @override
   Future<List<VehicleModel>> getDriverVehicles(int driverId) async {
     String path = "${ApiConstants.vehicle.driverVehicles}/$driverId";
 

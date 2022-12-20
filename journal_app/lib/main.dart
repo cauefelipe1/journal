@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:journal_mobile_app/config/app_config.dart';
 
-import 'locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,8 +46,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Future.wait([_initializeAppConfigs(), _addFontsLicense()]);
-
-  setupLocator();
 
   //As the application is using the Riverpod, it must be wraped in a ProviderScope
   runApp(const ProviderScope(

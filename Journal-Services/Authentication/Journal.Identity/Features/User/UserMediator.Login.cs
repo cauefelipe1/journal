@@ -1,8 +1,11 @@
+using System.Globalization;
 using JetBrains.Annotations;
 using Journal.Identity.Features.Jwt;
 using Journal.Identity.Models.User;
+using Journal.Localization;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Localization;
 
 namespace Journal.Identity.Features.User;
 
@@ -20,21 +23,23 @@ public partial class UserMediator
     {
         private readonly UserManager<AppUserModel> _userManager;
         private readonly IMediator _mediator;
+        private readonly IStringLocalizer<Translations> _l10n;
 
         public UserLoginHandler(
             UserManager<AppUserModel> userManager,
-            IMediator mediator)
+            IMediator mediator,
+            IStringLocalizer<Translations> l10n)
         {
             _userManager = userManager;
             _mediator = mediator;
+            _l10n = l10n;
         }
 
         public async Task<UserLoginResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
         {
-            //TODO: Translate it
-            const string ERROR_MESSAGE = "Username or password is invalid.";
+            string errorMessage = _l10n["loginUsernameOrPasswordErrorMessage"];
 
-            UserLoginResult GetLoginFailedResult() => new() { Errors = new[] { ERROR_MESSAGE } };
+            UserLoginResult GetLoginFailedResult() => new() { Errors = new[] { errorMessage } };
 
             var userInput = query.Input;
 

@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/features/vehicle/vehicle_repository.dart';
 import 'package:journal_mobile_app/gui/home/my_vehicle_card_component.dart';
+import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-var myVehiclesProvider = FutureProvider.autoDispose((ref) => VehicleRepository().getDriverVehicles(2));
+var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
+  return ref.watch(vehicleRepositoryProvider).getDriverVehicles(2);
+});
 
 class MyVehiclesComponent extends StatelessWidget {
   const MyVehiclesComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var l10n = AppLocalizations.of(context)!;
-
     return SizedBox(
       height: 190,
       child: Column(
@@ -21,7 +21,7 @@ class MyVehiclesComponent extends StatelessWidget {
           Row(
             children: [
               Text(
-                l10n.myVehiclesText,
+                context.l10n.myVehiclesText,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -30,7 +30,7 @@ class MyVehiclesComponent extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                l10n.seeAllText,
+                context.l10n.seeAllText,
                 style: const TextStyle(
                   color: Colors.teal,
                   fontSize: 15,
@@ -45,7 +45,7 @@ class MyVehiclesComponent extends StatelessWidget {
           Expanded(
             child: Consumer(
               builder: (context, ref, child) {
-                return ref.watch(myVehiclesProvider).when(
+                return ref.watch(driverVehiclesProvider).when(
                       data: _getListOrCard,
                       loading: () => const Center(child: CircularProgressIndicator()),
                       error: (error, stackTrace) => Text(error.toString()),

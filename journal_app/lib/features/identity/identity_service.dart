@@ -1,15 +1,26 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/infrastructure/http/api_constants.dart';
 import 'package:journal_mobile_app/infrastructure/http/authenticated_http_client.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 import 'package:journal_mobile_app/models/user.dart';
 
-class IdentityService {
-  late final AuthenticatedHttpClient _httpClient;
+final identityServiceProvider = Provider<IIdentityService>((ref) {
+  return IdentityService(httpClient: ref.watch(httpClientProvider));
+});
 
-  IdentityService() {
-    _httpClient = AuthenticatedHttpClient();
+abstract class IIdentityService {
+  Future<UserLoginResult> loginUser(UserLoginInput input);
+  Future<UserData?> getUserData();
+}
+
+class IdentityService implements IIdentityService {
+  late final IAuthenticatedHttpClient _httpClient;
+
+  IdentityService({required IAuthenticatedHttpClient httpClient}) {
+    _httpClient = httpClient;
   }
 
+  @override
   Future<UserLoginResult> loginUser(UserLoginInput input) async {
     var loginResult = await _httpClient.loginUser(input);
 
@@ -24,6 +35,7 @@ class IdentityService {
     }
   }
 
+  @override
   Future<UserData?> getUserData() async {
     var requestResult = await _httpClient.executeAuthGet(ApiConstants.identity.userData);
 

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/features/identity/identity_service.dart';
+import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/user.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-var userInfo = FutureProvider.autoDispose((ref) => IdentityService().getUserData());
+var userInfo = FutureProvider.autoDispose((ref) => ref.watch(identityServiceProvider).getUserData());
 
 class WelcomeComponent extends StatelessWidget {
   const WelcomeComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var l10n = AppLocalizations.of(context)!;
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -30,7 +29,7 @@ class WelcomeComponent extends StatelessWidget {
         child: Consumer(
           builder: (context, ref, child) {
             return ref.watch(userInfo).when(
-                  data: (data) => _getBody(data, l10n),
+                  data: (data) => _getBody(data, context.l10n),
                   loading: _getShimmer,
                   error: (error, stackTrace) => Text(error.toString()),
                 );

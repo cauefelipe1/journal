@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwagger();
 
 var settingsData = builder.Services.AddSharedSettings(configuration);
+builder.Services.AddAppLocalization();
 builder.Services.AddApplicationIdentity(configuration);
 builder.Services.AddDatabase();
 builder.Services.AddFeatures();
@@ -22,6 +23,8 @@ builder.Services.AddFeatures();
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+app.UseAppLocalization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
