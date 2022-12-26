@@ -89,7 +89,7 @@ class WelcomeComponent extends StatelessWidget {
   }
 
   String _getGreeting(AppLocalizations l10n) {
-    var now = DateTime.now(); //TODO: Create a datetime provider to nake this testable
+    var now = DateTime.now(); //TODO: Create a datetime provider to make this testable
 
     if (now.hour >= 0 && (now.hour <= 11 && now.minute <= 59)) {
       return l10n.goodMorningText;

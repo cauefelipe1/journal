@@ -27,31 +27,25 @@ class _NewDriverState extends State<NewDriverPage> {
       padding: const EdgeInsets.all(15),
       child: ListView(
         children: <Widget>[
-          Container(
-            child: TextField(
-              controller: txtFirstName,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: "First name",
-              ),
+          TextField(
+            controller: txtFirstName,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: "First name",
             ),
           ),
-          Container(
-            child: TextField(
-              controller: txtLastName,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: "Last name",
-              ),
+          TextField(
+            controller: txtLastName,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: "Last name",
             ),
           ),
-          Container(
-            child: TextField(
-              controller: txtCountryId,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: "Country",
-              ),
+          TextField(
+            controller: txtCountryId,
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              labelText: "Country",
             ),
           ),
         ],

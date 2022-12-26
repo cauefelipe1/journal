@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:journal_mobile_app/gui/base/base_page.dart';
+import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 
 class NewVehiclePage extends StatefulWidget {
   const NewVehiclePage({Key? key}) : super(key: key);
@@ -10,21 +8,21 @@ class NewVehiclePage extends StatefulWidget {
   State<StatefulWidget> createState() => _NewVehiclePageState();
 }
 
-class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
+class _NewVehiclePageState extends State<NewVehiclePage> {
   @override
-  Widget widgetBuild(BuildContext context, AppLocalizations l10n) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.newVehiclePageHeader),
+        title: Text(context.l10n.newVehiclePageHeader),
       ),
-      body: _getPageBody(context, l10n),
+      body: _getPageBody(context),
     );
   }
 
-  Widget _getPageBody(BuildContext context, AppLocalizations l10n) {
+  Widget _getPageBody(BuildContext context) {
     return Column(
       children: [
-        _getVehicleTypeField(context, l10n),
+        _getVehicleTypeField(context),
         TextField(
           controller: TextEditingController(),
           decoration: InputDecoration(
@@ -38,7 +36,7 @@ class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.white),
             ),
-            hintText: l10n.newVehicleModelField,
+            hintText: context.l10n.newVehicleModelField,
           ),
         ),
         TextField(
@@ -55,14 +53,14 @@ class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.white),
             ),
-            hintText: l10n.newVehicleYearField,
+            hintText: context.l10n.newVehicleYearField,
           ),
         ),
       ],
     );
   }
 
-  Widget _getVehicleTypeField(BuildContext context, AppLocalizations l10n) {
+  Widget _getVehicleTypeField(BuildContext context) {
     return TextField(
       controller: TextEditingController(),
       decoration: InputDecoration(
@@ -76,7 +74,7 @@ class _NewVehiclePageState extends BasePageState<NewVehiclePage> {
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.white),
         ),
-        hintText: l10n.newVehicleTypeField,
+        hintText: context.l10n.newVehicleTypeField,
       ),
     );
   }
