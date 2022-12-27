@@ -35,33 +35,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
-      /*body: SafeArea(
-        child: Column(
-          children: [
-            WelcomeComponent(),
-            // const Padding(
-            //   padding: EdgeInsets.all(10.0),
-            //   child: SizedBox(
-            //     width: double.infinity,
-            //     child: WelcomeComponent(),
-            //   ),
-            // ),
-            const MyVehiclesComponent(),
-            ElevatedButton(
-              onPressed: () => {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NewVehiclePage())),
-              },
-              child: const Text(
-                "New vehicle",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),*/
     );
   }
 }
