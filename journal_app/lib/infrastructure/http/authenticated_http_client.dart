@@ -20,8 +20,8 @@ abstract class IAuthenticatedHttpClient {
 }
 
 class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHttpClient {
-  final String _jwtTokenKey = "user_jwt_token";
-  final String _refreshTokenKey = "jwt_refresh_token";
+  static const String _JWT_TOKEN_KEY = "user_jwt_token";
+  static const String _REFRESH_TOKEN_KEY = "jwt_refresh_token";
   final String languageCode;
 
   late Map<String, String> _defaultHeader;
@@ -69,15 +69,15 @@ class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHt
 
   Future<void> _storeTokens(UserLoginResult loginResult) async {
     if (loginResult.token != null && loginResult.refreshToken != null) {
-      var saveJwtFuture = _secureStorage.write(key: _jwtTokenKey, value: loginResult.token);
-      var saveRefreshTokenFuture = _secureStorage.write(key: _refreshTokenKey, value: loginResult.refreshToken);
+      var saveJwtFuture = _secureStorage.write(key: _JWT_TOKEN_KEY, value: loginResult.token);
+      var saveRefreshTokenFuture = _secureStorage.write(key: _REFRESH_TOKEN_KEY, value: loginResult.refreshToken);
 
       await Future.wait([saveJwtFuture, saveRefreshTokenFuture]);
     }
   }
 
   Future<String?> _getJwtToken() async {
-    String? token = await _secureStorage.read(key: _jwtTokenKey);
+    String? token = await _secureStorage.read(key: _JWT_TOKEN_KEY);
 
     if (token == null || token.isEmpty) {
       return null;
@@ -91,7 +91,7 @@ class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHt
   }
 
   Future<String?> _refreshJwtToken(String jwtToken) async {
-    String? refreshToken = await _secureStorage.read(key: _refreshTokenKey);
+    String? refreshToken = await _secureStorage.read(key: _REFRESH_TOKEN_KEY);
 
     if (refreshToken == null) {
       return null;

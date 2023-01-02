@@ -95,4 +95,16 @@ public class IdentityController : ControllerBase
 
         return Ok(userData);
     }
+
+    /// <summary>
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("checkIfAuthenticated")]
+    public ActionResult<bool> CheckIfAuthenticated()
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(false);
+
+        return Ok(true);
+    }
 }

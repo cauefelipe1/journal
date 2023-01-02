@@ -10,6 +10,7 @@ class IdentityEndpoints {
   final String login = "$_basePath/login";
   final String refreshToken = "$_basePath/refreshToken";
   final String userData = "$_basePath/userData";
+  final String checkIfAuthenticated = "$_basePath/checkIfAuthenticated";
 }
 
 class VehicleEndpoints {

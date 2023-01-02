@@ -11,6 +11,7 @@ final identityServiceProvider = Provider<IIdentityService>((ref) {
 abstract class IIdentityService {
   Future<UserLoginResult> loginUser(UserLoginInput input);
   Future<UserData?> getUserData();
+  Future<bool> checkIfAuthenticated();
 }
 
 class IdentityService implements IIdentityService {
@@ -46,5 +47,12 @@ class IdentityService implements IIdentityService {
     var userData = UserData.fromJson(requestResult);
 
     return userData;
+  }
+
+  @override
+  Future<bool> checkIfAuthenticated() async {
+    var requestResult = await _httpClient.executeAuthGet(ApiConstants.identity.checkIfAuthenticated);
+
+    return requestResult != null;
   }
 }

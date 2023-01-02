@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/application.dart';
+import 'package:journal_mobile_app/features/identity/identity_service.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -45,10 +46,22 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Future.wait([_initializeAppConfigs(), _addFontsLicense()]);
+  final appConfigFuture = _initializeAppConfigs();
+  final fontsLicensesFuture = _addFontsLicense();
+
+  final container = ProviderContainer();
+  final identityService = container.read(identityServiceProvider);
+  final isLogggedInFuture = identityService.checkIfAuthenticated();
+
+  final results = await Future.wait([appConfigFuture, fontsLicensesFuture, isLogggedInFuture]);
+  final bool isLogged = results[2];
 
   //As the application is using the Riverpod, it must be wraped in a ProviderScope
-  runApp(const ProviderScope(
-    child: Application(),
+  //But here we are using the UncontrolledProviderScope because we are consumning a provider before flutter is initialized.
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: Application(
+      isLoggedIn: isLogged,
+    ),
   ));
 }

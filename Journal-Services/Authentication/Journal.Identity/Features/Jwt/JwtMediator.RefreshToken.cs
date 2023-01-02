@@ -38,7 +38,7 @@ public abstract partial class JwtMediator
                 JwtId = request.JwtId,
                 UserId = request.UserId,
                 CreationDate = DateTime.UtcNow,
-                ExpirationDate = DateTime.UtcNow.AddMonths(6),
+                ExpirationDate = DateTime.UtcNow.AddMonths(6), //TODO: Get this from config
                 Invalidated = false,
                 Used = false
             };
@@ -93,10 +93,10 @@ public abstract partial class JwtMediator
                 refreshToken.Used = true;
                 _repo.UpdateRefreshToken(refreshToken);
 
-                string usertId = principal!.Claims.Single(c =>
+                string userId = principal!.Claims.Single(c =>
                     string.Equals(c.Type, Constants.JWT_USER_ID_CLAIM, StringComparison.InvariantCultureIgnoreCase)).Value;
 
-                var userModel = await _userManager.FindByIdAsync(usertId);
+                var userModel = await _userManager.FindByIdAsync(userId);
 
                 var userLoginResult = await _mediator.Send(new GenerateJwtTokenQuery(userModel), cancellationToken);
 
@@ -141,7 +141,7 @@ public abstract partial class JwtMediator
                 return (null, "The refresh token has been used.");
 
             if (!string.Equals(refreshToken.JwtId, jtiValue))
-                return (null, "The refresh token doe not match the JWT.");
+                return (null, "The refresh token does not match the JWT.");
 
             return (refreshToken, null);
 

@@ -44,10 +44,12 @@ abstract class BaseHttpClient {
   }
 
   dynamic _internalGetRequestResult(http.Response response) {
-    if (response.statusCode == 200) {
+    if (_isHttpStatusCodeSuccess(response.statusCode)) {
       return json.decode(response.body);
     }
 
     return null;
   }
+
+  bool _isHttpStatusCodeSuccess(int statusCode) => (statusCode >= 200 && statusCode <= 299);
 }
