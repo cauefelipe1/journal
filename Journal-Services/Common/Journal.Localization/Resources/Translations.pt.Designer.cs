@@ -14,21 +14,21 @@ namespace Journal.Localization.Resources {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Translations_pt_BR {
+    internal class Translations_pt {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Translations_pt_BR() {
+        internal Translations_pt() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Journal.Localization.Resources.Translations_pt_BR", typeof(Translations_pt_BR).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Journal.Localization.Resources.Translations_pt", typeof(Translations_pt).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -11,9 +11,9 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Translations.en-US.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Translations.pt-BR.resx">
+      <EmbeddedResource Update="Resources\Translations.pt.resx">
         <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Translations.pt-BR.Designer.cs</LastGenOutput>
+        <LastGenOutput>Translations.pt.Designer.cs</LastGenOutput>
       </EmbeddedResource>
       <EmbeddedResource Update="Resources\Translations.es.resx">
         <Generator>ResXFileCodeGenerator</Generator>
@@ -28,7 +28,7 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Translations.en.resx</DependentUpon>
       </Compile>
-      <Compile Update="Resources\Translations.pt-BR.Designer.cs">
+      <Compile Update="Resources\Translations.pt.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Translations.pt.resx</DependentUpon>

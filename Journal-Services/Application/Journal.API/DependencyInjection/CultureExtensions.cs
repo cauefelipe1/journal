@@ -32,7 +32,7 @@ public static class CultureExtensions
         var supportedCultures = new[]
         {
             new CultureInfo("en-US"),
-            new CultureInfo("pt-BR"),
+            new CultureInfo("pt"),
             new CultureInfo("es")
         };
 
