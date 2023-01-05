@@ -47,6 +47,10 @@ public class ForeignKeyNameConvention : IForeignKeyConvention
 
     private string GetForeignKeyName(ForeignKeyDefinition foreignKey)
     {
+        //When the foreign keys already has a given name, so it must be used.
+        if (!string.IsNullOrEmpty(foreignKey.Name))
+            return foreignKey.Name;
+
         //It seems be inverted, so yeah it is weird.
         string keyName = $"fk_{foreignKey.PrimaryTable}_{foreignKey.ForeignTable}";
 

@@ -23,10 +23,10 @@ public class CreateDriverTables_00006 : BaseMigration {
             .WithColumn("last_name").AsString(100).NotNullable()
             .WithColumn("country_id").AsInt16().Nullable()
             .WithColumn("user_id")
-            .AsInt32()
-            .NotNullable()
-            .WithDefaultValue(0)
-            .WithColumnDescription($"It refers to the SecondaryId column on {Identity.Constants.IDENTITY_DB_SCHEMA}.app_user");
+                .AsInt32()
+                .NotNullable()
+                .WithDefaultValue(0)
+                .WithColumnDescription($"It refers to the SecondaryId column on {Identity.Constants.IDENTITY_DB_SCHEMA}.app_user");
 
         Create.ForeignKey()
             .FromTable("driver").InSchema(Settings.Database.SearchPath).ForeignColumn("country_id")
