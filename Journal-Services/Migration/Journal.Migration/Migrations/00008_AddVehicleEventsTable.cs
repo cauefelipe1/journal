@@ -6,7 +6,7 @@ namespace Journal.Migration.Migrations;
 public class AddVehicleEventsTable_00008 : BaseMigration {
     public AddVehicleEventsTable_00008(SettingsData settings) : base(settings) { }
 
-    public override void Up()
+    protected override void InternalUp()
     {
         InternalCreateVehicleEventsTypeTable();
         InternalCreateVehicleEventsTable();
@@ -15,8 +15,8 @@ public class AddVehicleEventsTable_00008 : BaseMigration {
     private void InternalCreateVehicleEventsTypeTable()
     {
         Create.Table("vehicle_event_type").InSchema(Settings.Database.SearchPath)
-            .WithColumn("vehicle_event_type_id").AsInt16().PrimaryKey().Identity()
-            .WithColumn("vehicle_event_type_desc").AsString().Nullable();
+            .WithColumn("vehicle_event_type_id").AsInt16().PrimaryKey().NotNullable()
+            .WithColumn("vehicle_event_type_desc").AsString().NotNullable();
     }
 
     private void InternalCreateVehicleEventsTable()

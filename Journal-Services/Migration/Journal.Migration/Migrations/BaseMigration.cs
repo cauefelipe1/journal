@@ -12,6 +12,28 @@ public abstract class BaseMigration: FluentMigrator.Migration
     protected IDictionary<string, object?> ToSnakeCase(object @object, params string[] columnsToSkip) =>
         SnakeCaseAdapter.ConvertToSnakeCase(@object, columnsToSkip);
 
+    public override void Up()
+    {
+        InternalUp();
+        SeedData();
+    }
+
+    /// <summary>
+    /// The method that actually implements the migration Up logic.
+    /// </summary>
+    protected virtual void InternalUp() { }
+
+    /// <summary>
+    /// Execute whatever SQL scripts in the default scripts folder with the same file as the current class.
+    /// If an different behaviour is required this method must be overriden.
+    /// </summary>
+    protected virtual void SeedData()
+    {
+        Execute.Script(
+            $"{ ROOT_PATH_SQL_SCRIPTS }{GetCurrentFileName()}.sql",
+            new Dictionary<string, string>() { { "Schema", Settings.Database.SearchPath } });
+    }
+
     /// <summary>
     /// This method will work when the class name follows the following pattern: Part1_Part2.
     /// </summary>
