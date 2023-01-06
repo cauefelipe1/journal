@@ -19,13 +19,21 @@ public class VehicleRepository : IVehicleRepository
         return dto.VehicleId;
     }
 
+    public VehicleDTO? GetVehicleById(int id)
+    {
+        var vehicle =
+            _dbContext.Vehicle.AsNoTracking()
+                .FirstOrDefault(v => v.VehicleId == id);
+
+        return vehicle;
+    }
+
     /// <inheritdoc/>
     public IList<VehicleDTO> GetVehicleByMainDriverId(int mainDriverId)
     {
         var vehicles =
-            _dbContext.Vehicle
+            _dbContext.Vehicle.AsNoTracking()
                 .Where(vehicle => vehicle.MainDriverId == mainDriverId)
-                .AsNoTracking()
                 .ToList();
 
         return vehicles;

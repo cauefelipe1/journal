@@ -1,4 +1,3 @@
-using System.Globalization;
 using JetBrains.Annotations;
 using Journal.Identity.Features.Jwt;
 using Journal.Identity.Models.User;
@@ -37,7 +36,7 @@ public partial class UserMediator
 
         public async Task<UserLoginResult> Handle(UserLoginQuery query, CancellationToken cancellationToken)
         {
-            string errorMessage = _l10n["loginUsernameOrPasswordErrorMessage"];
+            string errorMessage = _l10n["LoginUsernameOrPasswordErrorMessage"];
 
             UserLoginResult GetLoginFailedResult() => new() { Errors = new[] { errorMessage } };
 

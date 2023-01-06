@@ -45,9 +45,15 @@ namespace Journal.Localization.Resources {
             }
         }
         
-        internal static string loginUsernameOrPasswordErrorMessage {
+        internal static string LoginUsernameOrPasswordErrorMessage {
             get {
-                return ResourceManager.GetString("loginUsernameOrPasswordErrorMessage", resourceCulture);
+                return ResourceManager.GetString("LoginUsernameOrPasswordErrorMessage", resourceCulture);
+            }
+        }
+        
+        internal static string VehicleOdometerBehindPreviousRecord {
+            get {
+                return ResourceManager.GetString("VehicleOdometerBehindPreviousRecord", resourceCulture);
             }
         }
     }

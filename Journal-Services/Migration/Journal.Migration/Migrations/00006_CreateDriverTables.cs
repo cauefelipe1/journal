@@ -8,7 +8,7 @@ public class CreateDriverTables_00006 : BaseMigration {
 
     public CreateDriverTables_00006(SettingsData settings) : base(settings) { }
 
-    public override void Up()
+    protected override void InternalUp()
     {
         InternalCreateDriverTable();
         InternalCreateVehicleTable();
@@ -66,13 +66,6 @@ public class CreateDriverTables_00006 : BaseMigration {
         Create.ForeignKey()
             .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("main_driver_id")
             .ToTable("driver").InSchema(Settings.Database.SearchPath).PrimaryColumn("driver_id");
-    }
-
-    private void SeedData()
-    {
-        Execute.Script(
-            $"{ ROOT_PATH_SQL_SCRIPTS }{GetCurrentFileName()}.sql",
-            new Dictionary<string, string>() { { "Schema", Settings.Database.SearchPath } });
     }
 
     public override void Down()

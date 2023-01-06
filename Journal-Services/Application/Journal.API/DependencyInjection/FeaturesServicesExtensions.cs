@@ -1,6 +1,7 @@
 using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.HealthCheck;
 using Journal.Infrastructure.Features.Vehicle;
+using Journal.Infrastructure.Features.VehicleEvent;
 
 namespace Journal.API.DependencyInjection;
 
@@ -18,5 +19,7 @@ public static class FeaturesServicesExtensions
          services.AddSingleton<IHealthCheckRepository, HealthCheckRepository>();
          services.AddSingleton<IVehicleRepository, VehicleRepository>();
          services.AddScoped<IDriverRepository, DriverRepository>();
+         services.AddScoped<IVehicleEventRepository, VehicleEventRepository>();
+
     }
 }

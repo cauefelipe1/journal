@@ -1,7 +1,7 @@
 ﻿namespace Journal.Infrastructure.Features.Vehicle;
 
 /// <summary>
-/// Defines the methods for handling the Vehicles feature.
+/// Defines the methods for handling the Vehicles feature storage.
 /// </summary>
 public interface IVehicleRepository
 {
@@ -11,6 +11,14 @@ public interface IVehicleRepository
     /// <param name="dto">The vehicle to be saved.</param>
     /// <returns>The ID of the vehicle.</returns>
     int InsertVehicle(VehicleDTO dto);
+
+    /// <summary>
+    /// Gets a the <see cref="VehicleDTO"/> for a specific vehicle id.
+    /// When the vehicle is not found null will be returned.
+    /// </summary>
+    /// <param name="id">The unique identifier for the vehicle.</param>
+    /// <returns>The <see cref="VehicleDTO"/>.</returns>
+    VehicleDTO? GetVehicleById(int id);
 
     /// <summary>
     /// Gets a list of <see cref="VehicleDTO"/> that belongs to a driver based on its ID.

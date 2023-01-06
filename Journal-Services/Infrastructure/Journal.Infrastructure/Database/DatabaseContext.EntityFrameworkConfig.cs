@@ -1,5 +1,6 @@
 using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.Vehicle;
+using Journal.Infrastructure.Features.VehicleEvent;
 using Microsoft.EntityFrameworkCore;
 
 namespace Journal.Infrastructure.Database;
@@ -23,5 +24,8 @@ public partial class DatabaseContext
 
         modelBuilder.Entity<VehicleDTO>()
             .HasKey(e => e.VehicleId);
+
+        modelBuilder.Entity<VehicleEventDTO>()
+            .HasKey(e => e.VehicleEventId);
     }
 }
