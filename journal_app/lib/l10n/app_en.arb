@@ -93,6 +93,9 @@
     "goodEveningText": "Good evening",
     "@goodEveningText": {
       "goodEveningText": "Text to be used in greetings."
+    },
+    "history": "History",
+    "@history": {
+      "history": "Just a label."
     }
-
 }

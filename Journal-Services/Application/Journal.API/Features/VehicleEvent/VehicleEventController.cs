@@ -24,6 +24,19 @@ public class VehicleEventController : ControllerBase
     public VehicleEventController(IMediator mediator) => _mediator = mediator;
 
     /// <summary>
+    /// Get all events for a provided vehicle id.
+    /// </summary>
+    /// <param name="vehicleId">The id of the vehicle.</param>
+    /// <returns>A collection of <see cref="VehicleEventModel"/></returns>
+    [HttpGet("by_vehicle/{vehicleId:int}")]
+    public async Task<ActionResult<IList<VehicleEventModel>>> GetVehicleByMainDriverId(int vehicleId)
+    {
+        var events = await _mediator.Send(new VehicleEventMediator.GetVehicleEventByVehicleQuery(vehicleId));
+
+        return Ok(events);
+    }
+
+    /// <summary>
     /// Creates a new Vehicle Event.
     /// </summary>
     /// <param name="input">The input for creating the new vehicle event.</param>

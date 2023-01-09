@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:journal_mobile_app/gui/home/my_vehicles_component.dart';
+import 'package:journal_mobile_app/gui/home/vehicle_history_component.dart';
 import 'package:journal_mobile_app/gui/home/welcome_component.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
@@ -33,6 +34,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          const VehicleHistoryComponent(),
         ],
       ),
     );

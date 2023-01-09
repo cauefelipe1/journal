@@ -6,6 +6,7 @@ import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
 
 var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
+  //TODO: Get from the user session (create a state)
   return ref.watch(vehicleRepositoryProvider).getDriverVehicles(2);
 });
 

@@ -8,21 +8,21 @@ namespace Journal.Infrastructure.Features.VehicleEvent;
 public abstract partial class VehicleEventMediator
 {
 
-    public class GetVehicleEventByEventQuery : IRequest<IList<VehicleEventModel>>
+    public class GetVehicleEventByVehicleQuery : IRequest<IList<VehicleEventModel>>
     {
         public int VehicleId { get; }
 
-        public GetVehicleEventByEventQuery(int vehicleId) => VehicleId = vehicleId;
+        public GetVehicleEventByVehicleQuery(int vehicleId) => VehicleId = vehicleId;
     }
 
     [UsedImplicitly]
-    public class GetVehicleByMainDriverHandler : IRequestHandler<GetVehicleEventByEventQuery, IList<VehicleEventModel>>
+    public class GetVehicleEventByVehicleHandler : IRequestHandler<GetVehicleEventByVehicleQuery, IList<VehicleEventModel>>
     {
         private readonly IVehicleEventRepository _repo;
 
-        public GetVehicleByMainDriverHandler(IVehicleEventRepository repository) => _repo = repository;
+        public GetVehicleEventByVehicleHandler(IVehicleEventRepository repository) => _repo = repository;
 
-        public Task<IList<VehicleEventModel>> Handle(GetVehicleEventByEventQuery request, CancellationToken cancellationToken) => Task.Run(() =>
+        public Task<IList<VehicleEventModel>> Handle(GetVehicleEventByVehicleQuery request, CancellationToken cancellationToken) => Task.Run(() =>
         {
             var vehicleDTOs = _repo.GetVehicleEventsByVehicleId(request.VehicleId);
 
@@ -35,7 +35,7 @@ public abstract partial class VehicleEventMediator
         {
             var model = new VehicleEventModel
             {
-                Id = dto.VehicleId,
+                Id = dto.VehicleEventId,
                 OwnerDriverId = dto.OwnerDriverId,
                 DriverId = dto.DriverId,
                 VehicleId = dto.VehicleId,
