@@ -78,7 +78,7 @@ public static class GeneralServicesExtensions
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
     public static void AddDatabase(this IServiceCollection services)
     {
-        services.AddSingleton<DatabaseContext>();
+        services.AddDbContext<DatabaseContext>(optionsLifetime: ServiceLifetime.Singleton);
     }
 
     /// <summary>

@@ -16,9 +16,9 @@ public static class FeaturesServicesExtensions
     /// <param name="services"><see cref="IServiceCollection"/> instance.</param>
     public static void AddFeatures(this IServiceCollection services)
     {
-         services.AddSingleton<IHealthCheckRepository, HealthCheckRepository>();
-         services.AddSingleton<IVehicleRepository, VehicleRepository>();
+         services.AddScoped<IHealthCheckRepository, HealthCheckRepository>();
          services.AddScoped<IDriverRepository, DriverRepository>();
+         services.AddScoped<IVehicleRepository, VehicleRepository>();
          services.AddScoped<IVehicleEventRepository, VehicleEventRepository>();
 
     }

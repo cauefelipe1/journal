@@ -22,14 +22,14 @@ public abstract partial class VehicleEventMediator
 
         public GetVehicleEventByVehicleHandler(IVehicleEventRepository repository) => _repo = repository;
 
-        public Task<IList<VehicleEventModel>> Handle(GetVehicleEventByVehicleQuery request, CancellationToken cancellationToken) => Task.Run(() =>
+        public Task<IList<VehicleEventModel>> Handle(GetVehicleEventByVehicleQuery request, CancellationToken cancellationToken)
         {
             var vehicleDTOs = _repo.GetVehicleEventsByVehicleId(request.VehicleId);
 
             IList<VehicleEventModel> vehicles = vehicleDTOs.Select(dto => BuildModel(dto)).ToList();
 
-            return vehicles;
-        }, cancellationToken);
+            return Task.FromResult(vehicles);
+        }
 
         private VehicleEventModel BuildModel(VehicleEventDTO dto)
         {
