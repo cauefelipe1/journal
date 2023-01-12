@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          const VehicleHistoryComponent(),
+          VehicleHistoryComponent(),
         ],
       ),
     );

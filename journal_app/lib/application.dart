@@ -6,6 +6,7 @@ import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Application extends ConsumerWidget {
   final isLoggedIn;
