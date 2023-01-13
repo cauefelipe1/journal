@@ -45,7 +45,7 @@ class VehicleHistoryComponent extends StatelessWidget {
                 }
 
                 return ref.watch(vehicleEventsProvider(vehicleId)).when(
-                      data: _getComponentBody,
+                      data: (events) => _getHistoryBody(events, context),
                       loading: _getShimmer,
                       error: (error, stackTrace) => Text(error.toString()),
                     );
@@ -132,7 +132,39 @@ class VehicleHistoryComponent extends StatelessWidget {
     );
   }
 
-  Widget _getComponentBody(List<VehicleEventModel> events) {
+  Widget _getHistoryBody(List<VehicleEventModel> events, BuildContext context) {
+    if (events.length <= 0) {
+      return _getNoHistoryList(events, context);
+    }
+
+    return _getHistoryList(events);
+  }
+
+  Widget _getNoHistoryList(List<VehicleEventModel> events, BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 25,
+          ),
+          Icon(
+            Icons.history,
+            size: 200,
+            color: Colors.blueGrey,
+          ),
+          Text(
+            context.l10n.vehicleWithoutHistory,
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getHistoryList(List<VehicleEventModel> events) {
     return Expanded(
       child: ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 5),

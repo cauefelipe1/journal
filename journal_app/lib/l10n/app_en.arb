@@ -101,5 +101,9 @@
     "noVehicleSelected": "No vehicle selected.",
     "@noVehicleSelected": {
       "noVehicleSelected": "Used to inform that no vehicle is select to show the vehicle history."
+    },
+    "vehicleWithoutHistory": "The Vehicle doesn't have a history yet.",
+    "@vehicleWithoutHistory": {
+      "vehicleWithoutHistory": "Used to inform that the selected vehicle does not have history yet."
     }
 }

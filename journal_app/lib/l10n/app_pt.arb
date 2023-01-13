@@ -23,5 +23,6 @@
     "goodAfternoonText": "Boa tarde",
     "goodEveningText": "Boa tarde",
     "history": "Histórico",
-    "noVehicleSelected": "Nenhum veículo selecionado."
+    "noVehicleSelected": "Nenhum veículo selecionado.",
+    "vehicleWithoutHistory": "O veículo ainda não possui histórico."
 }
