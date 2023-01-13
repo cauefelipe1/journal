@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:journal_mobile_app/gui/components/my_vehicles/my_vehicles_component.dart';
 
-import 'package:journal_mobile_app/gui/home/my_vehicles_component.dart';
 import 'package:journal_mobile_app/gui/home/vehicle_history_component.dart';
 import 'package:journal_mobile_app/gui/home/welcome_component.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentVehicle = 0;
 
   @override
   Widget build(BuildContext context) {
-    return _getPageBody(context);
-  }
-
-  Widget _getPageBody(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
           const WelcomeComponent(),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(15),
-            child: MyVehiclesComponent(),
+            child: MyVehiclesComponent(
+              onCardPressed: (vehicleId) => setState(() => currentVehicle = vehicleId),
+            ),
           ),
           ElevatedButton(
             onPressed: () => {
@@ -34,7 +37,9 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          VehicleHistoryComponent(),
+          VehicleHistoryComponent(
+            vehicleId: currentVehicle,
+          ),
         ],
       ),
     );

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/application.dart';
 import 'package:journal_mobile_app/features/vehicle/vehicle_repository.dart';
-import 'package:journal_mobile_app/gui/home/my_vehicle_card_component.dart';
+import 'package:journal_mobile_app/gui/components/my_vehicles/my_vehicle_card_component.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
 
 var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
-  //TODO: Get from the user session (create a state)
-  return ref.watch(vehicleRepositoryProvider).getDriverVehicles(2);
+  final userInfo = ref.watch(loggedUserInfoProvider).value;
+  return ref.watch(vehicleRepositoryProvider).getDriverVehicles(userInfo!.userId);
 });
 
 class MyVehiclesComponent extends StatelessWidget {
-  const MyVehiclesComponent({Key? key}) : super(key: key);
+  final ValueChanged<int>? onCardPressed;
+
+  const MyVehiclesComponent({
+    Key? key,
+    this.onCardPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +75,10 @@ class MyVehiclesComponent extends StatelessWidget {
             final vehicle = vehicles[index];
 
             return MyVehicleCardComponent(
-              name: vehicle.displayName,
+              vehicleId: vehicle.id!,
               type: vehicle.type!,
+              name: vehicle.displayName,
+              onPressed: onCardPressed,
             );
           });
     }
@@ -78,9 +86,11 @@ class MyVehiclesComponent extends StatelessWidget {
     final vehicle = vehicles[0];
 
     return MyVehicleCardComponent(
+      vehicleId: vehicle.id!,
       name: vehicle.displayName,
       type: vehicle.type!,
       width: double.infinity,
+      onPressed: onCardPressed,
     );
   }
 }

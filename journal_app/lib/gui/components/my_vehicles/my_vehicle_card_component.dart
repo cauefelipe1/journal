@@ -3,15 +3,21 @@ import 'package:journal_mobile_app/models/vehicle.dart';
 
 class MyVehicleCardComponent extends StatelessWidget {
   static const double _CARD_WIDGET = 160;
-  final String? name;
+
+  final int vehicleId;
   final VehicleType type;
+  final String? name;
   final double? width;
+
+  final ValueChanged<int>? onPressed;
 
   const MyVehicleCardComponent({
     Key? key,
-    required this.name,
+    required this.vehicleId,
     required this.type,
+    required this.name,
     this.width,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -28,7 +34,7 @@ class MyVehicleCardComponent extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            debugPrint("$name was clicked.");
+            onPressed?.call(vehicleId);
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),

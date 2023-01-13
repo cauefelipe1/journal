@@ -175,7 +175,7 @@ class LoginPage extends ConsumerWidget {
       return;
     }
 
-    nv.pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+    nv.pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   Future<void> _showLoginErrorDialog(String errorMessage, WidgetRef ref) async {

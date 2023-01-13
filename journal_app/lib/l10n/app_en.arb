@@ -97,5 +97,9 @@
     "history": "History",
     "@history": {
       "history": "Just a label."
+    },
+    "noVehicleSelected": "No vehicle selected.",
+    "@noVehicleSelected": {
+      "noVehicleSelected": "Used to inform that no vehicle is select to show the vehicle history."
     }
 }
