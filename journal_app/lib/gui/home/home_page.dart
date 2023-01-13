@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:journal_mobile_app/gui/components/my_vehicles/my_vehicles_component.dart';
 
-import 'package:journal_mobile_app/gui/home/vehicle_history_component.dart';
+import 'package:journal_mobile_app/gui/components/vehicle_history/vehicle_history_component.dart';
 import 'package:journal_mobile_app/gui/home/welcome_component.dart';
 import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 
