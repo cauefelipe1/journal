@@ -14,15 +14,15 @@
             "name": "journal_app (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile",
-            "preLaunchTask": "genarate_auto_gen_files"
+            "flutterMode": "profile"
+            //"preLaunchTask": "genarate_auto_gen_files"
         },
         {
             "name": "journal_app (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release",
-            "preLaunchTask": "genarate_auto_gen_files"
+            "flutterMode": "release"
+            //"preLaunchTask": "genarate_auto_gen_files"
         }
     ]
 }

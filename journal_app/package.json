@@ -12,9 +12,7 @@
     "build": "flutter build",
     "generate_l10n": "flutter gen-l10n",
     "genarate_auto_gen_files": "flutter pub run build_runner build --delete-conflicting-outputs",
-    "genarate_splash_screen": "flutter pub run flutter_native_splash:create --path=spalsh_screen_configuration.yaml",
-    "prestart": "npm run generate_l10n && npm run genarate_auto_gen_files",
-    "prebuild": "npm run generate_l10n && npm run genarate_auto_gen_files"
+    "genarate_splash_screen": "flutter pub run flutter_native_splash:create --path=spalsh_screen_configuration.yaml"
   },
   "author": "Caue Carvalho <cauefelipe11@gmail.com>",
   "license": "ISC",
