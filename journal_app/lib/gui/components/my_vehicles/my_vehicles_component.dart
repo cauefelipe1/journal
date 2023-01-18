@@ -75,7 +75,7 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
             child: Consumer(
               builder: (context, ref, child) {
                 return ref.watch(driverVehiclesProvider).when(
-                      data: (vehicles) => _getListOrCard(vehicles, ref),
+                      data: _getComponentBody,
                       loading: () => const Center(child: CircularProgressIndicator()),
                       error: (error, stackTrace) => Text(error.toString()),
                     );
@@ -87,19 +87,21 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
     );
   }
 
-  Widget _getListOrCard(List<VehicleModel> vehicles, WidgetRef ref) {
-    if (!isCreated) {
-      currentVheicle = vehicles[0].id!;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!isCreated && currentVheicle != null) {
-          isCreated = true;
-
-          onDataIsReady?.call(currentVheicle!);
-        }
-      });
+  Widget _getComponentBody(List<VehicleModel> vehicles) {
+    if (vehicles.length > 0) {
+      _scheduleOnDataReadyEvent(vehicles);
+      return _getListOrCard(vehicles);
+    } else {
+      return _getNoVehicleBody();
     }
+  }
 
+  Widget _getNoVehicleBody() {
+    //TODO: Implement a proper body.
+    return Text("You don't have any vehicle. Lets create one?");
+  }
+
+  Widget _getListOrCard(List<VehicleModel> vehicles) {
     if (vehicles.length > 1) {
       return ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -126,5 +128,25 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
       width: double.infinity,
       onPressed: onCardPressed,
     );
+  }
+
+  void _scheduleOnDataReadyEvent(List<VehicleModel> vehicles) {
+    if (!isCreated) {
+      if (vehicles.length <= 0) {
+        //If there is no vehicles, no need to even schedule the post frame callback.
+        isCreated = true;
+        return;
+      }
+
+      currentVheicle = vehicles[0].id!;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!isCreated && currentVheicle != null) {
+          isCreated = true;
+
+          onDataIsReady?.call(currentVheicle!);
+        }
+      });
+    }
   }
 }
