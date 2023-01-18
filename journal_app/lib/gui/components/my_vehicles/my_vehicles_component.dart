@@ -27,19 +27,19 @@ class MyVehiclesComponent extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() {
     return _MyVehiclesComponentState(
       onCardPressed: onCardPressed,
-      dataIsReady: onDataIsReady,
+      onDataIsReady: onDataIsReady,
     );
   }
 }
 
 class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
   final ValueChanged<int>? onCardPressed;
-  final ValueChanged<int>? dataIsReady;
+  final ValueChanged<int>? onDataIsReady;
 
   bool isCreated = false;
   int? currentVheicle = null;
 
-  _MyVehiclesComponentState({this.onCardPressed, this.dataIsReady});
+  _MyVehiclesComponentState({this.onCardPressed, this.onDataIsReady});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
         if (!isCreated && currentVheicle != null) {
           isCreated = true;
 
-          dataIsReady?.call(currentVheicle!);
+          onDataIsReady?.call(currentVheicle!);
         }
       });
     }
