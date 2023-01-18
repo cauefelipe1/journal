@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentVehicle = 0;
+  int? currentVehicle = null;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(15),
             child: MyVehiclesComponent(
               onCardPressed: (vehicleId) => setState(() => currentVehicle = vehicleId),
+              onDataIsReady: (vehicleId) => setState(() => currentVehicle = vehicleId),
             ),
           ),
           ElevatedButton(

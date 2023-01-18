@@ -11,13 +11,35 @@ var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
   return ref.watch(vehicleRepositoryProvider).getDriverVehicles(userInfo!.userId);
 });
 
-class MyVehiclesComponent extends StatelessWidget {
-  final ValueChanged<int>? onCardPressed;
+var currentVehicleIdProvider = StateProvider<int?>((ref) => null);
 
-  const MyVehiclesComponent({
+class MyVehiclesComponent extends ConsumerStatefulWidget {
+  final ValueChanged<int>? onCardPressed;
+  final ValueChanged<int>? onDataIsReady;
+
+  MyVehiclesComponent({
     Key? key,
     this.onCardPressed,
+    this.onDataIsReady,
   }) : super(key: key);
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _MyVehiclesComponentState(
+      onCardPressed: onCardPressed,
+      dataIsReady: onDataIsReady,
+    );
+  }
+}
+
+class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
+  final ValueChanged<int>? onCardPressed;
+  final ValueChanged<int>? dataIsReady;
+
+  bool isCreated = false;
+  int? currentVheicle = null;
+
+  _MyVehiclesComponentState({this.onCardPressed, this.dataIsReady});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +75,7 @@ class MyVehiclesComponent extends StatelessWidget {
             child: Consumer(
               builder: (context, ref, child) {
                 return ref.watch(driverVehiclesProvider).when(
-                      data: _getListOrCard,
+                      data: (vehicles) => _getListOrCard(vehicles, ref),
                       loading: () => const Center(child: CircularProgressIndicator()),
                       error: (error, stackTrace) => Text(error.toString()),
                     );
@@ -65,7 +87,19 @@ class MyVehiclesComponent extends StatelessWidget {
     );
   }
 
-  Widget _getListOrCard(List<VehicleModel> vehicles) {
+  Widget _getListOrCard(List<VehicleModel> vehicles, WidgetRef ref) {
+    if (!isCreated) {
+      currentVheicle = vehicles[0].id!;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!isCreated && currentVheicle != null) {
+          isCreated = true;
+
+          dataIsReady?.call(currentVheicle!);
+        }
+      });
+    }
+
     if (vehicles.length > 1) {
       return ListView.builder(
           scrollDirection: Axis.horizontal,

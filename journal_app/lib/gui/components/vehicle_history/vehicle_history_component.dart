@@ -12,12 +12,12 @@ var vehicleEventsProvider = FutureProvider.autoDispose.family<List<VehicleEventM
 });
 
 class VehicleHistoryComponent extends StatelessWidget {
-  final int vehicleId;
+  final int? vehicleId;
   final DateFormat dateFormat = DateFormat.yMd();
 
   VehicleHistoryComponent({
     super.key,
-    required this.vehicleId,
+    this.vehicleId,
   });
 
   @override
@@ -40,11 +40,11 @@ class VehicleHistoryComponent extends StatelessWidget {
             SizedBox(height: 10),
             Consumer(
               builder: (context, ref, child) {
-                if (vehicleId <= 0) {
-                  return _getNoVehicleSelectedBody(context);
+                if (vehicleId == null) {
+                  return _getShimmer();
                 }
 
-                return ref.watch(vehicleEventsProvider(vehicleId)).when(
+                return ref.watch(vehicleEventsProvider(vehicleId!)).when(
                       data: (events) => _getHistoryBody(events, context),
                       loading: _getShimmer,
                       error: (error, stackTrace) => Text(error.toString()),
@@ -57,29 +57,30 @@ class VehicleHistoryComponent extends StatelessWidget {
     );
   }
 
-  Widget _getNoVehicleSelectedBody(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 25,
-          ),
-          Icon(
-            Icons.car_crash,
-            size: 200,
-            color: Colors.blueGrey,
-          ),
-          Text(
-            context.l10n.noVehicleSelected,
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Currently, this is not in use, but it will be kept here for a while
+  // Widget _getNoVehicleSelectedBody(BuildContext context) {
+  //   return Container(
+  //     width: double.infinity,
+  //     child: Column(
+  //       children: [
+  //         SizedBox(
+  //           height: 25,
+  //         ),
+  //         Icon(
+  //           Icons.car_crash,
+  //           size: 200,
+  //           color: Colors.blueGrey,
+  //         ),
+  //         Text(
+  //           context.l10n.noVehicleSelected,
+  //           style: TextStyle(
+  //             fontSize: 20,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _getShimmer() {
     return Shimmer.fromColors(
