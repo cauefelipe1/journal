@@ -181,12 +181,18 @@ class VehicleHistoryComponent extends StatelessWidget {
               isFirst: isFirst,
               isLast: isLast,
               beforeLineStyle: LineStyle(
-                thickness: 8,
+                thickness: 10,
+                color: Colors.grey[800]!,
               ),
               indicatorStyle: IndicatorStyle(
-                width: 40,
-                indicatorXY: 0.0,
-              ),
+                  width: 50,
+                  indicatorXY: 0.0,
+                  color: _getIndicatorColor(event.type),
+                  iconStyle: IconStyle(
+                    iconData: _getIndicatorIcon(event.type),
+                    color: Colors.white,
+                    fontSize: 35,
+                  )),
               endChild: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
@@ -217,5 +223,47 @@ class VehicleHistoryComponent extends StatelessWidget {
             );
           }),
     );
+  }
+
+  IconData _getIndicatorIcon(VehicleEventType? type) {
+    if (type == null) {
+      return Icons.question_mark;
+    }
+
+    switch (type) {
+      case VehicleEventType.refueling:
+        return Icons.local_gas_station;
+      case VehicleEventType.expense:
+        return Icons.credit_card_outlined;
+      case VehicleEventType.income:
+        return Icons.monetization_on_outlined;
+      case VehicleEventType.maintenance:
+        return Icons.precision_manufacturing;
+      case VehicleEventType.route:
+        return Icons.location_pin;
+      default:
+        return Icons.question_mark;
+    }
+  }
+
+  Color _getIndicatorColor(VehicleEventType? type) {
+    if (type == null) {
+      return Colors.grey;
+    }
+
+    switch (type) {
+      case VehicleEventType.refueling:
+        return Colors.yellow[900]!;
+      case VehicleEventType.expense:
+        return Colors.red[900]!;
+      case VehicleEventType.income:
+        return Colors.green[700]!;
+      case VehicleEventType.maintenance:
+        return Colors.blueGrey[600]!;
+      case VehicleEventType.route:
+        return Colors.blue[800]!;
+      default:
+        return Colors.red[900]!;
+    }
   }
 }
