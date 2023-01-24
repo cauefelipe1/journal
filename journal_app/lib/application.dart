@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/features/identity/identity_service.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
-import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:journal_mobile_app/gui/landing/landing_page.dart';
+import 'package:journal_mobile_app/gui/vehicle/new_vehicle_page.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
+import 'package:journal_mobile_app/routes/routes_constants.dart';
 
 var loggedUserInfoProvider = FutureProvider.autoDispose((ref) async {
   var userInf = await ref.watch(identityServiceProvider).getUserData();
@@ -34,8 +36,24 @@ class Application extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
-      home: isLoggedIn ? HomePage() : LoadingOverlay(child: LoginPage()),
+      onGenerateRoute: _generateRoute,
+      home: isLoggedIn ? LandingPage() : LoadingOverlay(child: LoginPage()),
     );
+  }
+
+  Route<dynamic>? _generateRoute(RouteSettings settings) {
+    WidgetBuilder builder;
+    switch (settings.name) {
+      case RoutesConstants.newVehicle:
+        builder = (BuildContext _) => NewVehiclePage();
+        break;
+      // As there is no route for invalid pages and also no reason for an invalid route as they are manages by code
+      // the default also handles the root (/) route.
+      default:
+        builder = (context) => LandingPage();
+    }
+
+    return MaterialPageRoute(builder: builder, settings: settings);
   }
 
   ThemeData _getThemeData() => ThemeData(

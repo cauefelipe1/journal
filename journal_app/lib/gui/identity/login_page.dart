@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
-import 'package:journal_mobile_app/gui/home/home_page.dart';
 import 'package:journal_mobile_app/gui/identity/login_controller.dart';
+import 'package:journal_mobile_app/gui/landing/landing_page.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 
@@ -175,7 +175,7 @@ class LoginPage extends ConsumerWidget {
       return;
     }
 
-    nv.pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+    nv.pushReplacement(MaterialPageRoute(builder: (context) => LandingPage()));
   }
 
   Future<void> _showLoginErrorDialog(String errorMessage, WidgetRef ref) async {

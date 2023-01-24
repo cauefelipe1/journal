@@ -105,5 +105,21 @@
     "vehicleWithoutHistory": "The Vehicle doesn't have a history yet.",
     "@vehicleWithoutHistory": {
       "vehicleWithoutHistory": "Used to inform that the selected vehicle does not have history yet."
+    },
+    "addText": "Add",
+    "@addText": {
+      "addText": "Text to be used in headers/titles."
+    },
+    "newText": "New",
+    "@newText": {
+      "newText": "Text to be used in headers/titles."
+    },
+    "homeText": "Home",
+    "@homeText": {
+      "homeText": "Text to be used in headers/titles."
+    },
+    "moreText": "More",
+    "@moreText": {
+      "moreText": "Text to be used in headers/titles."
     }
 }

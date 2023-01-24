@@ -5,6 +5,7 @@ import 'package:journal_mobile_app/features/vehicle/vehicle_repository.dart';
 import 'package:journal_mobile_app/gui/components/my_vehicles/my_vehicle_card_component.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
+import 'package:journal_mobile_app/routes/routes_constants.dart';
 
 var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
   final userInfo = ref.watch(loggedUserInfoProvider).value;
@@ -16,11 +17,13 @@ var currentVehicleIdProvider = StateProvider<int?>((ref) => null);
 class MyVehiclesComponent extends ConsumerStatefulWidget {
   final ValueChanged<int>? onCardPressed;
   final ValueChanged<int>? onDataIsReady;
+  final Function(String)? onNavigateRequest;
 
   MyVehiclesComponent({
     Key? key,
     this.onCardPressed,
     this.onDataIsReady,
+    this.onNavigateRequest,
   }) : super(key: key);
 
   @override
@@ -58,18 +61,18 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
                 ),
               ),
               const Spacer(),
-              Text(
-                context.l10n.seeAllText,
-                style: const TextStyle(
-                  color: Colors.teal,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+              TextButton(
+                onPressed: () => widget.onNavigateRequest?.call(RoutesConstants.newVehicle),
+                child: Text(
+                  context.l10n.newText,
+                  style: const TextStyle(
+                    color: Colors.teal,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             ],
-          ),
-          const SizedBox(
-            height: 10,
           ),
           Expanded(
             child: Consumer(

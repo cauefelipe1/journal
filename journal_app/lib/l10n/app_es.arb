@@ -24,5 +24,9 @@
     "goodEveningText": "Buenas noches",
     "history": "Historia",
     "noVehicleSelected": "Ningún vehículo seleccionado.",
-    "vehicleWithoutHistory": "El vehículo aún no tiene antecedentes."
+    "vehicleWithoutHistory": "El vehículo aún no tiene antecedentes.",
+    "addText": "Agregar",
+    "newText": "Nuevo",
+    "homeText": "Home",
+    "moreText": "Más"
 }

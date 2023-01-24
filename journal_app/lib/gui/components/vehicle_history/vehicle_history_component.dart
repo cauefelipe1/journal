@@ -13,12 +13,11 @@ var vehicleEventsProvider = FutureProvider.autoDispose.family<List<VehicleEventM
 
 class VehicleHistoryComponent extends StatelessWidget {
   final int? vehicleId;
-  final DateFormat dateFormat = DateFormat.yMd();
+  final ScrollController? scrollController;
 
-  VehicleHistoryComponent({
-    super.key,
-    this.vehicleId,
-  });
+  VehicleHistoryComponent({super.key, this.vehicleId, this.scrollController});
+
+  final DateFormat _dateFormat = DateFormat.yMd();
 
   @override
   Widget build(BuildContext context) {
@@ -58,30 +57,6 @@ class VehicleHistoryComponent extends StatelessWidget {
   }
 
   // Currently, this is not in use, but it will be kept here for a while
-  // Widget _getNoVehicleSelectedBody(BuildContext context) {
-  //   return Container(
-  //     width: double.infinity,
-  //     child: Column(
-  //       children: [
-  //         SizedBox(
-  //           height: 25,
-  //         ),
-  //         Icon(
-  //           Icons.car_crash,
-  //           size: 200,
-  //           color: Colors.blueGrey,
-  //         ),
-  //         Text(
-  //           context.l10n.noVehicleSelected,
-  //           style: TextStyle(
-  //             fontSize: 20,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _getShimmer() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[400]!,
@@ -168,60 +143,62 @@ class VehicleHistoryComponent extends StatelessWidget {
   Widget _getHistoryList(List<VehicleEventModel> events) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          itemCount: events.length,
-          itemExtent: 72,
-          itemBuilder: (context, index) {
-            final event = events[index];
-            final isFirst = index == 0;
-            final isLast = index == events.length - 1;
+        controller: scrollController,
+        padding: EdgeInsets.fromLTRB(5, 0, 5, 200), //TODO: Make this bottom padding smarter
+        itemCount: events.length,
+        itemExtent: 72,
+        itemBuilder: (context, index) {
+          final event = events[index];
+          final isFirst = index == 0;
+          final isLast = index == events.length - 1;
 
-            return TimelineTile(
-              alignment: TimelineAlign.start,
-              isFirst: isFirst,
-              isLast: isLast,
-              beforeLineStyle: LineStyle(
-                thickness: 10,
-                color: Colors.grey[800]!,
-              ),
-              indicatorStyle: IndicatorStyle(
-                  width: 50,
-                  indicatorXY: 0.0,
-                  color: _getIndicatorColor(event.type),
-                  iconStyle: IconStyle(
-                    iconData: _getIndicatorIcon(event.type),
-                    color: Colors.white,
-                    fontSize: 35,
-                  )),
-              endChild: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          event.description!,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
+          return TimelineTile(
+            alignment: TimelineAlign.start,
+            isFirst: isFirst,
+            isLast: isLast,
+            beforeLineStyle: LineStyle(
+              thickness: 10,
+              color: Colors.grey[800]!,
+            ),
+            indicatorStyle: IndicatorStyle(
+                width: 50,
+                indicatorXY: 0.0,
+                color: _getIndicatorColor(event.type),
+                iconStyle: IconStyle(
+                  iconData: _getIndicatorIcon(event.type),
+                  color: Colors.white,
+                  fontSize: 35,
+                )),
+            endChild: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        event.description!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
                         ),
-                        Spacer(),
-                        Text(dateFormat.format(event.date!)),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(event.vehicleOdometer.toString()),
-                      ],
-                    ),
-                    !isLast ? Divider() : SizedBox()
-                  ],
-                ),
+                      ),
+                      Spacer(),
+                      Text(_dateFormat.format(event.date!)),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(event.vehicleOdometer.toString()),
+                    ],
+                  ),
+                  !isLast ? Divider() : SizedBox()
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 
