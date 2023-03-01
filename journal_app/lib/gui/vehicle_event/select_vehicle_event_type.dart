@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/vehicle_event.dart';
 
 class SelectVehicleEventType extends StatelessWidget {
@@ -16,7 +17,7 @@ class SelectVehicleEventType extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Choose the event type", // TODO: Translate it
+                context.l10n.chooseEventTypeTitle,
                 style: const TextStyle(
                   fontSize: 35,
                 ),
@@ -30,27 +31,27 @@ class SelectVehicleEventType extends StatelessWidget {
                   StaggeredGridTile.count(
                     crossAxisCellCount: 1,
                     mainAxisCellCount: 1,
-                    child: _getCard("Refueling", VehicleEventType.refueling), // TODO: Translate it
+                    child: _getCard(context, VehicleEventType.refueling),
                   ),
                   StaggeredGridTile.count(
                     crossAxisCellCount: 1,
                     mainAxisCellCount: 1,
-                    child: _getCard("Maintenance", VehicleEventType.maintenance), // TODO: Translate it
+                    child: _getCard(context, VehicleEventType.maintenance),
                   ),
                   StaggeredGridTile.count(
                     crossAxisCellCount: 1,
                     mainAxisCellCount: 1,
-                    child: _getCard("Expense", VehicleEventType.expense), // TODO: Translate it
+                    child: _getCard(context, VehicleEventType.expense),
                   ),
                   StaggeredGridTile.count(
                     crossAxisCellCount: 1,
                     mainAxisCellCount: 1,
-                    child: _getCard("Income", VehicleEventType.income), // TODO: Translate it
+                    child: _getCard(context, VehicleEventType.income),
                   ),
                   StaggeredGridTile.count(
                     crossAxisCellCount: 2,
                     mainAxisCellCount: 1,
-                    child: _getCard("Route", VehicleEventType.route), // TODO: Translate it
+                    child: _getCard(context, VehicleEventType.route),
                   ),
                 ],
               ),
@@ -61,7 +62,7 @@ class SelectVehicleEventType extends StatelessWidget {
     );
   }
 
-  Widget _getCard(String name, VehicleEventType type) {
+  Widget _getCard(BuildContext context, VehicleEventType type) {
     return SizedBox(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -92,7 +93,7 @@ class SelectVehicleEventType extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  name,
+                  _getCardLabel(context, type),
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -104,6 +105,27 @@ class SelectVehicleEventType extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getCardLabel(BuildContext context, VehicleEventType? type) {
+    if (type == null) {
+      return context.l10n.unknownText;
+    }
+
+    switch (type) {
+      case VehicleEventType.refueling:
+        return context.l10n.refuelingText;
+      case VehicleEventType.expense:
+        return context.l10n.expenseText;
+      case VehicleEventType.income:
+        return context.l10n.incomeText;
+      case VehicleEventType.maintenance:
+        return context.l10n.maintenanceText;
+      case VehicleEventType.route:
+        return context.l10n.routeText;
+      default:
+        return context.l10n.unknownText;
+    }
   }
 
   IconData _getIndicatorIcon(VehicleEventType? type) {

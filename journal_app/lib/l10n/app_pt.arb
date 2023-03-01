@@ -28,5 +28,12 @@
     "addText": "Adicionar",
     "newText": "Novo",
     "homeText": "Home",
-    "moreText": "Mais"
+    "moreText": "Mais",
+    "chooseEventTypeTitle": "Selecione o tipo de evento",
+    "refuelingText": "Abastecimento",
+    "maintenanceText": "Manutenção",
+    "expenseText": "Despesa",
+    "incomeText": "Receita",
+    "routeText": "Deslocamento",
+    "unknownText": "Desconhecido"
 }

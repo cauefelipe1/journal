@@ -121,5 +121,33 @@
     "moreText": "More",
     "@moreText": {
       "moreText": "Text to be used in headers/titles."
+    },
+    "chooseEventTypeTitle": "Choose the event type",
+    "@chooseEventTypeTitle": {
+      "chooseEventTypeTitle": "Text to be used in headers/titles."
+    },
+    "refuelingText": "Refueling",
+    "@refuelingText": {
+      "refuelingText": "Text to be used in labels."
+    },
+    "maintenanceText": "Maintenance",
+    "@maintenanceText": {
+      "maintenanceText": "Text to be used in labels."
+    },
+    "expenseText": "Expense",
+    "@expenseText": {
+      "expenseText": "Text to be used in labels."
+    },
+    "incomeText": "Income",
+    "@incomeText": {
+      "incomeText": "Text to be used in labels."
+    },
+    "routeText": "Route",
+    "@routeText": {
+      "routeText": "Text to be used in labels."
+    },
+    "unknownText": "Unknown",
+    "@unknownText": {
+      "unknownText": "Generic text."
     }
 }
