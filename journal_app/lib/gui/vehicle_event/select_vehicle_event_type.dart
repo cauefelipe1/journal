@@ -11,7 +11,7 @@ class SelectVehicleEventType extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -84,7 +84,7 @@ class SelectVehicleEventType extends StatelessWidget {
                   ),
                   child: Icon(
                     _getIndicatorIcon(type),
-                    size: 80,
+                    size: 65,
                     color: Colors.white,
                   ),
                 ),
