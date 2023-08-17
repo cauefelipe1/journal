@@ -43,6 +43,12 @@
       <None Update="Migrations\SqlScripts\00008_AddVehicleEventsTable.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Migrations\SqlScripts\00002_CreateIdentityTables.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Migrations\SqlScripts\00007_PopulateDriverTables.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

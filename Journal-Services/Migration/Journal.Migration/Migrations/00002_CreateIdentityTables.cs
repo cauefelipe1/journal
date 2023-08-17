@@ -1,11 +1,13 @@
 namespace Journal.Migration.Migrations;
 
 [Migration(00002)]
-public class CreateIdentityTables_00002 : FluentMigrator.Migration
+public class CreateIdentityTables_00002 : BaseMigration
 {
     private const string DB_SCHEMA = Journal.Identity.Constants.IDENTITY_DB_SCHEMA;
 
-    public override void Up()
+    public CreateIdentityTables_00002(SettingsData settings) : base(settings) { }
+
+    protected override void InternalUp()
     {
         InternalCreateIdentityFrameworkTables();
         InternalCreateRefreshTokenTable();
@@ -28,7 +30,7 @@ public class CreateIdentityTables_00002 : FluentMigrator.Migration
 
         Create.Table("app_user").InSchema(DB_SCHEMA)
            .WithColumn("id").AsString().NotNullable().PrimaryKey()
-           .WithColumn("secondary_id").AsInt32().Identity()
+           .WithColumn("secondary_id").AsInt64().Identity()
            .WithColumn("access_failed_count").AsInt32().NotNullable()
            .WithColumn("concurrency_stamp").AsString().Nullable()
            .WithColumn("email").AsString(256).Nullable()

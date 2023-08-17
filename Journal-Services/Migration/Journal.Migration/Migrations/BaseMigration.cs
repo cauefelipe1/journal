@@ -29,9 +29,17 @@ public abstract class BaseMigration: FluentMigrator.Migration
     /// </summary>
     protected virtual void SeedData()
     {
-        Execute.Script(
-            $"{ ROOT_PATH_SQL_SCRIPTS }{GetCurrentFileName()}.sql",
-            new Dictionary<string, string>() { { "Schema", Settings.Database.SearchPath } });
+        string filePath = $"{ROOT_PATH_SQL_SCRIPTS}{GetCurrentFileName()}.sql";
+        if (!File.Exists(filePath))
+            return;
+
+        var parameters = new Dictionary<string, string>
+        {
+            { "Schema", Settings.Database.SearchPath },
+            { "Identity_Schema", Identity.Constants.IDENTITY_DB_SCHEMA }
+        };
+
+        Execute.Script($"{ ROOT_PATH_SQL_SCRIPTS }{GetCurrentFileName()}.sql", parameters);
     }
 
     /// <summary>

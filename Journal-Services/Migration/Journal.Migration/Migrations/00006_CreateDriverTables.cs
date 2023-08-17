@@ -18,12 +18,12 @@ public class CreateDriverTables_00006 : BaseMigration {
     private void InternalCreateDriverTable()
     {
         Create.Table("driver").InSchema(Settings.Database.SearchPath)
-            .WithColumn("driver_id").AsInt32().NotNullable().PrimaryKey().Identity()
+            .WithColumn("driver_id").AsInt64().NotNullable().PrimaryKey().Identity()
             .WithColumn("first_name").AsString(200).NotNullable()
             .WithColumn("last_name").AsString(100).NotNullable()
             .WithColumn("country_id").AsInt16().Nullable()
             .WithColumn("user_id")
-                .AsInt32()
+                .AsInt64()
                 .NotNullable()
                 .WithDefaultValue(0)
                 .WithColumnDescription($"It refers to the SecondaryId column on {Identity.Constants.IDENTITY_DB_SCHEMA}.app_user");
@@ -42,8 +42,8 @@ public class CreateDriverTables_00006 : BaseMigration {
     private void InternalCreateVehicleTable()
     {
         Create.Table("vehicle").InSchema(Settings.Database.SearchPath)
-            .WithColumn("vehicle_id").AsInt32().NotNullable().PrimaryKey().Identity()
-            .WithColumn("vehicle_secondary_id")
+            .WithColumn("vehicle_id").AsInt64().NotNullable().PrimaryKey().Identity()
+            .WithColumn("secondary_id")
             .AsString()
             .Nullable()
             .WithColumnDescription(
@@ -53,7 +53,7 @@ public class CreateDriverTables_00006 : BaseMigration {
             .WithColumn("vehicle_type_id").AsInt16().NotNullable()
             .WithColumn("vehicle_brand_id").AsInt16().NotNullable()
             .WithColumn("model_year").AsInt16().Nullable()
-            .WithColumn("main_driver_id").AsInt32().NotNullable();
+            .WithColumn("main_driver_id").AsInt64().NotNullable();
 
         Create.ForeignKey()
             .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("vehicle_type_id")
@@ -66,6 +66,9 @@ public class CreateDriverTables_00006 : BaseMigration {
         Create.ForeignKey()
             .FromTable("vehicle").InSchema(Settings.Database.SearchPath).ForeignColumn("main_driver_id")
             .ToTable("driver").InSchema(Settings.Database.SearchPath).PrimaryColumn("driver_id");
+
+        Create.Index("idx_vehicle_main_driver_id").OnTable("vehicle").InSchema(Settings.Database.SearchPath)
+            .OnColumn("main_driver_id").Ascending().WithOptions().NonClustered();
     }
 
     public override void Down()
