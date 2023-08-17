@@ -23,9 +23,9 @@ public class AddVehicleEventsTable_00008 : BaseMigration {
     {
         Create.Table("vehicle_event").InSchema(Settings.Database.SearchPath)
             .WithColumn("vehicle_event_id").AsInt64().NotNullable().PrimaryKey().Identity()
-            .WithColumn("owner_driver_id").AsInt32().NotNullable()
-            .WithColumn("vehicle_id").AsInt32().NotNullable()
-            .WithColumn("driver_id").AsInt32().NotNullable()
+            .WithColumn("owner_driver_id").AsInt64().NotNullable()
+            .WithColumn("vehicle_id").AsInt64().NotNullable()
+            .WithColumn("driver_id").AsInt64().NotNullable()
             .WithColumn("event_date").AsDateTimeOffset().NotNullable()
             .WithColumn("vehicle_odometer").AsInt32().NotNullable().WithDefaultValue(0)
             .WithColumn("vehicle_event_type_id").AsInt16().NotNullable()
