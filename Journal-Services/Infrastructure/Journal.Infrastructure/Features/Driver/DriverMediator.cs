@@ -37,6 +37,7 @@ public abstract partial class DriverMediator
             return new()
             {
                 DriverId = dto.DriverId,
+                SecondaryId = dto.SecondaryId,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 CountryId = dto.CountryId,

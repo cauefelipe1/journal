@@ -7,6 +7,8 @@ public class DriverDTO
 {
     public int DriverId { get; set; }
 
+    public Guid SecondaryId { get; set; }
+
     public string FirstName { get; set; } = default!;
 
     public string LastName { get; set; } = default!;

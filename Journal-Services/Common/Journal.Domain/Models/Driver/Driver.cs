@@ -7,9 +7,17 @@ public class DriverModel
 {
     /// <summary>
     /// The driver unique identifier.
+    /// Used internally in the backend application.
     /// </summary>
     /// <example>1</example>
     public int DriverId { get; set; }
+
+    /// <summary>
+    /// The secondary unique identifier.
+    /// Used in public context.
+    /// </summary>
+    /// <example>f58ae19d-8394-43de-9568-7bdfc745f643</example>
+    public Guid SecondaryId { get; set; }
 
     /// <summary>
     /// The driver first name.

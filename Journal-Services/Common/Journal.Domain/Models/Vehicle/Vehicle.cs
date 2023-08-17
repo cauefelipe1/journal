@@ -52,6 +52,13 @@ public class VehicleBrandModel
     public int Id { get; set; }
 
     /// <summary>
+    /// The secondary unique identifier.
+    /// Used in public context.
+    /// </summary>
+    /// <example>35ca24d4-e554-4f8a-a508-cd6f1e2c6c08</example>
+    public Guid SecondaryId { get; set; }
+
+    /// <summary>
     /// The vehicle brand name.
     /// </summary>
     /// <example>Ford</example>
@@ -79,8 +86,8 @@ public class VehicleModel
     /// The secondary unique identifier for a vehicle.
     /// It is a GUID given when the vehicle is create when the client application is offline.
     /// </summary>
-    /// <example>cbf41093-b360-459a-9b09-ec223fbbe2ed</example>
-    public string? SecondaryId { get; set; }
+    /// <example>fef18a07-e65b-4567-a595-ceb9f7e0258e</example>
+    public Guid SecondaryId { get; set; }
 
     /// <summary>
     /// The vehicle model name.

@@ -9,7 +9,7 @@ public class VehicleDTO
 {
     public int VehicleId { get; set; }
 
-    public string? SecondaryId { get; set; } = default!;
+    public Guid SecondaryId { get; set; }
 
     public string Model { get; set; } = default!;
 
