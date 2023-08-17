@@ -41,6 +41,12 @@ public class CreateDriverTables_00006 : BaseMigration {
             .Unique()
             .WithOptions()
                 .NonClustered();
+
+        Create.Index("idx_driver_secondary_id").OnTable("driver").InSchema(Settings.Database.SearchPath)
+            .OnColumn("secondary_id")
+            .Unique()
+            .WithOptions()
+                .NonClustered();
     }
 
     private void InternalCreateVehicleTable()
@@ -71,7 +77,15 @@ public class CreateDriverTables_00006 : BaseMigration {
             .ToTable("driver").InSchema(Settings.Database.SearchPath).PrimaryColumn("driver_id");
 
         Create.Index("idx_vehicle_main_driver_id").OnTable("vehicle").InSchema(Settings.Database.SearchPath)
-            .OnColumn("main_driver_id").Ascending().WithOptions().NonClustered();
+            .OnColumn("main_driver_id").Ascending()
+            .WithOptions()
+                .NonClustered();
+
+        Create.Index("idx_vehicle_secondary_id").OnTable("vehicle").InSchema(Settings.Database.SearchPath)
+            .OnColumn("secondary_id")
+            .Unique()
+            .WithOptions()
+                .NonClustered();
     }
 
     public override void Down()
