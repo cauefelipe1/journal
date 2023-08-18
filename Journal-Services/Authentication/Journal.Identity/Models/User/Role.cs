@@ -6,5 +6,5 @@ namespace Journal.Identity.Models.User;
 [UsedImplicitly]
 public class Role : IdentityRole
 {
-    public int SecondaryId { get; set; }
+    public long SecondaryId { get; set; }
 }

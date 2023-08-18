@@ -1,3 +1,5 @@
+using FluentMigrator.Postgres;
+
 namespace Journal.Migration.Migrations;
 
 [Migration(00002)]
@@ -10,6 +12,7 @@ public class CreateIdentityTables_00002 : BaseMigration
     protected override void InternalUp()
     {
         InternalCreateIdentityFrameworkTables();
+        InternalCreateIndexesForIdentityTables();
         InternalCreateRefreshTokenTable();
     }
 
@@ -17,6 +20,7 @@ public class CreateIdentityTables_00002 : BaseMigration
     {
         Create.Table("role").InSchema(DB_SCHEMA)
             .WithColumn("id").AsString().PrimaryKey()
+            .WithColumn("secondary_id").AsInt64().Identity(PostgresGenerationType.ByDefault)
             .WithColumn("concurrency_stamp").AsString().Nullable()
             .WithColumn("name").AsString(256).NotNullable()
             .WithColumn("normalized_name").AsString(256).Nullable()
@@ -30,7 +34,7 @@ public class CreateIdentityTables_00002 : BaseMigration
 
         Create.Table("app_user").InSchema(DB_SCHEMA)
            .WithColumn("id").AsString().NotNullable().PrimaryKey()
-           .WithColumn("secondary_id").AsInt64().Identity()
+           .WithColumn("secondary_id").AsInt64().Identity(PostgresGenerationType.ByDefault)
            .WithColumn("access_failed_count").AsInt32().NotNullable()
            .WithColumn("concurrency_stamp").AsString().Nullable()
            .WithColumn("email").AsString(256).Nullable()
@@ -96,6 +100,23 @@ public class CreateIdentityTables_00002 : BaseMigration
         Create.ForeignKey()
             .FromTable("app_user_roles").InSchema(DB_SCHEMA).ForeignColumn("role_id")
             .ToTable("role").InSchema(DB_SCHEMA).PrimaryColumn("id");
+    }
+
+    private void InternalCreateIndexesForIdentityTables()
+    {
+        Create.Index("idx_app_user_secondary_id")
+            .OnTable("app_user").InSchema(DB_SCHEMA)
+                .WithOptions()
+                    .Include("id")
+                    .NonClustered()
+            .OnColumn("secondary_id");
+
+        Create.Index("idx_role_secondary_id")
+            .OnTable("role").InSchema(DB_SCHEMA)
+                .WithOptions()
+                    .Include("id")
+                    .NonClustered()
+            .OnColumn("secondary_id");
     }
 
     private void InternalCreateRefreshTokenTable()

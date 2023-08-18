@@ -37,6 +37,7 @@ public abstract partial class DriverMediator
                 SecondaryId = model.SecondaryId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
+                CountryId = model.CountryId,
                 UserId = model.UserId
             };
         }

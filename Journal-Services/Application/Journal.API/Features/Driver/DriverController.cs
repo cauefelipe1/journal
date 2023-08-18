@@ -10,7 +10,6 @@ namespace Journal.API.Features.Driver;
 /// <summary>
 /// Defines the controller to handle the driver endpoints.
 /// </summary>
-[AllowAnonymous]
 [ApiController]
 [Produces("application/json")]
 [Authorize]
