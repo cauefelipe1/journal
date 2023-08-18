@@ -6,7 +6,7 @@ namespace Journal.Infrastructure.Features.Vehicle;
 
 public abstract partial class VehicleMediator
 {
-    public class CreateVehicleQuery : IRequest<int>
+    public class CreateVehicleQuery : IRequest<long>
     {
         public VehicleModel Model { get; }
 
@@ -14,18 +14,18 @@ public abstract partial class VehicleMediator
     }
 
     [UsedImplicitly]
-    public class CreateVehicleHandler : IRequestHandler<CreateVehicleQuery, int>
+    public class CreateVehicleHandler : IRequestHandler<CreateVehicleQuery, long>
     {
         private readonly IVehicleRepository _repo;
 
         public CreateVehicleHandler(IVehicleRepository repository) => _repo = repository;
 
-        public Task<int> Handle(CreateVehicleQuery request, CancellationToken cancellationToken) => Task.Run(() =>
+        public Task<long> Handle(CreateVehicleQuery request, CancellationToken cancellationToken) => Task.Run(() =>
         {
 
             var dto = BuildDTO(request.Model);
 
-            int id = _repo.InsertVehicle(dto);
+            long id = _repo.InsertVehicle(dto);
 
             return id;
 

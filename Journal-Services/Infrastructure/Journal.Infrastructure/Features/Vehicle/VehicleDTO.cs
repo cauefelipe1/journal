@@ -7,7 +7,7 @@ namespace Journal.Infrastructure.Features.Vehicle;
 [UsedImplicitly]
 public class VehicleDTO
 {
-    public int VehicleId { get; set; }
+    public long VehicleId { get; set; }
 
     public Guid SecondaryId { get; set; }
 

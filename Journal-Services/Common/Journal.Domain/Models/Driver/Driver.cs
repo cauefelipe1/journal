@@ -10,7 +10,7 @@ public class DriverModel
     /// Used internally in the backend application.
     /// </summary>
     /// <example>1</example>
-    public int DriverId { get; set; }
+    public long DriverId { get; set; }
 
     /// <summary>
     /// The secondary unique identifier.

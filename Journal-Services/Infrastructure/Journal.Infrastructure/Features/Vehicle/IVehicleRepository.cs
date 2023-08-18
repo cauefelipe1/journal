@@ -10,7 +10,7 @@ public interface IVehicleRepository
     /// </summary>
     /// <param name="dto">The vehicle to be saved.</param>
     /// <returns>The ID of the vehicle.</returns>
-    int InsertVehicle(VehicleDTO dto);
+    long InsertVehicle(VehicleDTO dto);
 
     /// <summary>
     /// Gets a the <see cref="VehicleDTO"/> for a specific vehicle id.

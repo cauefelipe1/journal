@@ -27,7 +27,7 @@ public class UserData
     /// The unique user identifier.
     /// </summary>
     /// <example>1</example>
-    public int UserId { get; set; }
+    public long UserId { get; set; }
 
     /// <summary>
     /// The type of the user.

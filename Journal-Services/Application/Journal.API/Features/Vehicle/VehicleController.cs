@@ -28,7 +28,7 @@ public class VehicleController : ControllerBase
     /// <param name="input">The input for creating a new driver.</param>
     /// <returns>The ID of the driver saved.</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> CreateVehicle(CreateVehicleInput input)
+    public async Task<ActionResult<long>> CreateVehicle(CreateVehicleInput input)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -44,7 +44,7 @@ public class VehicleController : ControllerBase
             MainDriverId = input.MainDriverId
         };
 
-        int vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model));
+        long vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model));
 
         return Created(string.Empty, vehicleId);
     }

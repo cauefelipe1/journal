@@ -5,7 +5,7 @@ namespace Journal.Infrastructure.Features.Driver;
 [UsedImplicitly]
 public class DriverDTO
 {
-    public int DriverId { get; set; }
+    public long DriverId { get; set; }
 
     public Guid SecondaryId { get; set; }
 

@@ -80,7 +80,7 @@ public class VehicleModel
     /// The unique identifier for a vehicle.
     /// </summary>
     /// <example>1</example>
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     /// <summary>
     /// The secondary unique identifier for a vehicle.

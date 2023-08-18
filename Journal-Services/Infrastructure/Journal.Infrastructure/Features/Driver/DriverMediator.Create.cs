@@ -6,7 +6,7 @@ namespace Journal.Infrastructure.Features.Driver;
 
 public abstract partial class DriverMediator
 {
-    public class CreateDriverByIdQuery : IRequest<int>
+    public class CreateDriverByIdQuery : IRequest<long>
     {
         public DriverModel Model { get; }
 
@@ -14,17 +14,17 @@ public abstract partial class DriverMediator
     }
 
     [UsedImplicitly]
-    public class CreateDriverByIdQueryHandler : IRequestHandler<CreateDriverByIdQuery, int>
+    public class CreateDriverByIdQueryHandler : IRequestHandler<CreateDriverByIdQuery, long>
     {
         private IDriverRepository _repo;
 
         public CreateDriverByIdQueryHandler(IDriverRepository repo) => _repo = repo;
 
-        public Task<int> Handle(CreateDriverByIdQuery request, CancellationToken cancellationToken) => Task.Run(() =>
+        public Task<long> Handle(CreateDriverByIdQuery request, CancellationToken cancellationToken) => Task.Run(() =>
         {
             var dto = BuildDTO(request.Model);
 
-            int id = _repo.InsertDriver(dto);
+            long id = _repo.InsertDriver(dto);
 
             return id;
         }, cancellationToken);

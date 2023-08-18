@@ -22,7 +22,7 @@ public class DriverRepository : IDriverRepository
         return driver;
     }
 
-    public int InsertDriver(DriverDTO dto)
+    public long InsertDriver(DriverDTO dto)
     {
         _dbContext.Driver.Add(dto);
         _dbContext.SaveChanges();

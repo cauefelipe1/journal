@@ -11,7 +11,7 @@ public class VehicleRepository : IVehicleRepository
     public VehicleRepository(DatabaseContext dbContext) => _dbContext = dbContext;
 
     /// <inheritdoc/>
-    public int InsertVehicle(VehicleDTO dto)
+    public long InsertVehicle(VehicleDTO dto)
     {
         _dbContext.Vehicle.Add(dto);
         _dbContext.SaveChanges();

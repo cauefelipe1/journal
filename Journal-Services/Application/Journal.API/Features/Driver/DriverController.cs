@@ -46,7 +46,7 @@ public class DriverController : ControllerBase
     /// <param name="input">The input for creating a new driver.</param>
     /// <returns>The ID of the driver saved.</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> CreateDriver(CreateDriverInput input)
+    public async Task<ActionResult<long>> CreateDriver(CreateDriverInput input)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -59,7 +59,7 @@ public class DriverController : ControllerBase
             UserId = this.GetUserSecondaryId()
         };
 
-        int driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
+        long driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
 
         return Created(string.Empty, driverId);
     }
