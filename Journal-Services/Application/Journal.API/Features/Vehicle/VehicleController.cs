@@ -54,8 +54,8 @@ public class VehicleController : ControllerBase
     /// </summary>
     /// <param name="driverId">The id of the driver.</param>
     /// <returns>A collection of <see cref="VehicleBrandModel"/></returns>
-    [HttpGet("by_main_driver/{driverId:int}")]
-    public async Task<ActionResult<IList<VehicleModel>>> GetVehicleByMainDriverId(int driverId)
+    [HttpGet("by_main_driver/{driverId:guid}")]
+    public async Task<ActionResult<IList<VehicleModel>>> GetVehicleByMainDriverId(Guid driverId)
     {
         var vehicles = await _mediator.Send(new VehicleMediator.GetVehicleByMainDriverQuery(driverId));
 

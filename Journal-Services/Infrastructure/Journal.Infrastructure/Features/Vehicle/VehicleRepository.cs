@@ -1,3 +1,4 @@
+using Dapper;
 using Journal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,34 @@ public class VehicleRepository : IVehicleRepository
                 .ToList();
 
         return vehicles;
+    }
+
+    /// <inheritdoc/>
+    public IList<VehicleDTO> GetVehicleByMainDriverSecondaryId(Guid mainDriverId)
+    {
+        const string SQL =
+            @"
+            select 
+                v.vehicle_id as VehicleId,
+                v.secondary_id as SecondaryId,
+                v.model as Model, 
+                v.nickname as Nickname, 
+                v.vehicle_type_id as VehicleTypeId, 
+                v.vehicle_brand_id as VehicleBrandId, 
+                v.model_year as ModelYear, 
+                v.main_driver_id as MainDriverId
+            from
+                vehicle v
+                inner join driver d on v.main_driver_id = d.driver_id
+            where
+                d.secondary_id = @SecondaryId";
+
+        using (var con = _dbContext.GetConnection())
+        {
+            var vehicles = con.Query<VehicleDTO>(SQL, new { SecondaryId = mainDriverId });
+
+            return vehicles.ToList();
+        }
     }
 
     /// <inheritdoc/>

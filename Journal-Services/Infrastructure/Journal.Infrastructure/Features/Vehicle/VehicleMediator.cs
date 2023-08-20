@@ -55,21 +55,39 @@ public abstract partial class VehicleMediator
 
     public class GetVehicleByMainDriverQuery : IRequest<IList<VehicleModel>>
     {
-        public int MainDriverId { get; }
+        public int? MainDriverId { get; }
+
+        public Guid? MainDriverSecondaryId { get; }
 
         public GetVehicleByMainDriverQuery(int mainDriverId) => MainDriverId = mainDriverId;
+
+        public GetVehicleByMainDriverQuery(Guid mainDriverId) => MainDriverSecondaryId = mainDriverId;
     }
 
     [UsedImplicitly]
     public class GetVehicleByMainDriverHandler : IRequestHandler<GetVehicleByMainDriverQuery, IList<VehicleModel>>
     {
         private readonly IVehicleRepository _repo;
+        private readonly ISender _sender;
 
-        public GetVehicleByMainDriverHandler(IVehicleRepository repository) => _repo = repository;
+        public GetVehicleByMainDriverHandler(IVehicleRepository repository, ISender sender)
+        {
+            _repo = repository;
+            _sender = sender;
+        }
 
         public Task<IList<VehicleModel>> Handle(GetVehicleByMainDriverQuery request, CancellationToken cancellationToken) => Task.Run(() =>
         {
-            var vehicleDTOs = _repo.GetVehicleByMainDriverId(request.MainDriverId);
+            IList<VehicleDTO> vehicleDTOs;
+
+            if (request.MainDriverId.HasValue)
+                vehicleDTOs = _repo.GetVehicleByMainDriverId(request.MainDriverId.Value);
+
+            else if (request.MainDriverSecondaryId.HasValue)
+                vehicleDTOs = _repo.GetVehicleByMainDriverSecondaryId(request.MainDriverSecondaryId.Value);
+
+            else
+                throw new ArgumentException("A valid main Driver Id or Secondary Id must be informed.");
 
             IList<VehicleModel> vehicles = vehicleDTOs.Select(dto => BuildModel(dto)).ToList();
 

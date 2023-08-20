@@ -28,6 +28,13 @@ public interface IVehicleRepository
     IList<VehicleDTO> GetVehicleByMainDriverId(int mainDriverId);
 
     /// <summary>
+    /// Gets a list of <see cref="VehicleDTO"/> that belongs to a driver based on its Secondary ID.
+    /// </summary>
+    /// <param name="mainDriverId">The unique secondary identifier for the main driver.</param>
+    /// <returns>A list of <see cref="VehicleDTO"/> that belongs to the driver.</returns>
+    IList<VehicleDTO> GetVehicleByMainDriverSecondaryId(Guid mainDriverId);
+
+    /// <summary>
     /// Retrieves a collection with all vehicle brands from the storage.
     /// </summary>
     /// <returns>The collection with all vehicle brands</returns>
