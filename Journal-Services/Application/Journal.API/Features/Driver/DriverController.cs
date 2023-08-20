@@ -28,8 +28,8 @@ public class DriverController : ControllerBase
     /// </summary>
     /// <param name="driverId">The driver unique identifier.</param>
     /// <returns>An instance of <see cref="DriverModel"/></returns>
-    [HttpGet("{driverId:int}")]
-    public async Task<ActionResult<DriverModel>> GetDriverById(int driverId)
+    [HttpGet("{driverId:guid}")]
+    public async Task<ActionResult<DriverModel>> GetDriverById(Guid driverId)
     {
         var driver = await _mediator.Send(new DriverMediator.GetDriverByIdQuery(driverId));
 

@@ -13,6 +13,13 @@ public interface IDriverRepository
     DriverDTO? GetDriverById(int driverId);
 
     /// <summary>
+    /// Retrieves a driver from the storage based on its secondary ID.
+    /// </summary>
+    /// <param name="secondaryId">The driver's secondary ID.</param>
+    /// <returns>The driver instance.</returns>
+    DriverDTO? GetDriverBySecondaryId(Guid secondaryId);
+
+    /// <summary>
     /// Inserts a driver in the storage.
     /// </summary>
     /// <param name="dto">The driver to be saved</param>

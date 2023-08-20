@@ -14,15 +14,16 @@ public abstract partial class DriverMediator
     }
 
     [UsedImplicitly]
-    public class CreateDriverByIdQueryHandler : IRequestHandler<CreateDriverByIdQuery, long>
+    public class CreateDriverCommandHandler : IRequestHandler<CreateDriverByIdQuery, long>
     {
-        private IDriverRepository _repo;
+        private readonly IDriverRepository _repo;
 
-        public CreateDriverByIdQueryHandler(IDriverRepository repo) => _repo = repo;
+        public CreateDriverCommandHandler(IDriverRepository repo) => _repo = repo;
 
         public Task<long> Handle(CreateDriverByIdQuery request, CancellationToken cancellationToken) => Task.Run(() =>
         {
             var dto = BuildDTO(request.Model);
+            dto.SecondaryId = Guid.NewGuid();
 
             long id = _repo.InsertDriver(dto);
 

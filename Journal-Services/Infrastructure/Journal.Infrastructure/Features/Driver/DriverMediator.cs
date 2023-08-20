@@ -8,15 +8,17 @@ public abstract partial class DriverMediator
 {
     public class GetDriverByIdQuery : IRequest<DriverModel?>
     {
-        public int DriverId { get; }
+        public Guid? SecondaryId { get; }
+        public int? Id { get; }
 
-        public GetDriverByIdQuery(int driverId) => DriverId = driverId;
+        public GetDriverByIdQuery(Guid secondaryId) => SecondaryId = secondaryId;
+        public GetDriverByIdQuery(int id) => Id = id;
     }
 
     [UsedImplicitly]
     public class GetDriverByIdHandler : IRequestHandler<GetDriverByIdQuery, DriverModel?>
     {
-        private IDriverRepository _repo;
+        private readonly IDriverRepository _repo;
 
         public GetDriverByIdHandler(IDriverRepository repo) => _repo = repo;
 
@@ -24,7 +26,15 @@ public abstract partial class DriverMediator
         {
             DriverModel? result = null;
 
-            var dto = _repo.GetDriverById(request.DriverId);
+            DriverDTO? dto;
+
+            if (request.Id.HasValue)
+                dto = _repo.GetDriverById(request.Id.Value);
+
+            else if (request.SecondaryId.HasValue)
+                dto = _repo.GetDriverBySecondaryId(request.SecondaryId.Value);
+            else
+                throw new ArgumentException("A valid Driver Id or Secondary Id must be informed.");
 
             if (dto is not null)
                 result = BuildModel(dto);

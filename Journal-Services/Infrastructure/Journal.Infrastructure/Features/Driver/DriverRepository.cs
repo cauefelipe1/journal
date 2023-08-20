@@ -22,6 +22,19 @@ public class DriverRepository : IDriverRepository
         return driver;
     }
 
+    /// <inheritdoc/>
+    public DriverDTO? GetDriverBySecondaryId(Guid secondaryId)
+    {
+        var driver =
+            _dbContext.Driver
+                .Where(d => d.SecondaryId == secondaryId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+        return driver;
+    }
+
+    /// <inheritdoc/>
     public long InsertDriver(DriverDTO dto)
     {
         _dbContext.Driver.Add(dto);
