@@ -116,7 +116,7 @@ public class VehicleModel
     /// The unique identifier for the main <see cref="DriverModel"/>.
     /// </summary>
     /// <example>1</example>
-    public int MainDriverId { get; set; }
+    public long MainDriverId { get; set; }
 
     /// <summary>
     /// The name to be shown in the UI.

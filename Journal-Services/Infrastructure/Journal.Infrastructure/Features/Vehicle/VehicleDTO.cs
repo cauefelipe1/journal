@@ -21,7 +21,7 @@ public class VehicleDTO
 
     public int VehicleBrandId { get; set; }
 
-    public int MainDriverId { get; set; }
+    public long MainDriverId { get; set; }
 }
 
 [UsedImplicitly]

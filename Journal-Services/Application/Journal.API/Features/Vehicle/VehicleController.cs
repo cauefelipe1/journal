@@ -40,10 +40,9 @@ public class VehicleController : ControllerBase
             ModelYear = input.ModelYear,
             Type = input.Type,
             BrandId = input.BrandId,
-            MainDriverId = input.MainDriverId
         };
 
-        long vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model));
+        long vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model, input.MainDriverId));
 
         return Created(string.Empty, vehicleId);
     }

@@ -28,6 +28,6 @@ public class CreateVehicleInput
     public int BrandId { get; set; }
 
     /// <see cref="VehicleModel.MainDriverId"/>
-    /// <example>1</example>
-    public int MainDriverId { get; set; }
+    /// <example>ba2d9e86-cedb-4fe9-b087-e70090c93b8c</example>
+    public Guid MainDriverId { get; set; }
 }
