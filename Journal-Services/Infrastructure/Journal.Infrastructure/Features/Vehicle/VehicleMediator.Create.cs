@@ -24,6 +24,7 @@ public abstract partial class VehicleMediator
         {
 
             var dto = BuildDTO(request.Model);
+            dto.SecondaryId = Guid.NewGuid();
 
             long id = _repo.InsertVehicle(dto);
 

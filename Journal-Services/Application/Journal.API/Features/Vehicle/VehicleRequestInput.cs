@@ -7,10 +7,6 @@ namespace Journal.API.Features.Vehicle;
 /// </summary>
 public class CreateVehicleInput
 {
-    /// <see cref="VehicleModel.SecondaryId"/>
-    /// <example>cbf41093-b360-459a-9b09-ec223fbbe2ed</example>
-    public Guid SecondaryId { get; set; }
-
     /// <see cref="VehicleModel.ModelName"/>
     /// <example>Taurus</example>
     public string ModelName { get; set; } = default!;

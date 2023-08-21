@@ -35,7 +35,6 @@ public class VehicleController : ControllerBase
 
         var model = new VehicleModel
         {
-            SecondaryId = input.SecondaryId,
             ModelName = input.ModelName,
             Nickname = input.Nickname,
             ModelYear = input.ModelYear,
