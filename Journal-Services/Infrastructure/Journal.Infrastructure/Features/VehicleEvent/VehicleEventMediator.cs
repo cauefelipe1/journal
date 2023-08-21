@@ -10,9 +10,14 @@ public abstract partial class VehicleEventMediator
 
     public class GetVehicleEventByVehicleQuery : IRequest<IList<VehicleEventModel>>
     {
-        public int VehicleId { get; }
+
+        public int? VehicleId { get; }
+
+        public Guid? VehicleSecondaryId { get; }
 
         public GetVehicleEventByVehicleQuery(int vehicleId) => VehicleId = vehicleId;
+
+        public GetVehicleEventByVehicleQuery(Guid vehicleSecondaryId) => VehicleSecondaryId = vehicleSecondaryId;
     }
 
     [UsedImplicitly]
@@ -24,7 +29,16 @@ public abstract partial class VehicleEventMediator
 
         public Task<IList<VehicleEventModel>> Handle(GetVehicleEventByVehicleQuery request, CancellationToken cancellationToken)
         {
-            var vehicleDTOs = _repo.GetVehicleEventsByVehicleId(request.VehicleId);
+            IList<VehicleEventDTO> vehicleDTOs;
+
+            if (request.VehicleId.HasValue)
+                vehicleDTOs = _repo.GetVehicleEventsByVehicleId(request.VehicleId.Value);
+
+            else if (request.VehicleSecondaryId.HasValue)
+                vehicleDTOs = _repo.GetVehicleEventsByVehicleSecondaryId(request.VehicleSecondaryId.Value);
+
+            else
+                throw new ArgumentException("A valid main Vehicle Id or Secondary Id must be informed.");
 
             IList<VehicleEventModel> vehicles = vehicleDTOs.Select(dto => BuildModel(dto)).ToList();
 

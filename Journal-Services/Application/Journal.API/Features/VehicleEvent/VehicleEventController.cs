@@ -24,12 +24,12 @@ public class VehicleEventController : ControllerBase
     public VehicleEventController(IMediator mediator) => _mediator = mediator;
 
     /// <summary>
-    /// Get all events for a provided vehicle id.
+    /// Get all events for a provided secondary id.
     /// </summary>
     /// <param name="vehicleId">The id of the vehicle.</param>
     /// <returns>A collection of <see cref="VehicleEventModel"/></returns>
-    [HttpGet("by_vehicle/{vehicleId:int}")]
-    public async Task<ActionResult<IList<VehicleEventModel>>> GetVehicleByMainDriverId(int vehicleId)
+    [HttpGet("by_vehicle/{vehicleId:guid}")]
+    public async Task<ActionResult<IList<VehicleEventModel>>> GetVehicleByMainDriverId(Guid vehicleId)
     {
         var events = await _mediator.Send(new VehicleEventMediator.GetVehicleEventByVehicleQuery(vehicleId));
 

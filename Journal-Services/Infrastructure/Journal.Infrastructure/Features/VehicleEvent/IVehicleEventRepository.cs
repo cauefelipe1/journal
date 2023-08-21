@@ -20,6 +20,13 @@ public interface IVehicleEventRepository
     public IList<VehicleEventDTO> GetVehicleEventsByVehicleId(int vehicleId);
 
     /// <summary>
+    /// Gets all events for a vehicle.
+    /// </summary>
+    /// <param name="vehicleId">The vehicle secondary id will be used.</param>
+    /// <returns>The vehicles event list.</returns>
+    public IList<VehicleEventDTO> GetVehicleEventsByVehicleSecondaryId(Guid vehicleId);
+
+    /// <summary>
     /// Gets all events for a vehicle limited by a given datetime.
     /// </summary>
     /// <param name="vehicleId">The vehicle id will be used.</param>
