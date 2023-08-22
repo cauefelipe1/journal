@@ -18,7 +18,15 @@ public interface IVehicleRepository
     /// </summary>
     /// <param name="id">The unique identifier for the vehicle.</param>
     /// <returns>The <see cref="VehicleDTO"/>.</returns>
-    VehicleDTO? GetVehicleById(int id);
+    VehicleDTO? GetVehicleById(long id);
+
+    /// <summary>
+    /// Gets a the <see cref="VehicleDTO"/> for a specific vehicle secondary id.
+    /// When the vehicle is not found null will be returned.
+    /// </summary>
+    /// <param name="secondaryId">The unique identifier for the vehicle.</param>
+    /// <returns>The <see cref="VehicleDTO"/>.</returns>
+    VehicleDTO? GetVehicleBySecondaryId(Guid secondaryId);
 
     /// <summary>
     /// Gets a list of <see cref="VehicleDTO"/> that belongs to a driver based on its ID.

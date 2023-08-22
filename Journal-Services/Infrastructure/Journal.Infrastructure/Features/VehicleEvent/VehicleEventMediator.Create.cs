@@ -1,5 +1,8 @@
 using JetBrains.Annotations;
+using Journal.Domain.Models.Driver;
+using Journal.Domain.Models.Vehicle;
 using Journal.Domain.Models.VehicleEvent;
+using Journal.Infrastructure.Features.Driver;
 using Journal.Infrastructure.Features.Vehicle;
 using Journal.Localization;
 using MediatR;
@@ -9,7 +12,8 @@ namespace Journal.Infrastructure.Features.VehicleEvent;
 
 public abstract partial class VehicleEventMediator
 {
-    public class CreateVehicleEventQuery : IRequest<int>
+
+    public class CreateVehicleEventQuery : IRequest<long>
     {
         public VehicleEventModel Model { get; }
 
@@ -17,8 +21,10 @@ public abstract partial class VehicleEventMediator
     }
 
     [UsedImplicitly]
-    public class CreateVehicleEventHandler : IRequestHandler<CreateVehicleEventQuery, int>
+    public class CreateVehicleEventHandler : IRequestHandler<CreateVehicleEventQuery, long>
     {
+        private readonly record struct ModelsDependenciesResult(VehicleModel Vehicle, DriverModel Driver, DriverModel OwnerDriver);
+
         private readonly IVehicleEventRepository _repo;
         private readonly IMediator _mediator;
         private readonly IStringLocalizer<Translations> _l10n;
@@ -33,15 +39,55 @@ public abstract partial class VehicleEventMediator
             _l10n = l10n;
         }
 
-        public async Task<int> Handle(CreateVehicleEventQuery request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateVehicleEventQuery request, CancellationToken cancellationToken)
         {
+            var model = request.Model;
 
-            await ValidateModel(request.Model);
+            var dependenciesModels = await InternalGetModelsDependencies(model);
+
+            PopulateIds(model, dependenciesModels);
+
+            ValidateModel(model, dependenciesModels.Vehicle);
 
             var dto = BuildDTO(request.Model);
-            int id = _repo.InsertVehicleEvent(dto);
+
+            long id = _repo.InsertVehicleEvent(dto);
 
             return id;
+        }
+
+        private void PopulateIds(VehicleEventModel model, ModelsDependenciesResult dependencies)
+        {
+            model.VehicleId = dependencies.Vehicle.Id;
+            model.DriverId = dependencies.Driver.DriverId;
+            model.OwnerDriverId = dependencies.OwnerDriver.DriverId;
+        }
+
+        private async Task<ModelsDependenciesResult> InternalGetModelsDependencies(VehicleEventModel eventModel)
+        {
+            var vehicleTask = _mediator.Send(new VehicleMediator.GetVehicleByIdQuery(eventModel.VehicleSecondaryId));
+            var driverTask = _mediator.Send(new DriverMediator.GetDriverByIdQuery(eventModel.DriverSecondaryId));
+
+            //TODO: After refactoring the GetDriverById and GetDriverBySecondaryId to use Dapper rather than EF Core,
+            // add this line back and fetch all dependencies at once.
+            //var ownerDriverTask = _mediator.Send(new DriverMediator.GetDriverByIdQuery(eventModel.OwnerDriverSecondaryId));
+
+            await Task.WhenAll(vehicleTask, driverTask);
+
+            var vehicle = vehicleTask.Result;
+            var driver = driverTask.Result;
+            var ownerDriver = await _mediator.Send(new DriverMediator.GetDriverByIdQuery(eventModel.OwnerDriverSecondaryId));
+
+            if (vehicle is null)
+                throw new Exception("Vehicle not found.");
+
+            if (driver is null)
+                throw new Exception("Driver not found.");
+
+            if (ownerDriver is null)
+                throw new Exception("Owner not found.");
+
+            return new ModelsDependenciesResult(vehicle, driver, ownerDriver);
         }
 
         private VehicleEventDTO BuildDTO(VehicleEventModel model)
@@ -61,15 +107,12 @@ public abstract partial class VehicleEventMediator
             return dto;
         }
 
-        private async Task ValidateModel(VehicleEventModel model)
+        private void ValidateModel(VehicleEventModel model, VehicleModel vehicle)
         {
-            var vehicle = await _mediator.Send(new VehicleMediator.GetVehicleByIdQuery(model.VehicleId));
-
-            if (vehicle is null)
-                throw new Exception("Vehicle not found.");
-
             if (vehicle.MainDriverId != model.OwnerDriverId)
                 throw new Exception("Vehicle does not belong to the driver");
+
+            model.Date = model.Date.ToUniversalTime();
 
             ValidateOdometerSequence(model);
         }

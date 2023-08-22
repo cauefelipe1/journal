@@ -8,16 +8,16 @@ namespace Journal.API.Features.VehicleEvent;
 public class CreateVehicleEventInput
 {
     /// <see cref="VehicleEventModel.OwnerDriverId"/>
-    /// <example>2</example>
-    public int OwnerDriverId { get; set; }
+    /// <example>e1d9e2c7-408b-4179-8294-87bd2163c636</example>
+    public Guid OwnerDriverId { get; set; }
 
     /// <see cref="VehicleEventModel.VehicleId"/>
-    /// <example>3</example>
-    public int VehicleId { get; set; }
+    /// <example>6361012b-d571-4c22-bf14-1434f5562907</example>
+    public Guid VehicleId { get; set; }
 
     /// <see cref="VehicleEventModel.DriverId"/>
-    /// <example>2</example>
-    public int DriverId { get; set; }
+    /// <example>73b0e917-abc6-4ff0-8eaa-76ce6d8e8751</example>
+    public Guid DriverId { get; set; }
 
     /// <see cref="VehicleEventModel.Date"/>
     /// <example>2022-01-30 13:00:00</example>

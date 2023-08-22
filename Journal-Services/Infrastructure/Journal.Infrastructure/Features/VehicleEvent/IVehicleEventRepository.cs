@@ -10,7 +10,7 @@ public interface IVehicleEventRepository
     /// </summary>
     /// <param name="dto">The vehicle event to be saved.</param>
     /// <returns>The ID of the vehicle event.</returns>
-    public int InsertVehicleEvent(VehicleEventDTO dto);
+    public long InsertVehicleEvent(VehicleEventDTO dto);
 
     /// <summary>
     /// Gets all events for a vehicle.
@@ -32,5 +32,5 @@ public interface IVehicleEventRepository
     /// <param name="vehicleId">The vehicle id will be used.</param>
     /// <param name="dateLimit">The datetime limit to fetch the events.</param>
     /// <returns>The vehicles event list.</returns>
-    public IList<VehicleEventDTO> GetVehicleEventsByVehicleIdWithDate(int vehicleId, DateTimeOffset dateLimit);
+    public IList<VehicleEventDTO> GetVehicleEventsByVehicleIdWithDate(long vehicleId, DateTimeOffset dateLimit);
 }

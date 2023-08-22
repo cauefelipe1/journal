@@ -42,24 +42,24 @@ public class VehicleEventController : ControllerBase
     /// <param name="input">The input for creating the new vehicle event.</param>
     /// <returns>The ID of the driver saved.</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> CreateVehicleEvent(CreateVehicleEventInput input)
+    public async Task<ActionResult<long>> CreateVehicleEvent(CreateVehicleEventInput input)
     {
         if (!ModelState.IsValid)
             return BadRequest();
 
         var model = new VehicleEventModel
         {
-            OwnerDriverId = input.OwnerDriverId,
-            VehicleId = input.VehicleId,
+            OwnerDriverSecondaryId = input.OwnerDriverId,
+            VehicleSecondaryId = input.VehicleId,
             Date = input.Date,
             VehicleOdometer = input.VehicleOdometer,
             Type = input.Type,
-            DriverId = input.DriverId,
+            DriverSecondaryId = input.DriverId,
             Description = input.Description,
             Note = input.Note
         };
 
-        int eventId = await _mediator.Send(new VehicleEventMediator.CreateVehicleEventQuery(model));
+        long eventId = await _mediator.Send(new VehicleEventMediator.CreateVehicleEventQuery(model));
 
         return Created(string.Empty, eventId);
     }

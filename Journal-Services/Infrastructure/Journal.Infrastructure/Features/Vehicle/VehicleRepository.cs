@@ -20,11 +20,22 @@ public class VehicleRepository : IVehicleRepository
         return dto.VehicleId;
     }
 
-    public VehicleDTO? GetVehicleById(int id)
+    /// <inheritdoc/>
+    public VehicleDTO? GetVehicleById(long id)
     {
         var vehicle =
             _dbContext.Vehicle.AsNoTracking()
-                .FirstOrDefault(v => v.VehicleId == id);
+                .SingleOrDefault(v => v.VehicleId == id);
+
+        return vehicle;
+    }
+
+    /// <inheritdoc/>
+    public VehicleDTO? GetVehicleBySecondaryId(Guid secondaryId)
+    {
+        var vehicle =
+            _dbContext.Vehicle.AsNoTracking()
+                .SingleOrDefault(v => v.SecondaryId == secondaryId);
 
         return vehicle;
     }

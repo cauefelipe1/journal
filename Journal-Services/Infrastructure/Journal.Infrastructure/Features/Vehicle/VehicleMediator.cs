@@ -28,9 +28,13 @@ public abstract partial class VehicleMediator
 
     public class GetVehicleByIdQuery : IRequest<VehicleModel?>
     {
-        public int VehicleId { get; }
+        public long? VehicleId { get; }
 
-        public GetVehicleByIdQuery(int vehicleId) => VehicleId = vehicleId;
+        public Guid? VehicleSecondaryId { get; }
+
+        public GetVehicleByIdQuery(long vehicleId) => VehicleId = vehicleId;
+
+        public GetVehicleByIdQuery(Guid vehicleSecondaryId) => VehicleSecondaryId = vehicleSecondaryId;
     }
 
     [UsedImplicitly]
@@ -44,7 +48,16 @@ public abstract partial class VehicleMediator
         {
             VehicleModel? result = null;
 
-            var dto = _repo.GetVehicleById(request.VehicleId);
+            VehicleDTO? dto;
+
+            if (request.VehicleId.HasValue)
+                dto = _repo.GetVehicleById(request.VehicleId.Value);
+
+            else if (request.VehicleSecondaryId.HasValue)
+                dto = _repo.GetVehicleBySecondaryId(request.VehicleSecondaryId.Value);
+
+            else
+                throw new ArgumentException("A valid Vehicle Id or Secondary Id must be informed.");
 
             if (dto is not null)
                 result = BuildModel(dto);

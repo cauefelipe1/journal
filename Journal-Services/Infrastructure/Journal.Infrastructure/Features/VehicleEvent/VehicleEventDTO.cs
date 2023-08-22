@@ -2,13 +2,13 @@ namespace Journal.Infrastructure.Features.VehicleEvent;
 
 public class VehicleEventDTO
 {
-    public int VehicleEventId { get; set; }
+    public long VehicleEventId { get; set; }
 
-    public int OwnerDriverId { get; set; }
+    public long OwnerDriverId { get; set; }
 
-    public int VehicleId { get; set; }
+    public long VehicleId { get; set; }
 
-    public int DriverId { get; set; }
+    public long DriverId { get; set; }
 
     public DateTimeOffset EventDate { get; set; }
 

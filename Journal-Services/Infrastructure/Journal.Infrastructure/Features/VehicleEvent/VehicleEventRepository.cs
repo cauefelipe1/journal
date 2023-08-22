@@ -12,7 +12,7 @@ public class VehicleEventRepository : IVehicleEventRepository
     public VehicleEventRepository(DatabaseContext dbContext) => _dbContext = dbContext;
 
     /// <inheritdoc/>
-    public int InsertVehicleEvent(VehicleEventDTO dto)
+    public long InsertVehicleEvent(VehicleEventDTO dto)
     {
         _dbContext.VehicleEvent.Add(dto);
         _dbContext.SaveChanges();
@@ -62,7 +62,7 @@ public class VehicleEventRepository : IVehicleEventRepository
     }
 
     /// <inheritdoc/>
-    public IList<VehicleEventDTO> GetVehicleEventsByVehicleIdWithDate(int vehicleId, DateTimeOffset dateLimit){
+    public IList<VehicleEventDTO> GetVehicleEventsByVehicleIdWithDate(long vehicleId, DateTimeOffset dateLimit){
         var events =
             _dbContext.VehicleEvent
                 .Where(vehicleEvent => vehicleEvent.VehicleId == vehicleId &&

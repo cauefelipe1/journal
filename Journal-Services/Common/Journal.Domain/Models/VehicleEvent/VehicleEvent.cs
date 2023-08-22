@@ -42,26 +42,50 @@ public class VehicleEventModel
     /// The unique identifier for the vehicle event.
     /// </summary>
     /// <example>1</example>
-    public int Id { get; set; }
+    public long Id { get; set; }
+
+    /// <summary>
+    /// The unique secondary identifier for the vehicle event.
+    /// </summary>
+    /// <example>3b250b51-6e7a-4e85-b8d6-0b483ca86330</example>
+    public Guid SecondaryId { get; set; }
 
     /// <summary>
     /// The unique identifier for the owner driver of the vehicle.
     /// </summary>
     /// <example>2</example>
-    public int OwnerDriverId { get; set; }
+    public long OwnerDriverId { get; set; }
+
+    /// <summary>
+    /// The secondary Id of <see cref="OwnerDriverId"/>
+    /// </summary>
+    /// <example>30886fec-b295-44a4-839f-a778a628fd1a</example>
+    public Guid OwnerDriverSecondaryId { get; set; }
 
     /// <summary>
     /// The unique identifier for vehicle.
     /// </summary>
     /// <example>1</example>
-    public int VehicleId { get; set; }
+    public long VehicleId { get; set; }
+
+    /// <summary>
+    /// The secondary Id of <see cref="VehicleId"/>
+    /// </summary>
+    /// <example>7e246a84-6293-4ae4-8c41-5fc6f9264680</example>
+    public Guid VehicleSecondaryId { get; set; }
 
     /// <summary>
     /// The unique identifier for the driver that has created the event.
     /// The driver must have access to the vehicle in the moment of the event creation.
     /// </summary>
     /// <example>2</example>
-    public int DriverId { get; set; }
+    public long DriverId { get; set; }
+
+    /// <summary>
+    /// The secondary Id of <see cref="DriverId"/>
+    /// </summary>
+    /// <example>d27a9647-4e56-4049-b2e9-d856b7342b06</example>
+    public Guid DriverSecondaryId { get; set; }
 
     /// <summary>
     /// The date of the event.
