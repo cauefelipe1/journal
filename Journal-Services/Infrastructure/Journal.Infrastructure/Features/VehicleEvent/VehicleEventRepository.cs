@@ -39,9 +39,13 @@ public class VehicleEventRepository : IVehicleEventRepository
         const string SQL = @"
             select
                 e.vehicle_event_id as VehicleEventId,
+                e.secondary_id as SecondaryId,
                 e.owner_driver_id as OwnerDriverId,
+                owner_driver.secondary_id as OwnerDriverSecondaryId,
                 e.vehicle_id as VehicleId,
+                v.secondary_id as VehicleSecondaryId,
                 e.driver_id as DriverId,
+                d.secondary_id as DriverSecondaryId,
                 e.event_date as EventDate,
                 e.vehicle_odometer as VehicleOdometer,
                 e.vehicle_event_type_id as VehicleEventTypeId,
@@ -50,6 +54,8 @@ public class VehicleEventRepository : IVehicleEventRepository
             from
                 vehicle_event e
                 inner join vehicle v on e.vehicle_id = v.vehicle_id 
+                inner join driver owner_driver on e.owner_driver_id = owner_driver.driver_id
+                inner join driver d on e.driver_id = d.driver_id
             where 
                 v.secondary_id = @SecondaryId";
 

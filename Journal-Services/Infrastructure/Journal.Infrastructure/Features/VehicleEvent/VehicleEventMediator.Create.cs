@@ -50,6 +50,7 @@ public abstract partial class VehicleEventMediator
             ValidateModel(model, dependenciesModels.Vehicle);
 
             var dto = BuildDTO(request.Model);
+            dto.SecondaryId = Guid.NewGuid();
 
             long id = _repo.InsertVehicleEvent(dto);
 
@@ -95,8 +96,11 @@ public abstract partial class VehicleEventMediator
             var dto = new VehicleEventDTO
             {
                 VehicleId = model.VehicleId,
+                VehicleSecondaryId = model.VehicleSecondaryId,
                 DriverId = model.DriverId,
+                DriverSecondaryId = model.SecondaryId,
                 OwnerDriverId = model.OwnerDriverId,
+                OwnerDriverSecondaryId = model.SecondaryId,
                 EventDate = model.Date,
                 EventDescription = model.Description,
                 EventNote = model.Note,

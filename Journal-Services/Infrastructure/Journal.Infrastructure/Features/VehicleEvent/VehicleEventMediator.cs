@@ -50,9 +50,13 @@ public abstract partial class VehicleEventMediator
             var model = new VehicleEventModel
             {
                 Id = dto.VehicleEventId,
+                SecondaryId = dto.SecondaryId,
                 OwnerDriverId = dto.OwnerDriverId,
+                OwnerDriverSecondaryId = dto.OwnerDriverSecondaryId.Value,
                 DriverId = dto.DriverId,
+                DriverSecondaryId = dto.DriverSecondaryId.Value,
                 VehicleId = dto.VehicleId,
+                VehicleSecondaryId = dto.VehicleSecondaryId.Value,
                 Type = (VehicleEventType)dto.VehicleEventTypeId,
                 VehicleOdometer = dto.VehicleOdometer,
                 Date = dto.EventDate,

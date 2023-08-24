@@ -22,6 +22,10 @@ public class AddVehicleEventsTable_00008 : BaseMigration {
     private void InternalCreateVehicleEventsTable()
     {
         Create.Table("vehicle_event").InSchema(Settings.Database.SearchPath)
+                .WithColumn("secondary_id")
+                .AsGuid()
+                .NotNullable()
+                .WithColumnDescription("The public entity ID.")
             .WithColumn("vehicle_event_id").AsInt64().NotNullable().PrimaryKey().Identity()
             .WithColumn("owner_driver_id").AsInt64().NotNullable()
             .WithColumn("vehicle_id").AsInt64().NotNullable()
@@ -54,6 +58,12 @@ public class AddVehicleEventsTable_00008 : BaseMigration {
             .OnColumn("vehicle_id").Ascending()
             .WithOptions()
                 .NonClustered();
+
+        Create.Index("idx_vehicle_event_secondary_id").OnTable("vehicle_event").InSchema(Settings.Database.SearchPath)
+            .OnColumn("secondary_id")
+            .Unique()
+            .WithOptions()
+            .NonClustered();
     }
 
     public override void Down()
