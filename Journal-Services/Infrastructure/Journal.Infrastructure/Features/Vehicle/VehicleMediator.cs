@@ -7,7 +7,6 @@ namespace Journal.Infrastructure.Features.Vehicle;
 [UsedImplicitly]
 public abstract partial class VehicleMediator
 {
-
     private static VehicleModel BuildModel(VehicleDTO dto)
     {
         var model = new VehicleModel
@@ -15,7 +14,9 @@ public abstract partial class VehicleMediator
             Id = dto.VehicleId,
             SecondaryId = dto.SecondaryId,
             BrandId = dto.VehicleBrandId,
+            BrandSecondaryId = dto.VehicleBrandSecondaryId,
             MainDriverId = dto.MainDriverId,
+            MainDriverSecondaryId = dto.MainDriverSecondaryId,
             ModelName = dto.Model,
             ModelYear = dto.ModelYear,
             Nickname = dto.Nickname ?? string.Empty,
@@ -81,12 +82,10 @@ public abstract partial class VehicleMediator
     public class GetVehicleByMainDriverHandler : IRequestHandler<GetVehicleByMainDriverQuery, IList<VehicleModel>>
     {
         private readonly IVehicleRepository _repo;
-        private readonly ISender _sender;
 
         public GetVehicleByMainDriverHandler(IVehicleRepository repository, ISender sender)
         {
             _repo = repository;
-            _sender = sender;
         }
 
         public Task<IList<VehicleModel>> Handle(GetVehicleByMainDriverQuery request, CancellationToken cancellationToken) => Task.Run(() =>

@@ -1,6 +1,8 @@
 using JetBrains.Annotations;
+using Journal.Domain.Models.Driver;
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Driver;
+using Journal.Infrastructure.Features.VehicleBrand;
 using MediatR;
 
 namespace Journal.Infrastructure.Features.Vehicle;
@@ -34,19 +36,36 @@ public abstract partial class VehicleMediator
 
         public async Task<long> Handle(CreateVehicleQuery request, CancellationToken cancellationToken)
         {
-            var driver = await _sender.Send(new DriverMediator.GetDriverByIdQuery(request.MainDriverSecondaryId), cancellationToken);
-
-            if (driver is null)
-                throw new Exception("Driver not found");
+            var (driver, brand) = await InternalGetModelsDependencies(request.Model);
 
             var dto = BuildDTO(request.Model);
             dto.SecondaryId = Guid.NewGuid();
 
             dto.MainDriverId = driver.DriverId;
+            dto.VehicleBrandId = brand.Id;
 
             long id = _repo.InsertVehicle(dto);
 
             return id;
+        }
+
+        private async Task<(DriverModel Driver, VehicleBrandModel Brand)> InternalGetModelsDependencies(VehicleModel vehicleModel)
+        {
+            var vehicleTask = _sender.Send(new VehicleBrandMediator.GetVehicleBrandByIdQuery(vehicleModel.BrandSecondaryId.Value));
+            var driverTask = _sender.Send(new DriverMediator.GetDriverByIdQuery(vehicleModel.MainDriverSecondaryId.Value));
+
+            await Task.WhenAll(vehicleTask, driverTask);
+
+            var brand = vehicleTask.Result;
+            var driver = driverTask.Result;
+
+            if (brand is null)
+                throw new Exception("Vehicle not found.");
+
+            if (driver is null)
+                throw new Exception("Driver not found.");
+
+            return new (driver, brand);
         }
 
         private VehicleDTO BuildDTO(VehicleModel model)

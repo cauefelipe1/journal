@@ -37,6 +37,8 @@ public partial class DatabaseContext
             .HasKey(e => e.DriverId);
 
         modelBuilder.Entity<VehicleDTO>()
+            .Ignore(e => e.MainDriverSecondaryId)
+            .Ignore(e => e.VehicleBrandSecondaryId)
             .HasKey(e => e.VehicleId);
 
         modelBuilder.Entity<VehicleEventDTO>()

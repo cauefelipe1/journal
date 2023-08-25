@@ -21,7 +21,11 @@ public class VehicleDTO
 
     public int VehicleBrandId { get; set; }
 
+    public Guid? VehicleBrandSecondaryId { get; set; }
+
     public long MainDriverId { get; set; }
+
+    public Guid? MainDriverSecondaryId { get; set; }
 }
 
 [UsedImplicitly]

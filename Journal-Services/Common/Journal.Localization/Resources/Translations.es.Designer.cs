@@ -56,5 +56,11 @@ namespace Journal.Localization.Resources {
                 return ResourceManager.GetString("VehicleOdometerBehindPreviousRecord", resourceCulture);
             }
         }
+        
+        internal static string VehicleBrandNotFound {
+            get {
+                return ResourceManager.GetString("VehicleBrandNotFound", resourceCulture);
+            }
+        }
     }
 }

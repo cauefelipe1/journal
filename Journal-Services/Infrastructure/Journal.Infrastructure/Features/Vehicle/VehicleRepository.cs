@@ -40,22 +40,7 @@ public class VehicleRepository : IVehicleRepository
         return vehicle;
     }
 
-    /// <inheritdoc/>
-    public IList<VehicleDTO> GetVehicleByMainDriverId(int mainDriverId)
-    {
-        var vehicles =
-            _dbContext.Vehicle.AsNoTracking()
-                .Where(vehicle => vehicle.MainDriverId == mainDriverId)
-                .ToList();
-
-        return vehicles;
-    }
-
-    /// <inheritdoc/>
-    public IList<VehicleDTO> GetVehicleByMainDriverSecondaryId(Guid mainDriverId)
-    {
-        const string SQL =
-            @"
+    private const string GET_VEHICLE_SQL = @"
             select 
                 v.vehicle_id as VehicleId,
                 v.secondary_id as SecondaryId,
@@ -63,11 +48,34 @@ public class VehicleRepository : IVehicleRepository
                 v.nickname as Nickname, 
                 v.vehicle_type_id as VehicleTypeId, 
                 v.vehicle_brand_id as VehicleBrandId, 
+                vb.secondary_id as VehicleBrandSecondaryId,
                 v.model_year as ModelYear, 
-                v.main_driver_id as MainDriverId
+                v.main_driver_id as MainDriverId,
+                d.secondary_id as MainDriverSecondaryId
             from
                 vehicle v
                 inner join driver d on v.main_driver_id = d.driver_id
+                inner join vehicle_brand vb on v.vehicle_brand_id = vb.vehicle_brand_id";
+
+    /// <inheritdoc/>
+    public IList<VehicleDTO> GetVehicleByMainDriverId(int mainDriverId)
+    {
+        const string SQL = GET_VEHICLE_SQL + @"
+            where
+                d.main_driver_id = @MainDriverId";
+
+        using (var con = _dbContext.GetConnection())
+        {
+            var vehicles = con.Query<VehicleDTO>(SQL, new { MainDriverId = mainDriverId });
+
+            return vehicles.ToList();
+        }
+    }
+
+    /// <inheritdoc/>
+    public IList<VehicleDTO> GetVehicleByMainDriverSecondaryId(Guid mainDriverId)
+    {
+        const string SQL = GET_VEHICLE_SQL + @"
             where
                 d.secondary_id = @SecondaryId";
 
@@ -77,17 +85,5 @@ public class VehicleRepository : IVehicleRepository
 
             return vehicles.ToList();
         }
-    }
-
-    /// <inheritdoc/>
-    public IList<VehicleBrandDTO> GetAllBrands()
-    {
-        var brands =
-            _dbContext.VehicleBrand
-                .Where(brand => brand.VehicleBrandId > 0)
-                .AsNoTracking()
-                .ToList();
-
-        return brands;
     }
 }

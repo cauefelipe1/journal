@@ -119,10 +119,22 @@ public class VehicleModel
     public int BrandId { get; set; }
 
     /// <summary>
+    /// The unique secondary identifier for a <see cref="VehicleBrandModel"/>.
+    /// </summary>
+    /// <example>3</example>
+    public Guid? BrandSecondaryId { get; set; }
+
+    /// <summary>
     /// The unique identifier for the main <see cref="DriverModel"/>.
     /// </summary>
     /// <example>1</example>
     public long MainDriverId { get; set; }
+
+    /// <summary>
+    /// The unique secondary identifier for the main <see cref="DriverModel"/>.
+    /// </summary>
+    /// <example>1</example>
+    public Guid? MainDriverSecondaryId { get; set; }
 
     /// <summary>
     /// The name to be shown in the UI.

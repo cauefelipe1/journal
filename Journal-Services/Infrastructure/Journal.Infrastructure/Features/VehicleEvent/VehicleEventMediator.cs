@@ -7,10 +7,8 @@ namespace Journal.Infrastructure.Features.VehicleEvent;
 [UsedImplicitly]
 public abstract partial class VehicleEventMediator
 {
-
     public class GetVehicleEventByVehicleQuery : IRequest<IList<VehicleEventModel>>
     {
-
         public int? VehicleId { get; }
 
         public Guid? VehicleSecondaryId { get; }

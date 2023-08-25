@@ -26,16 +26,16 @@ public abstract partial class VehicleEventMediator
         private readonly record struct ModelsDependenciesResult(VehicleModel Vehicle, DriverModel Driver, DriverModel OwnerDriver);
 
         private readonly IVehicleEventRepository _repo;
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
         private readonly IStringLocalizer<Translations> _l10n;
 
         public CreateVehicleEventHandler(
             IVehicleEventRepository repo,
-            IMediator mediator,
+            ISender sender,
             IStringLocalizer<Translations> l10n)
         {
             _repo = repo;
-            _mediator = mediator;
+            _sender = sender;
             _l10n = l10n;
         }
 
@@ -66,8 +66,8 @@ public abstract partial class VehicleEventMediator
 
         private async Task<ModelsDependenciesResult> InternalGetModelsDependencies(VehicleEventModel eventModel)
         {
-            var vehicleTask = _mediator.Send(new VehicleMediator.GetVehicleByIdQuery(eventModel.VehicleSecondaryId));
-            var driverTask = _mediator.Send(new DriverMediator.GetDriverByIdQuery(eventModel.DriverSecondaryId));
+            var vehicleTask = _sender.Send(new VehicleMediator.GetVehicleByIdQuery(eventModel.VehicleSecondaryId));
+            var driverTask = _sender.Send(new DriverMediator.GetDriverByIdQuery(eventModel.DriverSecondaryId));
 
             //TODO: After refactoring the GetDriverById and GetDriverBySecondaryId to use Dapper rather than EF Core,
             // add this line back and fetch all dependencies at once.
@@ -77,7 +77,7 @@ public abstract partial class VehicleEventMediator
 
             var vehicle = vehicleTask.Result;
             var driver = driverTask.Result;
-            var ownerDriver = await _mediator.Send(new DriverMediator.GetDriverByIdQuery(eventModel.OwnerDriverSecondaryId));
+            var ownerDriver = await _sender.Send(new DriverMediator.GetDriverByIdQuery(eventModel.OwnerDriverSecondaryId));
 
             if (vehicle is null)
                 throw new Exception("Vehicle not found.");

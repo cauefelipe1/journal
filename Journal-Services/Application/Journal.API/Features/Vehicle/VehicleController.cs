@@ -1,5 +1,6 @@
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Vehicle;
+using Journal.Infrastructure.Features.VehicleBrand;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,8 @@ public class VehicleController : ControllerBase
             Nickname = input.Nickname,
             ModelYear = input.ModelYear,
             Type = input.Type,
-            BrandId = input.BrandId,
+            BrandSecondaryId = input.BrandId,
+            MainDriverSecondaryId = input.MainDriverId
         };
 
         long vehicleId = await _mediator.Send(new VehicleMediator.CreateVehicleQuery(model, input.MainDriverId));
@@ -67,7 +69,7 @@ public class VehicleController : ControllerBase
     [HttpGet("brands")]
     public async Task<ActionResult<IList<VehicleBrandModel>>> GetAllBrands()
     {
-        var brands = await _mediator.Send(new VehicleMediator.AllVehicleBrandQuery());
+        var brands = await _mediator.Send(new VehicleBrandMediator.AllVehicleBrandQuery());
 
         brands = brands
             .OrderBy(b => b.Name)

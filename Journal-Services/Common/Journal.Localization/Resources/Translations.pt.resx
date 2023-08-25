@@ -24,4 +24,7 @@
     <data name="VehicleOdometerBehindPreviousRecord" xml:space="preserve">
         <value>O odômetro informado é menor que o útimo registrado para a data informada.</value>
     </data>
+    <data name="VehicleBrandNotFound" xml:space="preserve">
+        <value>Marca do veículo não encontrada.</value>
+    </data>
 </root>
