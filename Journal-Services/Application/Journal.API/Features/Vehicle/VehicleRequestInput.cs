@@ -24,7 +24,7 @@ public class CreateVehicleInput
     public VehicleType Type { get; set; }
 
     /// <see cref="VehicleModel.BrandId"/>
-    /// <example>3</example>
+    /// <example>ba2d9e86-cedb-4fe9-b087-e70090c93b8c</example>
     public Guid BrandId { get; set; }
 
     /// <see cref="VehicleModel.MainDriverId"/>
