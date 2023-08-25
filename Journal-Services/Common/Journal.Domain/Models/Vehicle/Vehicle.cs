@@ -52,6 +52,12 @@ public class VehicleBrandModel
     public int Id { get; set; }
 
     /// <summary>
+    /// The vehicle brand unique secondary identifier.
+    /// </summary>
+    /// <example>1</example>
+    public Guid SecondaryId { get; set; }
+
+    /// <summary>
     /// The vehicle brand name.
     /// </summary>
     /// <example>Ford</example>

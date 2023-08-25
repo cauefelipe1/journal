@@ -30,6 +30,8 @@ public class VehicleBrandDTO
     [AdaptMember(nameof(VehicleBrandModel.Id))]
     public int VehicleBrandId { get; set; }
 
+    public Guid SecondaryId { get; set; }
+
     public string Name { get; set; } = default!;
 
     public int CountryId { get; set; }
