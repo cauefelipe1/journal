@@ -1,3 +1,4 @@
+using Journal.API.Configurations;
 using Journal.Infrastructure.Features.HealthCheck;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ namespace Journal.API.Features.HealthCheck;
 [Produces("application/json")]
 [Authorize]
 [Route("api/health_heck/")]
+[ApiExplorerSettings(GroupName = Constants.Swagger.GENERAL_API)]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class HealthCheckController : ControllerBase

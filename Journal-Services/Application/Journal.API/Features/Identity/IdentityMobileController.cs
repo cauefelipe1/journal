@@ -18,14 +18,14 @@ namespace Journal.API.Features.Identity;
 [Authorize]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
-[Route("api/identity")]
-[ApiExplorerSettings(GroupName = Constants.Swagger.GENERAL_API)]
-public class IdentityController : ControllerBase
+[Route("app/mobile/identity")]
+[ApiExplorerSettings(GroupName = Constants.Swagger.MOBILE_API)]
+public class IdentityMobileController : ControllerBase
 {
     private readonly IMediator _mediator;
 
     /// <inheritdoc/>
-    public IdentityController(IMediator mediator) => _mediator = mediator;
+    public IdentityMobileController(IMediator mediator) => _mediator = mediator;
 
     /// <summary>
     /// Register a new user into the application.
