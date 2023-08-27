@@ -1,3 +1,4 @@
+using Journal.API.Configurations;
 using Journal.API.DependencyInjection;
 using Journal.Identity.Extensions;
 using Journal.SharedSettings;
@@ -30,7 +31,11 @@ app.UseAppLocalization();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint($"/swagger/{Constants.Swagger.GENERAL_API}/swagger.json", Constants.Swagger.GENERAL_API);
+            c.SwaggerEndpoint($"/swagger/{Constants.Swagger.MOBILE_API}/swagger.json", Constants.Swagger.MOBILE_API);
+        });
 }
 
 app.UseHttpsRedirection();

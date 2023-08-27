@@ -1,3 +1,4 @@
+using Journal.API.Configurations;
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Vehicle;
 using Journal.Infrastructure.Features.VehicleBrand;
@@ -14,6 +15,7 @@ namespace Journal.API.Features.Vehicle;
 [Produces("application/json")]
 [Authorize]
 [Route("api/vehicle")]
+[ApiExplorerSettings(GroupName = Constants.Swagger.GENERAL_API)]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class VehicleController : ControllerBase

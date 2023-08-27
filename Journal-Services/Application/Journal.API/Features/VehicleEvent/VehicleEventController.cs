@@ -1,3 +1,4 @@
+using Journal.API.Configurations;
 using Journal.Domain.Models.VehicleEvent;
 using Journal.Infrastructure.Features.VehicleEvent;
 using MediatR;
@@ -14,6 +15,7 @@ namespace Journal.API.Features.VehicleEvent;
 [Produces("application/json")]
 [Authorize]
 [Route("api/vehicle_event")]
+[ApiExplorerSettings(GroupName = Constants.Swagger.GENERAL_API)]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class VehicleEventController : ControllerBase

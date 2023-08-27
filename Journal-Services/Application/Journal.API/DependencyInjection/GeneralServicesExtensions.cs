@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Reflection;
+using Journal.API.Configurations;
 using Journal.Infrastructure.Database;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -10,6 +12,8 @@ namespace Journal.API.DependencyInjection;
 /// </summary>
 public static class GeneralServicesExtensions
 {
+    private static string Capitalize(this string text) => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text);
+
     /// <summary>
     /// Adds the all swagger dependencies into the <see cref="IServiceCollection"/>.
     /// </summary>
@@ -20,7 +24,14 @@ public static class GeneralServicesExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Journal API", Version = "V1" });
+            options.SwaggerDoc(
+                Constants.Swagger.GENERAL_API,
+                new OpenApiInfo { Title = $"Journal {Constants.Swagger.GENERAL_API.Capitalize()} API", Version = "V3" });
+
+            options.SwaggerDoc(
+                Constants.Swagger.MOBILE_API,
+                new OpenApiInfo { Title = $"Journal {Constants.Swagger.MOBILE_API.Capitalize()} API", Version = "V3" });
+
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,

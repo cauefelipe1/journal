@@ -1,3 +1,4 @@
+using Journal.API.Configurations;
 using Journal.API.Extensions;
 using Journal.Domain.Models.Driver;
 using Journal.Infrastructure.Features.Driver;
@@ -13,7 +14,8 @@ namespace Journal.API.Features.Driver;
 [ApiController]
 [Produces("application/json")]
 [Authorize]
-[Route("app/driver/mobile")]
+[Route("app/mobile/driver")]
+[ApiExplorerSettings(GroupName = Constants.Swagger.MOBILE_API)]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class DriverMobileController : ControllerBase
