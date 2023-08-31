@@ -1,3 +1,4 @@
+using Journal.Domain.Base;
 using Journal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,11 +36,11 @@ public class DriverRepository : IDriverRepository
     }
 
     /// <inheritdoc/>
-    public long InsertDriver(DriverDTO dto)
+    public ModelDoublePK InsertDriver(DriverDTO dto)
     {
         _dbContext.Driver.Add(dto);
         _dbContext.SaveChanges();
 
-        return dto.DriverId;
+        return new ModelDoublePK(dto.DriverId, dto.SecondaryId);
     }
 }

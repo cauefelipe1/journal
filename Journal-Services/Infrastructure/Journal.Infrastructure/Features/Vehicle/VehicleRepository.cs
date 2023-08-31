@@ -1,4 +1,5 @@
 using Dapper;
+using Journal.Domain.Base;
 using Journal.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +13,12 @@ public class VehicleRepository : IVehicleRepository
     public VehicleRepository(DatabaseContext dbContext) => _dbContext = dbContext;
 
     /// <inheritdoc/>
-    public long InsertVehicle(VehicleDTO dto)
+    public ModelDoublePK InsertVehicle(VehicleDTO dto)
     {
         _dbContext.Vehicle.Add(dto);
         _dbContext.SaveChanges();
 
-        return dto.VehicleId;
+        return new ModelDoublePK(dto.VehicleId, dto.SecondaryId);
     }
 
     /// <inheritdoc/>

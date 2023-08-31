@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Journal.Domain.Base;
 using Journal.Domain.Models.Driver;
 using Journal.Domain.Models.Vehicle;
 using Journal.Domain.Models.VehicleEvent;
@@ -13,7 +14,7 @@ namespace Journal.Infrastructure.Features.VehicleEvent;
 public abstract partial class VehicleEventMediator
 {
 
-    public class CreateVehicleEventQuery : IRequest<long>
+    public class CreateVehicleEventQuery : IRequest<ModelDoublePK>
     {
         public VehicleEventModel Model { get; }
 
@@ -21,7 +22,7 @@ public abstract partial class VehicleEventMediator
     }
 
     [UsedImplicitly]
-    public class CreateVehicleEventHandler : IRequestHandler<CreateVehicleEventQuery, long>
+    public class CreateVehicleEventHandler : IRequestHandler<CreateVehicleEventQuery, ModelDoublePK>
     {
         private readonly record struct ModelsDependenciesResult(VehicleModel Vehicle, DriverModel Driver, DriverModel OwnerDriver);
 
@@ -39,7 +40,7 @@ public abstract partial class VehicleEventMediator
             _l10n = l10n;
         }
 
-        public async Task<long> Handle(CreateVehicleEventQuery request, CancellationToken cancellationToken)
+        public async Task<ModelDoublePK> Handle(CreateVehicleEventQuery request, CancellationToken cancellationToken)
         {
             var model = request.Model;
 
@@ -52,9 +53,9 @@ public abstract partial class VehicleEventMediator
             var dto = BuildDTO(request.Model);
             dto.SecondaryId = Guid.NewGuid();
 
-            long id = _repo.InsertVehicleEvent(dto);
+            var ids = _repo.InsertVehicleEvent(dto);
 
-            return id;
+            return ids;
         }
 
         private void PopulateIds(VehicleEventModel model, ModelsDependenciesResult dependencies)

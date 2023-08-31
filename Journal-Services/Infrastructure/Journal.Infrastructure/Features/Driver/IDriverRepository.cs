@@ -1,3 +1,5 @@
+using Journal.Domain.Base;
+
 namespace Journal.Infrastructure.Features.Driver;
 
 /// <summary>
@@ -24,5 +26,5 @@ public interface IDriverRepository
     /// </summary>
     /// <param name="dto">The driver to be saved</param>
     /// <returns>The ID of the driver.</returns>
-    long InsertDriver(DriverDTO dto);
+    ModelDoublePK InsertDriver(DriverDTO dto);
 }

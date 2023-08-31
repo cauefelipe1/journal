@@ -20,10 +20,10 @@ namespace Journal.API.Features.Driver;
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 public class DriverController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly ISender _sender;
 
     /// <inheritdoc/>
-    public DriverController(IMediator mediator) => _mediator = mediator;
+    public DriverController(ISender sender) => _sender = sender;
 
     /// <summary>
     /// Gets a driver based on its ID.
@@ -33,7 +33,7 @@ public class DriverController : ControllerBase
     [HttpGet("{driverId:guid}")]
     public async Task<ActionResult<DriverModel>> GetDriverById(Guid driverId)
     {
-        var driver = await _mediator.Send(new DriverMediator.GetDriverByIdQuery(driverId));
+        var driver = await _sender.Send(new DriverMediator.GetDriverByIdQuery(driverId));
 
         if (driver is null)
             return NotFound();
@@ -60,8 +60,8 @@ public class DriverController : ControllerBase
             UserId = this.GetUserSecondaryId()
         };
 
-        long driverId = await _mediator.Send(new DriverMediator.CreateDriverByIdQuery(model));
+        var driverPks = await _sender.Send(new DriverMediator.CreateDriverCommand(model));
 
-        return Created(string.Empty, driverId);
+        return Created(string.Empty, driverPks.Id);
     }
 }

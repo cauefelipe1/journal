@@ -1,4 +1,6 @@
-﻿namespace Journal.Infrastructure.Features.Vehicle;
+﻿using Journal.Domain.Base;
+
+namespace Journal.Infrastructure.Features.Vehicle;
 
 /// <summary>
 /// Defines the methods for handling the Vehicles feature storage.
@@ -10,7 +12,7 @@ public interface IVehicleRepository
     /// </summary>
     /// <param name="dto">The vehicle to be saved.</param>
     /// <returns>The ID of the vehicle.</returns>
-    long InsertVehicle(VehicleDTO dto);
+    ModelDoublePK InsertVehicle(VehicleDTO dto);
 
     /// <summary>
     /// Gets a the <see cref="VehicleDTO"/> for a specific vehicle id.

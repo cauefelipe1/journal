@@ -121,7 +121,7 @@ public class VehicleModel
     /// <summary>
     /// The unique secondary identifier for a <see cref="VehicleBrandModel"/>.
     /// </summary>
-    /// <example>3</example>
+    /// <example>fef18a07-e65b-4567-a595-ceb9f7e0258e</example>
     public Guid? BrandSecondaryId { get; set; }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class VehicleModel
     /// <summary>
     /// The unique secondary identifier for the main <see cref="DriverModel"/>.
     /// </summary>
-    /// <example>1</example>
+    /// <example>fef18a07-e65b-4567-a595-ceb9f7e0258e</example>
     public Guid? MainDriverSecondaryId { get; set; }
 
     /// <summary>

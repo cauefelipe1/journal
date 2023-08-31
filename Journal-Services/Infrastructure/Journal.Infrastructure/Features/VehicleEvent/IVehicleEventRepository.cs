@@ -1,3 +1,5 @@
+using Journal.Domain.Base;
+
 namespace Journal.Infrastructure.Features.VehicleEvent;
 
 /// <summary>
@@ -10,7 +12,7 @@ public interface IVehicleEventRepository
     /// </summary>
     /// <param name="dto">The vehicle event to be saved.</param>
     /// <returns>The ID of the vehicle event.</returns>
-    public long InsertVehicleEvent(VehicleEventDTO dto);
+    public ModelDoublePK InsertVehicleEvent(VehicleEventDTO dto);
 
     /// <summary>
     /// Gets all events for a vehicle.

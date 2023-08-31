@@ -22,10 +22,10 @@ namespace Journal.API.Features.Identity;
 [ApiExplorerSettings(GroupName = Constants.Swagger.GENERAL_API)]
 public class IdentityController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly ISender _sender;
 
     /// <inheritdoc/>
-    public IdentityController(IMediator mediator) => _mediator = mediator;
+    public IdentityController(ISender sender) => _sender = sender;
 
     /// <summary>
     /// Register a new user into the application.
@@ -39,7 +39,7 @@ public class IdentityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest();
 
-        var registrationResult = await _mediator.Send(new UserMediator.UserRegistrationQuery(userInput));
+        var registrationResult = await _sender.Send(new UserMediator.UserRegistrationQuery(userInput));
 
         return Ok(registrationResult);
     }
@@ -56,7 +56,7 @@ public class IdentityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest();
 
-        var loginResult = await _mediator.Send(new UserMediator.UserLoginQuery(loginInput));
+        var loginResult = await _sender.Send(new UserMediator.UserLoginQuery(loginInput));
 
         return Ok(loginResult);
     }
@@ -73,7 +73,7 @@ public class IdentityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest();
 
-        var loginResult = await _mediator.Send(new JwtMediator.RefreshTokenQuery(refreshInput));
+        var loginResult = await _sender.Send(new JwtMediator.RefreshTokenQuery(refreshInput));
 
         return Created(string.Empty, loginResult);
     }
@@ -90,7 +90,7 @@ public class IdentityController : ControllerBase
 
         int userId = this.GetUserSecondaryId();
 
-        var userData = await _mediator.Send(new UserMediator.GetUserDataQuery(userId));
+        var userData = await _sender.Send(new UserMediator.GetUserDataQuery(userId));
 
         if (userData is null)
             return NotFound();

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Journal.Domain.Base;
 using Journal.Domain.Models.Driver;
 using MediatR;
 
@@ -6,28 +7,28 @@ namespace Journal.Infrastructure.Features.Driver;
 
 public abstract partial class DriverMediator
 {
-    public class CreateDriverByIdQuery : IRequest<long>
+    public class CreateDriverCommand : IRequest<ModelDoublePK>
     {
         public DriverModel Model { get; }
 
-        public CreateDriverByIdQuery(DriverModel model) => Model = model;
+        public CreateDriverCommand(DriverModel model) => Model = model;
     }
 
     [UsedImplicitly]
-    public class CreateDriverCommandHandler : IRequestHandler<CreateDriverByIdQuery, long>
+    public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, ModelDoublePK>
     {
         private readonly IDriverRepository _repo;
 
         public CreateDriverCommandHandler(IDriverRepository repo) => _repo = repo;
 
-        public Task<long> Handle(CreateDriverByIdQuery request, CancellationToken cancellationToken) => Task.Run(() =>
+        public Task<ModelDoublePK> Handle(CreateDriverCommand request, CancellationToken cancellationToken) => Task.Run(() =>
         {
             var dto = BuildDTO(request.Model);
             dto.SecondaryId = Guid.NewGuid();
 
-            long id = _repo.InsertDriver(dto);
+            var result = _repo.InsertDriver(dto);
 
-            return id;
+            return result;
         }, cancellationToken);
 
         private DriverDTO BuildDTO(DriverModel model)

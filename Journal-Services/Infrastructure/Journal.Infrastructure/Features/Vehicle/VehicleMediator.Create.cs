@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Journal.Domain.Base;
 using Journal.Domain.Models.Driver;
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Driver;
@@ -9,7 +10,7 @@ namespace Journal.Infrastructure.Features.Vehicle;
 
 public abstract partial class VehicleMediator
 {
-    public class CreateVehicleQuery : IRequest<long>
+    public class CreateVehicleQuery : IRequest<ModelDoublePK>
     {
         public VehicleModel Model { get; }
 
@@ -23,7 +24,7 @@ public abstract partial class VehicleMediator
     }
 
     [UsedImplicitly]
-    public class CreateVehicleHandler : IRequestHandler<CreateVehicleQuery, long>
+    public class CreateVehicleHandler : IRequestHandler<CreateVehicleQuery, ModelDoublePK>
     {
         private readonly IVehicleRepository _repo;
         private readonly ISender _sender;
@@ -34,7 +35,7 @@ public abstract partial class VehicleMediator
             _sender = sender;
         }
 
-        public async Task<long> Handle(CreateVehicleQuery request, CancellationToken cancellationToken)
+        public async Task<ModelDoublePK> Handle(CreateVehicleQuery request, CancellationToken cancellationToken)
         {
             var (driver, brand) = await InternalGetModelsDependencies(request.Model);
 
@@ -44,9 +45,9 @@ public abstract partial class VehicleMediator
             dto.MainDriverId = driver.DriverId;
             dto.VehicleBrandId = brand.Id;
 
-            long id = _repo.InsertVehicle(dto);
+            var doublePk = _repo.InsertVehicle(dto);
 
-            return id;
+            return doublePk;
         }
 
         private async Task<(DriverModel Driver, VehicleBrandModel Brand)> InternalGetModelsDependencies(VehicleModel vehicleModel)

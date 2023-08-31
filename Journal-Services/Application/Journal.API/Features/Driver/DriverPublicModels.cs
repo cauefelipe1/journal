@@ -1,3 +1,4 @@
+using Journal.Domain.Base;
 using Journal.Domain.Models.Driver;
 
 namespace Journal.API.Features.Driver;
@@ -5,7 +6,7 @@ namespace Journal.API.Features.Driver;
 /// <summary>
 /// Represents a driver for the Mobile Application
 /// </summary>
-public class DriverMobileModel
+public class DriverMobileModel : IPublicModel<DriverModel, DriverMobileModel>
 {
     /// <see cref="DriverModel.SecondaryId"/>
     /// <example>f58ae19d-8394-43de-9568-7bdfc745f643</example>
@@ -31,6 +32,7 @@ public class DriverMobileModel
     /// <example>1</example>
     public int UserId { get; set; }
 
+    /// <inheritdoc/>
     public static DriverMobileModel FromModel(DriverModel source)
     {
         if (source is null)
