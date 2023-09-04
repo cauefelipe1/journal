@@ -1,3 +1,4 @@
+using Journal.API.Base;
 using Journal.API.Configurations;
 using Journal.API.Extensions;
 using Journal.Domain.Models.Driver;
@@ -31,14 +32,14 @@ public class DriverController : ControllerBase
     /// <param name="driverId">The driver unique identifier.</param>
     /// <returns>An instance of <see cref="DriverModel"/></returns>
     [HttpGet("{driverId:guid}")]
-    public async Task<ActionResult<DriverModel>> GetDriverById(Guid driverId)
+    public async Task<ActionResult<ApiResponse<DriverModel>>> GetDriverById(Guid driverId)
     {
         var driver = await _sender.Send(new DriverMediator.GetDriverByIdQuery(driverId));
 
         if (driver is null)
-            return NotFound();
+            return NotFound(ApiResponse<DriverModel>.NonSuccess("Driver not found."));
 
-        return Ok(driver);
+        return Ok(ApiResponse<DriverModel>.WithSuccess(driver));
     }
 
     /// <summary>
