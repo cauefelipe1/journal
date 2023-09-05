@@ -1,3 +1,4 @@
+using Journal.API.Base;
 using Journal.API.Configurations;
 using Journal.API.Extensions;
 using Journal.Domain.Models.Driver;
@@ -31,7 +32,7 @@ public class DriverMobileController : ControllerBase
     /// <param name="driverId">The driver unique identifier.</param>
     /// <returns>An instance of <see cref="DriverModel"/></returns>
     [HttpGet("{driverId:guid}")]
-    public async Task<ActionResult<DriverMobileModel>> GetDriverById(Guid driverId)
+    public async Task<ActionResult<ApiResponse<DriverMobileModel>>> GetDriverById(Guid driverId)
     {
         var driver = await _sender.Send(new DriverMediator.GetDriverByIdQuery(driverId));
 
@@ -40,7 +41,7 @@ public class DriverMobileController : ControllerBase
 
         var result = DriverMobileModel.FromModel(driver);
 
-        return Ok(result);
+        return Ok(ApiResponse<DriverMobileModel>.WithSuccess(result));
     }
 
     /// <summary>

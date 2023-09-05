@@ -21,7 +21,7 @@ public sealed record ApiResponse<T>
     /// When the request is not checked as success, it contains the failure's details.
     /// Empty or null otherwise.
     /// </summary>
-    /// <example>THe current event is behind the last odometer for provided date.</example>
+    /// <example>The current event is behind the last odometer for provided date.</example>
     public string? Details { get; private set; }
 
 
