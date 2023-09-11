@@ -48,5 +48,5 @@ public class DriverModel
     /// The user id associated with the driver.
     /// </summary>
     /// <example>1</example>
-    public int UserId { get; set; }
+    public uint UserId { get; set; }
 }

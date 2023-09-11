@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:journal_mobile_app/features/identity/identity_service.dart';
+import 'package:journal_mobile_app/features/driver/driver_data_service.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,9 +11,10 @@ import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/routes/routes_constants.dart';
 
 var loggedUserInfoProvider = FutureProvider.autoDispose((ref) async {
-  var userInf = await ref.watch(identityServiceProvider).getUserData();
+  var loggedDriverInf = await ref.watch(driverDataServiceProvider).getLoggedDriver();
+
   ref.keepAlive();
-  return userInf!;
+  return loggedDriverInf!;
 });
 
 class Application extends ConsumerWidget {

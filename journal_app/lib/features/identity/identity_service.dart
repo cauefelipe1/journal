@@ -44,7 +44,7 @@ class IdentityService implements IIdentityService {
       return null;
     }
 
-    var userData = UserData.fromJson(requestResult);
+    var userData = UserData.fromJson(requestResult["data"]);
 
     return userData;
   }

@@ -15,5 +15,5 @@ public class DriverDTO
 
     public int CountryId { get; set; }
 
-    public int UserId { get; set; }
+    public uint UserId { get; set; }
 }

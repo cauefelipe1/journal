@@ -50,7 +50,7 @@ public class VehicleEventRepository : IVehicleEventRepository
                 e.event_date as EventDate,
                 e.vehicle_odometer as VehicleOdometer,
                 e.vehicle_event_type_id as VehicleEventTypeId,
-                e.event_description as EvendDescription,
+                e.event_description as EventDescription,
                 e.event_note as EventNote
             from
                 vehicle_event e

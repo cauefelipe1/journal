@@ -8,14 +8,13 @@ part of '../vehicle_event.dart';
 
 VehicleEventModel _$VehicleEventModelFromJson(Map<String, dynamic> json) =>
     VehicleEventModel(
-      id: json['id'] as int?,
-      ownerDriverId: json['ownerDriverId'] as int?,
-      vehicleId: json['vehicleId'] as int?,
-      driverId: json['driverId'] as int?,
-      date:
-          json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      vehicleOdometer: json['vehicleOdometer'] as int?,
-      type: $enumDecodeNullable(_$VehicleEventTypeEnumMap, json['type']),
+      id: json['id'] as String,
+      ownerDriverId: json['ownerDriverId'] as String,
+      vehicleId: json['vehicleId'] as String,
+      driverId: json['driverId'] as String,
+      date: DateTime.parse(json['date'] as String),
+      vehicleOdometer: json['vehicleOdometer'] as int,
+      type: $enumDecode(_$VehicleEventTypeEnumMap, json['type']),
       description: json['description'] as String?,
       note: json['note'] as String?,
     );
@@ -26,9 +25,9 @@ Map<String, dynamic> _$VehicleEventModelToJson(VehicleEventModel instance) =>
       'ownerDriverId': instance.ownerDriverId,
       'vehicleId': instance.vehicleId,
       'driverId': instance.driverId,
-      'date': instance.date?.toIso8601String(),
+      'date': instance.date.toIso8601String(),
       'vehicleOdometer': instance.vehicleOdometer,
-      'type': _$VehicleEventTypeEnumMap[instance.type],
+      'type': _$VehicleEventTypeEnumMap[instance.type]!,
       'description': instance.description,
       'note': instance.note,
     };

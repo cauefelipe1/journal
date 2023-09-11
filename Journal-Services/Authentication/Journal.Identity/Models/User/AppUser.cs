@@ -11,5 +11,5 @@ public class AppUserModel : IdentityUser
     /// The secondary id to be used at the business level.
     /// </summary>
     /// <example>1</example>
-    public long SecondaryId { get; set; }
+    public uint SecondaryId { get; set; }
 }

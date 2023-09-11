@@ -9,7 +9,7 @@ final vehicleRepositoryProvider = Provider<IVehicleRepository>((ref) {
 
 abstract class IVehicleRepository {
   Future<List<VehicleBrandModel>> getAllBrands();
-  Future<List<VehicleModel>> getDriverVehicles(int driverId);
+  Future<List<VehicleModel>> getDriverVehicles(String driverId);
 }
 
 class VehicleRepository implements IVehicleRepository {
@@ -21,8 +21,6 @@ class VehicleRepository implements IVehicleRepository {
 
   @override
   Future<List<VehicleBrandModel>> getAllBrands() async {
-    await Future.delayed(const Duration(seconds: 10));
-
     var requestResult = await _httpClient.executeAuthGet(ApiConstants.vehicle.allBrands);
 
     if (requestResult == null) {
@@ -38,7 +36,7 @@ class VehicleRepository implements IVehicleRepository {
   }
 
   @override
-  Future<List<VehicleModel>> getDriverVehicles(int driverId) async {
+  Future<List<VehicleModel>> getDriverVehicles(String driverId) async {
     String path = "${ApiConstants.vehicle.driverVehicles}/$driverId";
 
     var requestResult = await _httpClient.executeAuthGet(path);
@@ -47,11 +45,11 @@ class VehicleRepository implements IVehicleRepository {
       return [];
     }
 
-    var brands = <VehicleModel>[];
-    for (var p in requestResult) {
-      brands.add(VehicleModel.fromJson(p));
+    var vehicles = <VehicleModel>[];
+    for (var p in requestResult["data"]) {
+      vehicles.add(VehicleModel.fromJson(p));
     }
 
-    return brands;
+    return vehicles;
   }
 }

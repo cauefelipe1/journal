@@ -4,12 +4,12 @@ import 'package:journal_mobile_app/models/vehicle.dart';
 class MyVehicleCardComponent extends StatelessWidget {
   static const double _CARD_WIDGET = 160;
 
-  final int vehicleId;
+  final String vehicleId;
   final VehicleType type;
   final String? name;
   final double? width;
 
-  final ValueChanged<int>? onPressed;
+  final ValueChanged<String>? onPressed;
 
   const MyVehicleCardComponent({
     Key? key,

@@ -21,27 +21,25 @@ Map<String, dynamic> _$VehicleBrandModelToJson(VehicleBrandModel instance) =>
     };
 
 VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) => VehicleModel(
-      id: json['id'] as int?,
-      secondaryId: json['secondaryId'] as String?,
-      modelName: json['modelName'] as String?,
-      nickname: json['nickname'] as String?,
-      modelYear: json['modelYear'] as int?,
-      type: $enumDecodeNullable(_$VehicleTypeEnumMap, json['type']),
-      brandId: json['brandId'] as int?,
-      mianDriverId: json['mianDriverId'] as int?,
-      displayName: json['displayName'] as String?,
+      id: json['id'] as String?,
+      modelName: json['modelName'] as String,
+      nickname: json['nickname'] as String,
+      modelYear: json['modelYear'] as int,
+      type: $enumDecode(_$VehicleTypeEnumMap, json['type']),
+      brandId: json['brandId'] as String,
+      mainDriverId: json['mainDriverId'] as String,
+      displayName: json['displayName'] as String,
     );
 
 Map<String, dynamic> _$VehicleModelToJson(VehicleModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'secondaryId': instance.secondaryId,
       'modelName': instance.modelName,
       'nickname': instance.nickname,
       'modelYear': instance.modelYear,
-      'type': _$VehicleTypeEnumMap[instance.type],
+      'type': _$VehicleTypeEnumMap[instance.type]!,
       'brandId': instance.brandId,
-      'mianDriverId': instance.mianDriverId,
+      'mainDriverId': instance.mainDriverId,
       'displayName': instance.displayName,
     };
 

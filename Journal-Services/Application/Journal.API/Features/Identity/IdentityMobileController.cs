@@ -1,6 +1,6 @@
+using Journal.API.Base;
 using Journal.API.Configurations;
 using Journal.API.Extensions;
-using Journal.Domain.Models.User;
 using Journal.Identity.Features.Jwt;
 using Journal.Identity.Features.User;
 using Journal.Identity.Models.User;
@@ -83,19 +83,21 @@ public class IdentityMobileController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("userData")]
-    public async Task<ActionResult<UserData>> GetUserData()
+    public async Task<ActionResult<ApiResponse<UserDataMobileModel>>> GetUserData()
     {
         if (!ModelState.IsValid)
             return BadRequest();
 
-        int userId = this.GetUserSecondaryId();
+        var userId = this.GetUserId();
 
         var userData = await _sender.Send(new UserMediator.GetUserDataQuery(userId));
 
         if (userData is null)
             return NotFound();
 
-        return Ok(userData);
+        var result = UserDataMobileModel.FromModel(userData);
+
+        return Ok(ApiResponse<UserDataMobileModel>.WithSuccess(result));
     }
 
     /// <summary>

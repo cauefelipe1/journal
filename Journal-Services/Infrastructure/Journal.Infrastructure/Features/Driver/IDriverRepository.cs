@@ -27,4 +27,11 @@ public interface IDriverRepository
     /// <param name="dto">The driver to be saved</param>
     /// <returns>The ID of the driver.</returns>
     ModelDoublePK InsertDriver(DriverDTO dto);
+
+    /// <summary>
+    /// Retrieves a driver from the storage based on a driver's user ID.
+    /// </summary>
+    /// <param name="userId">The driver's user ID.</param>
+    /// <returns>The driver instance.</returns>
+    DriverDTO? GetDriverByUserId(uint userId);
 }

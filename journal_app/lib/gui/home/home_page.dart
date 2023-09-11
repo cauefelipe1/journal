@@ -21,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   _HomePageState({required this.bottomNavbarListener});
 
-  int? currentVehicle = null;
+  String? currentVehicle = null;
   late final ScrollController _scrollController;
   final BottomNavbarNotifier bottomNavbarListener;
 

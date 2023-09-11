@@ -6,6 +6,20 @@ namespace Journal.Infrastructure.Features.Driver;
 
 public abstract partial class DriverMediator
 {
+    private static DriverModel BuildModel(DriverDTO dto)
+    {
+        return new()
+        {
+            DriverId = dto.DriverId,
+            SecondaryId = dto.SecondaryId,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            CountryId = dto.CountryId,
+            FullName = $"{dto.FirstName} {dto.LastName}",
+            UserId = dto.UserId
+        };
+    }
+
     public class GetDriverByIdQuery : IRequest<DriverModel?>
     {
         public Guid? SecondaryId { get; }
@@ -41,19 +55,5 @@ public abstract partial class DriverMediator
 
             return result;
         }, cancellationToken);
-
-        private DriverModel BuildModel(DriverDTO dto)
-        {
-            return new()
-            {
-                DriverId = dto.DriverId,
-                SecondaryId = dto.SecondaryId,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                CountryId = dto.CountryId,
-                FullName = $"{dto.FirstName} {dto.LastName}",
-                UserId = dto.UserId
-            };
-        }
     }
 }

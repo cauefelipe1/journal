@@ -57,11 +57,10 @@ public class DriverController : ControllerBase
         {
             FirstName = input.FirstName,
             LastName = input.LastName,
-            CountryId = input.CountryId,
-            UserId = this.GetUserSecondaryId()
+            CountryId = input.CountryId
         };
 
-        var driverPks = await _sender.Send(new DriverMediator.CreateDriverCommand(model));
+        var driverPks = await _sender.Send(new DriverMediator.CreateDriverCommand(model, this.GetUserId()));
 
         return Created(string.Empty, driverPks.Id);
     }
