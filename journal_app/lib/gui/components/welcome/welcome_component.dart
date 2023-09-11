@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/application.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
+import 'package:journal_mobile_app/models/driver.dart';
 import 'package:journal_mobile_app/models/user.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -37,7 +38,7 @@ class WelcomeComponent extends StatelessWidget {
     );
   }
 
-  Widget _getBody(UserData? userData, AppLocalizations l10n) {
+  Widget _getBody(LoggedDriverDataModel? userData, AppLocalizations l10n) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +51,7 @@ class WelcomeComponent extends StatelessWidget {
           ),
         ),
         Text(
-          userData?.displayName ?? "Unknown",
+          userData?.driver.firstName ?? "Unknown",
           style: const TextStyle(
             color: Colors.white,
             fontSize: 25,

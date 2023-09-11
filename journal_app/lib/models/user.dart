@@ -13,23 +13,12 @@ enum UserType {
 
 @JsonSerializable()
 class UserData extends Serializable {
-  final int userId;
+  final String id;
   UserType userType;
   String email;
   String username;
-  String name;
-  String nickname;
-  String displayName;
 
-  UserData({
-    required this.userId,
-    required this.userType,
-    required this.email,
-    required this.username,
-    required this.name,
-    required this.nickname,
-    required this.displayName,
-  });
+  UserData({required this.id, required this.userType, required this.email, required this.username});
 
   @override
   Map<String, dynamic> toJson() => _$UserDataToJson(this);

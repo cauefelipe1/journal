@@ -1,3 +1,4 @@
+using Journal.API.Base;
 using Journal.API.Configurations;
 using Journal.Domain.Models.Vehicle;
 using Journal.Infrastructure.Features.Vehicle;
@@ -57,7 +58,7 @@ public class VehicleMobileController : ControllerBase
     /// <param name="driverId">The id of the driver.</param>
     /// <returns>A collection of <see cref="VehicleMobileModel"/></returns>
     [HttpGet("by_main_driver/{driverId:guid}")]
-    public async Task<ActionResult<IList<VehicleMobileModel>>> GetVehicleByMainDriverId(Guid driverId)
+    public async Task<ActionResult<ApiResponse<IList<VehicleMobileModel>>>> GetVehicleByMainDriverId(Guid driverId)
     {
         var vehicles = await _sender.Send(new VehicleMediator.GetVehicleByMainDriverQuery(driverId));
 
@@ -66,7 +67,7 @@ public class VehicleMobileController : ControllerBase
 
         var result = vehicles.Select(VehicleMobileModel.FromModel);
 
-        return Ok(result);
+        return Ok(ApiResponse<IList<VehicleMobileModel>>.WithSuccess(result.ToList()));
     }
 
     /// <summary>

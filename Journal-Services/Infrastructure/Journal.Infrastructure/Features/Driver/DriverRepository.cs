@@ -16,9 +16,8 @@ public class DriverRepository : IDriverRepository
     {
         var driver =
             _dbContext.Driver
-                .Where(d => d.DriverId == driverId)
                 .AsNoTracking()
-                .FirstOrDefault();
+                .SingleOrDefault(d => d.DriverId == driverId);
 
         return driver;
     }
@@ -42,5 +41,16 @@ public class DriverRepository : IDriverRepository
         _dbContext.SaveChanges();
 
         return new ModelDoublePK(dto.DriverId, dto.SecondaryId);
+    }
+
+    /// <inheritdoc/>
+    public DriverDTO? GetDriverByUserId(uint userId)
+    {
+        var driver =
+            _dbContext.Driver
+                .AsNoTracking()
+                .SingleOrDefault(d => d.UserId == userId);
+
+        return driver;
     }
 }

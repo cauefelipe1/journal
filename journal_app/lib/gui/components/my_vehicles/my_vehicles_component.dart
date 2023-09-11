@@ -9,14 +9,16 @@ import 'package:journal_mobile_app/routes/routes_constants.dart';
 
 var driverVehiclesProvider = FutureProvider.autoDispose((ref) {
   final userInfo = ref.watch(loggedUserInfoProvider).value;
-  return ref.watch(vehicleRepositoryProvider).getDriverVehicles(userInfo!.userId);
+  final vehicles = ref.watch(vehicleRepositoryProvider).getDriverVehicles(userInfo!.driver.id);
+
+  return vehicles;
 });
 
 var currentVehicleIdProvider = StateProvider<int?>((ref) => null);
 
 class MyVehiclesComponent extends ConsumerStatefulWidget {
-  final ValueChanged<int>? onCardPressed;
-  final ValueChanged<int>? onDataIsReady;
+  final ValueChanged<String>? onCardPressed;
+  final ValueChanged<String>? onDataIsReady;
   final Function(String)? onNavigateRequest;
 
   MyVehiclesComponent({
@@ -36,11 +38,11 @@ class MyVehiclesComponent extends ConsumerStatefulWidget {
 }
 
 class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
-  final ValueChanged<int>? onCardPressed;
-  final ValueChanged<int>? onDataIsReady;
+  final ValueChanged<String>? onCardPressed;
+  final ValueChanged<String>? onDataIsReady;
 
   bool isCreated = false;
-  int? currentVheicle = null;
+  String? currentVheicle = null;
 
   _MyVehiclesComponentState({this.onCardPressed, this.onDataIsReady});
 

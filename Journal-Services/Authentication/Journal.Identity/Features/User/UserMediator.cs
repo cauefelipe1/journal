@@ -10,15 +10,19 @@ namespace Journal.Identity.Features.User;
 [UsedImplicitly]
 public partial class UserMediator
 {
-    public class GetUserDataQuery : IRequest<UserData?>
+    public class GetUserDataQuery : IRequest<UserDataModel?>
     {
-        public int UserId { get; }
+        public Guid? UserId { get; }
 
-        public GetUserDataQuery(int userId) => UserId = userId;
+        public uint? UserSecondaryId { get; }
+
+        public GetUserDataQuery(Guid userId) => UserId = userId;
+
+        public GetUserDataQuery(uint userSecondaryId) => UserSecondaryId = userSecondaryId;
     }
 
     [UsedImplicitly]
-    public class GetUserDataHandler : IRequestHandler<GetUserDataQuery, UserData?>
+    public class GetUserDataHandler : IRequestHandler<GetUserDataQuery, UserDataModel?>
     {
         private readonly UserManager<AppUserModel> _userManager;
 
@@ -27,22 +31,28 @@ public partial class UserMediator
             _userManager = userManager;
         }
 
-        public async Task<UserData?> Handle(GetUserDataQuery query, CancellationToken cancellationToken)
+        public async Task<UserDataModel?> Handle(GetUserDataQuery query, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindBySecondaryIdAsync(query.UserId);
+            AppUserModel? dto;
 
-            if (user is null)
+            if (query.UserId.HasValue)
+                dto = await _userManager.FindByIdAsync(query.UserId.Value.ToString());
+
+            else if (query.UserSecondaryId.HasValue)
+                dto = await _userManager.FindBySecondaryIdAsync(query.UserSecondaryId.Value);
+            else
+                throw new ArgumentException("A valid User Id or Secondary Id must be informed.");
+
+            if (dto is null)
                 return null;
 
-            var result = new UserData
+            var result = new UserDataModel
             {
-                UserId = user.SecondaryId,
-                Email = user.NormalizedEmail.ToLower(),
-                Name = "Dominic Toreto", //TODO: Add a field for that in the database.
-                Nickname = "Dom", //TODO: Add a field for that in the database.
+                Id = Guid.Parse(dto.Id),
+                SecondaryId = dto.SecondaryId,
+                Email = dto.NormalizedEmail.ToLower(),
                 UserType = UserType.Premium,
-                Username = user.UserName,
-                DisplayName = "Dominic"
+                Username = dto.UserName
             };
 
             return result;

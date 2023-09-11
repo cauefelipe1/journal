@@ -1,3 +1,4 @@
+using Journal.API.Features.Identity;
 using Journal.Domain.Base;
 using Journal.Domain.Models.Driver;
 
@@ -28,9 +29,6 @@ public class DriverMobileModel : IPublicModel<DriverModel, DriverMobileModel>
     /// <example>1</example>
     public int CountryId { get; set; }
 
-    /// <see cref="DriverModel.UserId"/>
-    /// <example>1</example>
-    public int UserId { get; set; }
 
     /// <inheritdoc/>
     public static DriverMobileModel FromModel(DriverModel source)
@@ -44,10 +42,21 @@ public class DriverMobileModel : IPublicModel<DriverModel, DriverMobileModel>
             FirstName = source.FirstName,
             LastName = source.LastName,
             FullName = source.FullName,
-            CountryId = source.CountryId,
-            UserId = source.UserId
+            CountryId = source.CountryId
         };
 
         return instance;
     }
+}
+
+/// <summary>
+/// Represents the driver and user information for the logged driver/user
+/// </summary>
+public class LoggedDriverDataMobileModel
+{
+    /// <see cref="DriverMobileModel"/>
+    public DriverMobileModel? Driver { get; set; }
+
+    /// <see cref="UserDataMobileModel"/>
+    public UserDataMobileModel? UserData { get; set; }
 }
