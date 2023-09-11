@@ -11,11 +11,10 @@ import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/routes/routes_constants.dart';
 
 var loggedUserInfoProvider = FutureProvider.autoDispose((ref) async {
-  //var userInf = await ref.watch(identityServiceProvider).getUserData();
-  var userInf = await ref.watch(driverDataServiceProvider).getLoggedDriver();
+  var loggedDriverInf = await ref.watch(driverDataServiceProvider).getLoggedDriver();
 
   ref.keepAlive();
-  return userInf!;
+  return loggedDriverInf!;
 });
 
 class Application extends ConsumerWidget {
