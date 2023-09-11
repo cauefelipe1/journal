@@ -7,12 +7,12 @@ import 'package:journal_mobile_app/models/vehicle_event.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-var vehicleEventsProvider = FutureProvider.autoDispose.family<List<VehicleEventModel>, int>((ref, vehicleId) {
+var vehicleEventsProvider = FutureProvider.autoDispose.family<List<VehicleEventModel>, String>((ref, vehicleId) {
   return ref.watch(vehicleEventsRepositoryProvider).getVehicleEvents(vehicleId);
 });
 
 class VehicleHistoryComponent extends StatelessWidget {
-  final int? vehicleId;
+  final String? vehicleId;
   final ScrollController? scrollController;
 
   VehicleHistoryComponent({super.key, this.vehicleId, this.scrollController});

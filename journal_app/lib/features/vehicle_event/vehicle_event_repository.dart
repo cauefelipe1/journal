@@ -8,7 +8,7 @@ final vehicleEventsRepositoryProvider = Provider<IVehicleEventRepository>((ref) 
 });
 
 abstract class IVehicleEventRepository {
-  Future<List<VehicleEventModel>> getVehicleEvents(int vehicleId);
+  Future<List<VehicleEventModel>> getVehicleEvents(String vehicleId);
 }
 
 class VehicleEventRepository implements IVehicleEventRepository {
@@ -19,7 +19,7 @@ class VehicleEventRepository implements IVehicleEventRepository {
   }
 
   @override
-  Future<List<VehicleEventModel>> getVehicleEvents(int vehicleId) async {
+  Future<List<VehicleEventModel>> getVehicleEvents(String vehicleId) async {
     String path = "${ApiConstants.vehicleEvents.vehicleEventsByVehicle}/$vehicleId";
 
     var requestResult = await _httpClient.executeAuthGet(path);

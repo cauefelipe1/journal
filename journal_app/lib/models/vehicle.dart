@@ -34,21 +34,19 @@ class VehicleBrandModel extends Serializable {
 
 @JsonSerializable()
 class VehicleModel extends Serializable {
-  int? id;
-  String? secondaryId;
-  String? modelName;
-  String? nickname;
+  String? id;
+  String modelName;
+  String nickname;
   int? modelYear;
   VehicleType? type;
-  int? brandId;
-  int? mianDriverId;
+  String? brandId;
+  String? mianDriverId;
   String? displayName;
 
   VehicleModel({
     this.id,
-    this.secondaryId,
-    this.modelName,
-    this.nickname,
+    required this.modelName,
+    required this.nickname,
     this.modelYear,
     this.type,
     this.brandId,
