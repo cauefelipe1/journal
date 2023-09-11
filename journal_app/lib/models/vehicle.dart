@@ -37,21 +37,21 @@ class VehicleModel extends Serializable {
   String? id;
   String modelName;
   String nickname;
-  int? modelYear;
-  VehicleType? type;
-  String? brandId;
-  String? mianDriverId;
-  String? displayName;
+  int modelYear;
+  VehicleType type;
+  String brandId;
+  String mainDriverId;
+  String displayName;
 
   VehicleModel({
-    this.id,
+    required this.id,
     required this.modelName,
     required this.nickname,
-    this.modelYear,
-    this.type,
-    this.brandId,
-    this.mianDriverId,
-    this.displayName,
+    required this.modelYear,
+    required this.type,
+    required this.brandId,
+    required this.mainDriverId,
+    required this.displayName,
   });
 
   @override

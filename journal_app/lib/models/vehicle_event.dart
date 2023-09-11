@@ -18,24 +18,24 @@ enum VehicleEventType {
 
 @JsonSerializable()
 class VehicleEventModel extends Serializable {
-  int? id;
-  int? ownerDriverId;
-  int? vehicleId;
-  int? driverId;
-  DateTime? date;
-  int? vehicleOdometer;
-  VehicleEventType? type;
+  String id;
+  String ownerDriverId;
+  String vehicleId;
+  String driverId;
+  DateTime date;
+  int vehicleOdometer;
+  VehicleEventType type;
   String? description;
   String? note;
 
   VehicleEventModel({
-    this.id,
-    this.ownerDriverId,
-    this.vehicleId,
-    this.driverId,
-    this.date,
-    this.vehicleOdometer,
-    this.type,
+    required this.id,
+    required this.ownerDriverId,
+    required this.vehicleId,
+    required this.driverId,
+    required this.date,
+    required this.vehicleOdometer,
+    required this.type,
     this.description,
     this.note,
   });

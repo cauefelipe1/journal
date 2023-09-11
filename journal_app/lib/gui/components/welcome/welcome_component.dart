@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/application.dart';
 import 'package:journal_mobile_app/l10n/app_localization_context.dart';
 import 'package:journal_mobile_app/models/driver.dart';
-import 'package:journal_mobile_app/models/user.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -183,7 +183,7 @@ class VehicleHistoryComponent extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Text(_dateFormat.format(event.date!)),
+                      Text(_dateFormat.format(event.date)),
                     ],
                   ),
                   SizedBox(height: 10),

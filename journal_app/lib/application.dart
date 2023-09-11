@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/features/driver/driver_data_service.dart';
-import 'package:journal_mobile_app/features/identity/identity_service.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

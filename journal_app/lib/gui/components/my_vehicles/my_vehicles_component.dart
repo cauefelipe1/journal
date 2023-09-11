@@ -117,7 +117,7 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
 
             return MyVehicleCardComponent(
               vehicleId: vehicle.id!,
-              type: vehicle.type!,
+              type: vehicle.type,
               name: vehicle.displayName,
               onPressed: onCardPressed,
             );
@@ -129,7 +129,7 @@ class _MyVehiclesComponentState extends ConsumerState<MyVehiclesComponent> {
     return MyVehicleCardComponent(
       vehicleId: vehicle.id!,
       name: vehicle.displayName,
-      type: vehicle.type!,
+      type: vehicle.type,
       width: double.infinity,
       onPressed: onCardPressed,
     );
