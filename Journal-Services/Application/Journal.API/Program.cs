@@ -7,6 +7,7 @@ using MediatR;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddAdditionalConfigFiles();
+builder.Configuration.AddEnvironmentVariables();
 var configuration = builder.Configuration;
 
 // Add services to the container.
