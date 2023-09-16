@@ -1,0 +1,14 @@
+{
+    "Logging": {
+        "LogLevel": {
+            "Default": "Debug"
+        }
+    },
+    "Database": {
+        "Port": 5432,
+        "SearchPath": "app"
+    },
+    "JwtSettings": {
+        "JwtLifetime": "00:02:00:00"
+    }
+}

@@ -28,7 +28,7 @@ var app = builder.Build();
 app.UseAppLocalization();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsAnyDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>

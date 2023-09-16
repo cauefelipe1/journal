@@ -98,9 +98,29 @@ public static class GeneralServicesExtensions
     /// <param name="configuration"><see cref="ConfigurationManager"/> instance.</param>
     public static void AddAdditionalConfigFiles(this ConfigurationManager configuration)
     {
-        const string SECRETS_FILE = "sharedSettings.Secrets.json";
+        const string BASE_FILE_NAME = "sharedSettings.";
+        const string FILE_EXT = ".json";
+        const string SECRETS_FILE = BASE_FILE_NAME + "Secrets" + FILE_EXT;
 
         string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
         configuration.AddJsonFile( Path.Combine(path, SECRETS_FILE), true, false);
+
+        string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+        if (!string.IsNullOrEmpty(env))
+        {
+            string envConfigFileName = BASE_FILE_NAME + env + FILE_EXT;
+            configuration.AddJsonFile( Path.Combine(path, envConfigFileName), false, false);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the current host environment name is some development environment.
+    /// </summary>
+    /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
+    /// <returns>True if the environment name is some development environment, otherwise false.</returns>
+    public static bool IsAnyDevelopment(this IHostEnvironment hostEnvironment)
+    {
+        return hostEnvironment.IsEnvironment(Environments.Development) || hostEnvironment.IsEnvironment("LocalDevelopment");
     }
 }
