@@ -103,7 +103,6 @@ public static class GeneralServicesExtensions
         const string SECRETS_FILE = BASE_FILE_NAME + "Secrets" + FILE_EXT;
 
         string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        configuration.AddJsonFile( Path.Combine(path, SECRETS_FILE), true, false);
 
         string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -112,6 +111,8 @@ public static class GeneralServicesExtensions
             string envConfigFileName = BASE_FILE_NAME + env + FILE_EXT;
             configuration.AddJsonFile( Path.Combine(path, envConfigFileName), false, false);
         }
+
+        configuration.AddJsonFile( Path.Combine(path, SECRETS_FILE), true, false);
     }
 
     /// <summary>

@@ -24,7 +24,9 @@ public partial class DatabaseContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            .UseNpgsql(_settingsData.Database.ConnectionString)
+            .UseNpgsql(
+                _settingsData.Database.ConnectionString,
+                builder => builder.EnableRetryOnFailure(maxRetryCount:3, maxRetryDelay:TimeSpan.FromMilliseconds(2000), errorCodesToAdd:null))
             .UseSnakeCaseNamingConvention();
     }
 
