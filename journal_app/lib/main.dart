@@ -50,11 +50,17 @@ void main() async {
   final fontsLicensesFuture = _addFontsLicense();
 
   final container = ProviderContainer();
-  final identityService = container.read(identityServiceProvider);
-  final isLogggedInFuture = identityService.checkIfAuthenticated();
 
-  final results = await Future.wait([appConfigFuture, fontsLicensesFuture, isLogggedInFuture]);
-  final bool isLogged = results[2];
+  bool isLogged = false;
+
+  try {
+    final identityService = container.read(identityServiceProvider);
+    isLogged = await identityService.checkIfAuthenticated();
+  } catch (e) {
+    isLogged = false;
+  }
+
+  await Future.wait([appConfigFuture, fontsLicensesFuture]);
 
   //As the application is using the Riverpod, it must be wraped in a ProviderScope
   //But here we are using the UncontrolledProviderScope because we are consumning a provider before flutter is initialized.
