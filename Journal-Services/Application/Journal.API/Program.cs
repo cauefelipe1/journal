@@ -39,8 +39,6 @@ if (app.Environment.IsAnyDevelopment())
         });
 }
 
-app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -26,4 +26,19 @@
       <ProjectReference Include="..\..\Infrastructure\Journal.Infrastructure\Journal.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include=".ebextensions\https-instance.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include=".ebextensions\https-instance-single.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include=".platform\nginx\conf.d\https.conf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

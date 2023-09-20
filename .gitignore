@@ -457,3 +457,6 @@ fabric.properties
 
 # Database volumes
 /data
+
+#API Published
+/Journal-Services/Published
