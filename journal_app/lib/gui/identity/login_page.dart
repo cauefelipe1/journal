@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:journal_mobile_app/gui/common/constants.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/identity/login_controller.dart';
 import 'package:journal_mobile_app/gui/landing/landing_page.dart';
@@ -25,22 +26,24 @@ class LoginPage extends ConsumerWidget {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 70),
-                const Icon(
-                  Icons.car_repair,
-                  size: 150,
+                const Image(
+                  image: AssetImage(UiConstants.imagesBasePath + "/app-logo.png"),
+                  width: 200,
                 ),
                 Text(
                   context.l10n.appName,
                   style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 35,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 5,
+                    fontFamily: "Nunito",
+                    fontSize: 70,
                   ),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  context.l10n.loginPageHeader,
-                  style: const TextStyle(fontSize: 30),
-                ),
+                //const SizedBox(height: 20),
+                // Text(
+                //   context.l10n.loginPageHeader,
+                //   style: const TextStyle(fontSize: 80),
+                // ),
                 const SizedBox(height: 20),
                 //Username field
                 Padding(

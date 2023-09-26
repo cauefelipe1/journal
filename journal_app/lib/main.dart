@@ -32,10 +32,12 @@ Future _addFontsLicense() async {
   LicenseRegistry.addLicense(() async* {
     final openSansLicense = rootBundle.loadString('assets/fonts/open_sasns/OFL.txt');
     final montserratLicense = rootBundle.loadString('assets/fonts/montserrat/OFL.txt');
-    var licenses = await Future.wait([openSansLicense, montserratLicense]);
+    final nunitoLicense = rootBundle.loadString('assets/fonts/nunito/OFL.txt');
+    var licenses = await Future.wait([openSansLicense, montserratLicense, nunitoLicense]);
 
     yield LicenseEntryWithLineBreaks(['open_sans_font'], licenses[0]);
     yield LicenseEntryWithLineBreaks(['montserrat_font'], licenses[1]);
+    yield LicenseEntryWithLineBreaks(['nunito_font'], licenses[2]);
   });
 }
 

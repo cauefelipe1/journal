@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "journal_app",
+            "name": "Journal",
             "request": "launch",
             "type": "dart",
             "preLaunchTask": "genarate_auto_gen_files"
         },
         {
-            "name": "journal_app (profile mode)",
+            "name": "Journal (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
             //"preLaunchTask": "genarate_auto_gen_files"
         },
         {
-            "name": "journal_app (release mode)",
+            "name": "Journal (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

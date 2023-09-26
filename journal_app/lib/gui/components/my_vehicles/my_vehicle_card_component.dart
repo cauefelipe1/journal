@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:journal_mobile_app/gui/common/constants.dart';
 import 'package:journal_mobile_app/models/vehicle.dart';
 
 class MyVehicleCardComponent extends StatelessWidget {
@@ -62,7 +63,7 @@ class MyVehicleCardComponent extends StatelessWidget {
   }
 
   String _getCardIconPath() {
-    const String basePath = "assets/images/vehicle_icons";
+    const String basePath = UiConstants.imagesBasePath + "/vehicle_icons";
 
     switch (type) {
       case VehicleType.car:
