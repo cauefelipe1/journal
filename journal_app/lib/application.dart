@@ -60,10 +60,7 @@ class Application extends ConsumerWidget {
 
   ThemeData _getThemeData() => ThemeData(
         fontFamily: 'OpenSans',
-        //primaryColor: Color(0x648112),
-        //primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(100, 129, 18, 100)),
-        //primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(66, 82, 14, 100)),
-        primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(126, 178, 57, 100)),
+        primarySwatch: MaterialColorGenerator.from(Color(0xFF7EB239)),
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
