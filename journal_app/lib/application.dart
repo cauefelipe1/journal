@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:journal_mobile_app/features/driver/driver_data_service.dart';
+import 'package:journal_mobile_app/gui/common/material_color_generator.dart';
 import 'package:journal_mobile_app/gui/components/loading_overlay.dart';
 import 'package:journal_mobile_app/gui/identity/login_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -59,8 +60,10 @@ class Application extends ConsumerWidget {
 
   ThemeData _getThemeData() => ThemeData(
         fontFamily: 'OpenSans',
-        primaryColor: Colors.teal[300],
-        primarySwatch: Colors.teal,
+        //primaryColor: Color(0x648112),
+        //primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(100, 129, 18, 100)),
+        //primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(66, 82, 14, 100)),
+        primarySwatch: MaterialColorGenerator.from(Color.fromRGBO(126, 178, 57, 100)),
         appBarTheme: const AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),

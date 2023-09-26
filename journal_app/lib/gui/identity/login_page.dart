@@ -25,26 +25,26 @@ class LoginPage extends ConsumerWidget {
           child: Center(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 70),
+                const SizedBox(height: 80),
                 const Image(
                   image: AssetImage(UiConstants.imagesBasePath + "/app-logo.png"),
-                  width: 200,
+                  width: 330,
                 ),
-                Text(
-                  context.l10n.appName,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 5,
-                    fontFamily: "Nunito",
-                    fontSize: 70,
-                  ),
-                ),
+                // Text(
+                //   context.l10n.appName,
+                //   style: const TextStyle(
+                //     fontWeight: FontWeight.w900,
+                //     letterSpacing: 5,
+                //     fontFamily: "Nunito",
+                //     fontSize: 70,
+                //   ),
+                // ),
                 //const SizedBox(height: 20),
                 // Text(
                 //   context.l10n.loginPageHeader,
                 //   style: const TextStyle(fontSize: 80),
                 // ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 80),
                 //Username field
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
