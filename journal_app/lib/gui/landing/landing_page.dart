@@ -31,7 +31,7 @@ class _LandingPageState extends State<LandingPage> with SingleTickerProviderStat
         onNavigateRequest: _navigateRequest,
       ),
       SelectVehicleEventType(),
-      MoreIemsPage(),
+      MoreItemsPage(),
     ];
 
     _controller = AnimationController(
