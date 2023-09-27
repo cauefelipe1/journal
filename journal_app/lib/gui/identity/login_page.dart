@@ -175,38 +175,10 @@ class LoginPage extends ConsumerWidget {
     if (loginResult.errors != null && loginResult.errors!.isNotEmpty) {
       String? error = loginResult.errors?.join("/n");
       await ErrorDialog.show(ref.context, context.l10n.notAbleToLogin, error!);
-      //await _showLoginErrorDialog(error!, ref);
 
       return;
     }
 
     nv.pushReplacement(MaterialPageRoute(builder: (context) => LoadingOverlay(child: LandingPage())));
   }
-
-  // Future<void> _showLoginErrorDialog(String errorMessage, WidgetRef ref) async {
-  //   return showDialog<void>(
-  //     context: ref.context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text(context.l10n.notAbleToLogin),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(errorMessage),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text(context.l10n.ok),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }
