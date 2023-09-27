@@ -1,3 +1,4 @@
+using Dapper;
 using Journal.Identity.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,5 +37,39 @@ public class JwtRepository : IJwtRepository
     {
         _dbContext.Add(dto);
         _dbContext.SaveChanges();
+    }
+
+    public void InvalidateRefreshTokenByUserId(string userId)
+    {
+        using (var con = _dbContext.GetConnection())
+        {
+            const string SQL = @"
+                update 
+                    auth.refresh_token
+                set
+                    invalidated = true
+                where 
+                    used = false
+                    and user_id = @UserId";
+
+            con.Open();
+
+            using (var t = con.BeginTransaction())
+            {
+                try
+                {
+                    var p = new { UserId = userId };
+
+                    con.Execute(SQL, p, commandTimeout: 30);
+
+                    t.Commit();
+                }
+                catch (Exception e)
+                {
+                    t.Rollback();
+                    throw;
+                }
+            }
+        }
     }
 }

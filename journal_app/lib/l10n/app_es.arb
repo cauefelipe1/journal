@@ -35,5 +35,6 @@
     "expenseText": "Gastos",
     "incomeText": "Ingresso",
     "routeText": "Ruta",
-    "unknownText": "Desconocido"
+    "unknownText": "Desconocido",
+    "logoutOption": "Cerrar sesión"
 }

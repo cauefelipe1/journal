@@ -1,3 +1,4 @@
+using Journal.API.Base;
 using Journal.API.Configurations;
 using Journal.API.Extensions;
 using Journal.Domain.Models.User;
@@ -51,7 +52,7 @@ public class IdentityController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<UserLoginResult>> RegisterUser([FromBody] UserLoginInput loginInput)
+    public async Task<ActionResult<UserLoginResult>> LoginUser([FromBody] UserLoginInput loginInput)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -99,6 +100,7 @@ public class IdentityController : ControllerBase
     }
 
     /// <summary>
+    /// Verifies if the user is authenticated.
     /// </summary>
     /// <returns></returns>
     [HttpGet("checkIfAuthenticated")]
@@ -108,5 +110,24 @@ public class IdentityController : ControllerBase
             return BadRequest(false);
 
         return Ok(true);
+    }
+
+    /// <summary>
+    /// Logout the logged user.
+    /// </summary>
+    [HttpPost("logout")]
+    public async Task<ActionResult<ApiResponse<bool>>> LogoutUser()
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(false);
+
+        var userId = this.GetUserId();
+
+        bool userData = await _sender.Send(new UserMediator.UserLogoutCommand(userId));
+
+        if (!userData)
+            return NotFound(ApiResponse<bool>.NonSuccess("Failed"));
+
+        return Ok(ApiResponse<bool>.WithSuccess(userData));
     }
 }

@@ -35,5 +35,6 @@
     "expenseText": "Despesa",
     "incomeText": "Receita",
     "routeText": "Deslocamento",
-    "unknownText": "Desconhecido"
+    "unknownText": "Desconhecido",
+    "logoutOption": "Sair do Aplicativo"
 }

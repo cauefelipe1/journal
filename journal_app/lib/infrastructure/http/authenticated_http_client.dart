@@ -15,6 +15,7 @@ final httpClientProvider = Provider<IAuthenticatedHttpClient>((ref) {
 
 abstract class IAuthenticatedHttpClient {
   Future<UserLoginResult?> loginUser(UserLoginInput input);
+  Future<bool> logoutUser();
   Future<dynamic> executeAuthGet(String path);
   Future<dynamic> executeAuthPost(String path, Object? body);
 }
@@ -67,6 +68,20 @@ class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHt
     return null;
   }
 
+  @override
+  Future<bool> logoutUser() async {
+    var headers = await _getHttpHeaders();
+    var requestResult = await executePost(ApiConstants.identity.logoutUser, null, headers);
+
+    if (requestResult["data"]) {
+      await _cleanTokens();
+
+      return true;
+    }
+
+    return false;
+  }
+
   Future<void> _storeTokens(UserLoginResult loginResult) async {
     if (loginResult.token != null && loginResult.refreshToken != null) {
       var saveJwtFuture = _secureStorage.write(key: _JWT_TOKEN_KEY, value: loginResult.token);
@@ -74,6 +89,13 @@ class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHt
 
       await Future.wait([saveJwtFuture, saveRefreshTokenFuture]);
     }
+  }
+
+  Future<void> _cleanTokens() async {
+    var saveJwtFuture = _secureStorage.delete(key: _JWT_TOKEN_KEY);
+    var saveRefreshTokenFuture = _secureStorage.delete(key: _REFRESH_TOKEN_KEY);
+
+    await Future.wait([saveJwtFuture, saveRefreshTokenFuture]);
   }
 
   Future<String?> _getJwtToken() async {

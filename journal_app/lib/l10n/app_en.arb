@@ -149,5 +149,9 @@
     "unknownText": "Unknown",
     "@unknownText": {
       "unknownText": "Generic text."
+    },
+    "logoutOption": "Logout",
+    "@logoutOption": {
+      "logoutOption": "Logout button text."
     }
 }

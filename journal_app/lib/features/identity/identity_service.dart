@@ -12,6 +12,7 @@ abstract class IIdentityService {
   Future<UserLoginResult> loginUser(UserLoginInput input);
   Future<UserData?> getUserData();
   Future<bool> checkIfAuthenticated();
+  Future<bool> logoutUser();
 }
 
 class IdentityService implements IIdentityService {
@@ -54,5 +55,12 @@ class IdentityService implements IIdentityService {
     var requestResult = await _httpClient.executeAuthGet(ApiConstants.identity.checkIfAuthenticated);
 
     return requestResult != null;
+  }
+
+  @override
+  Future<bool> logoutUser() async {
+    bool loginResult = await _httpClient.logoutUser();
+
+    return loginResult;
   }
 }
