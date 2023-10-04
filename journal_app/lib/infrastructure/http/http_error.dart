@@ -1,0 +1,4 @@
+enum HttpError {
+  unknown,
+  hostUnavailable,
+}

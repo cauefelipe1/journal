@@ -36,5 +36,6 @@
     "incomeText": "Receita",
     "routeText": "Deslocamento",
     "unknownText": "Desconhecido",
-    "logoutOption": "Sair do Aplicativo"
+    "logoutOption": "Sair do Aplicativo",
+    "notAbleToLogout": "Erro ao tentar sair"
 }

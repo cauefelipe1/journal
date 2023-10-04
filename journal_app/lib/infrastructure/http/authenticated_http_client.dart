@@ -3,14 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:journal_mobile_app/infrastructure/http/api_constants.dart';
 import 'package:journal_mobile_app/infrastructure/http/base_http_client.dart';
+import 'package:journal_mobile_app/infrastructure/http/error_hanlder/http_error_handler.dart';
 import 'package:journal_mobile_app/l10n/app_localization_provider.dart';
 import 'package:journal_mobile_app/models/identity.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 final httpClientProvider = Provider<IAuthenticatedHttpClient>((ref) {
   final String locale = ref.watch(appLocalizationsProvider).localeName;
+  final IHttpErrorHandler errorHandler = ref.watch(httpErrorHandlerProvider);
 
-  return AuthenticatedHttpClient(languageCode: locale);
+  return AuthenticatedHttpClient(languageCode: locale, httpErrorHandler: errorHandler);
 });
 
 abstract class IAuthenticatedHttpClient {
@@ -29,7 +31,10 @@ class AuthenticatedHttpClient extends BaseHttpClient implements IAuthenticatedHt
 
   late final FlutterSecureStorage _secureStorage;
 
-  AuthenticatedHttpClient({required this.languageCode}) {
+  AuthenticatedHttpClient({
+    required this.languageCode,
+    required IHttpErrorHandler httpErrorHandler,
+  }) : super(httpErrorHandler: httpErrorHandler) {
     _secureStorage = const FlutterSecureStorage();
 
     _defaultHeader = {

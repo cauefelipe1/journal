@@ -1,11 +1,18 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:journal_mobile_app/config/app_config.dart';
+import 'package:journal_mobile_app/infrastructure/http/error_hanlder/http_error_handler.dart';
 
 abstract class BaseHttpClient {
   String jsonMimeType = 'application/json; charset=UTF-8';
+
+  @protected
+  IHttpErrorHandler httpErrorHandler;
+
+  BaseHttpClient({required this.httpErrorHandler});
 
   @protected
   Future<dynamic> executeGet(String path, Map<String, String>? headers) async {
@@ -16,12 +23,12 @@ abstract class BaseHttpClient {
       var result = _internalGetRequestResult(response);
 
       return result;
-    } catch (e) {
-      if (kDebugMode) {
+    } on Exception catch (e) {
+      bool handled = _handleHttpException(e);
+
+      if (!handled) {
         rethrow;
       }
-
-      return null;
     }
   }
 
@@ -34,12 +41,12 @@ abstract class BaseHttpClient {
       var result = _internalGetRequestResult(response);
 
       return result;
-    } catch (e) {
-      if (kDebugMode) {
+    } on Exception catch (e) {
+      bool handled = _handleHttpException(e);
+
+      if (!handled) {
         rethrow;
       }
-
-      return null;
     }
   }
 
@@ -52,4 +59,14 @@ abstract class BaseHttpClient {
   }
 
   bool _isHttpStatusCodeSuccess(int statusCode) => (statusCode >= 200 && statusCode <= 299);
+
+  bool _handleHttpException(Exception e) {
+    if (e is SocketException) {
+      httpErrorHandler.SocketClientException(e);
+
+      return true;
+    }
+
+    return false;
+  }
 }

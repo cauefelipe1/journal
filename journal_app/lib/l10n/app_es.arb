@@ -36,5 +36,6 @@
     "incomeText": "Ingresso",
     "routeText": "Ruta",
     "unknownText": "Desconocido",
-    "logoutOption": "Cerrar sesión"
+    "logoutOption": "Cerrar sesión",
+    "notAbleToLogout": "No puedo cerrar sesión"
 }

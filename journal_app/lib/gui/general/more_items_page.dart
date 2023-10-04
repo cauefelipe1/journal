@@ -54,7 +54,7 @@ class MoreItemsPage extends ConsumerWidget {
     }
 
     if (!isLogouted) {
-      await ErrorDialog.show(ref.context, context.l10n.notAbleToLogin, error);
+      await ErrorDialog.show(ref.context, context.l10n.notAbleToLogout, error);
 
       return;
     }
