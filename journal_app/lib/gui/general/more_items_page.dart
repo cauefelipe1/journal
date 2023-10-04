@@ -43,7 +43,7 @@ class MoreItemsPage extends ConsumerWidget {
     var nv = Navigator.of(context);
 
     bool isLogouted = false;
-    String error = "Loggout Error";
+    String error = "Error during the logout, try again."; //TODO: Translate it
 
     try {
       isLogouted = await ref.read(loginControllerProvider).logout();

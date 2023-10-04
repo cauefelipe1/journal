@@ -47,6 +47,8 @@ abstract class BaseHttpClient {
       if (!handled) {
         rethrow;
       }
+
+      return null;
     }
   }
 
