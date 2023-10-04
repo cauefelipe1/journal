@@ -22,4 +22,10 @@ class LoginController {
 
     return loginResult;
   }
+
+  Future<bool> logout() async {
+    bool loginResult = await _identityDS.logoutUser();
+
+    return loginResult;
+  }
 }

@@ -39,7 +39,7 @@ class Application extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: _getThemeData(),
       onGenerateRoute: _generateRoute,
-      home: isLoggedIn ? LandingPage() : LoadingOverlay(child: LoginPage()),
+      home: LoadingOverlay(child: isLoggedIn ? LandingPage() : LoginPage()),
     );
   }
 

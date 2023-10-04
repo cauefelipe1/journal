@@ -149,5 +149,13 @@
     "unknownText": "Unknown",
     "@unknownText": {
       "unknownText": "Generic text."
+    },
+    "logoutOption": "Logout",
+    "@logoutOption": {
+      "logoutOption": "Logout button text."
+    },
+    "notAbleToLogout": "Not able to logout",
+    "@notAbleToLogout": {
+      "description": "Text used in the logout error dialog title."
     }
 }

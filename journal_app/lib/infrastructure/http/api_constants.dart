@@ -13,6 +13,7 @@ class IdentityEndpoints {
   final String refreshToken = "$_basePath/refreshToken";
   final String userData = "$_basePath/userData";
   final String checkIfAuthenticated = "$_basePath/checkIfAuthenticated";
+  final String logoutUser = "$_basePath/logout";
 }
 
 class DriverEndpoints {

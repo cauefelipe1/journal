@@ -1,9 +1,11 @@
+using System.Data;
 using Journal.Identity.Features.Jwt;
 using Journal.Identity.Models.User;
 using Journal.SharedSettings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Journal.Identity.Database;
 
@@ -54,4 +56,6 @@ public class IdentityDatabaseContext : IdentityDbContext<AppUserModel, Role, str
                 x => x.MigrationsAssembly("Journal.Migration"))
         .UseSnakeCaseNamingConvention();
     }
+
+    public IDbConnection GetConnection() => new NpgsqlConnection(_settingsData.Database.ConnectionString);
 }

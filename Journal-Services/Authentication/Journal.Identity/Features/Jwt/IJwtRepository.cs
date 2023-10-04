@@ -23,4 +23,10 @@ public interface IJwtRepository
     /// </summary>
     /// <param name="dto">The <see cref="RefreshTokenDTO"/> instance to be saved.</param>
     void CreateRefreshToken(RefreshTokenDTO dto);
+
+    /// <summary>
+    /// Mark all refresh tokens for a specif user as invalidated.
+    /// </summary>
+    /// <param name="userId">The User id.</param>
+    void InvalidateRefreshTokenByUserId(string userId);
 }

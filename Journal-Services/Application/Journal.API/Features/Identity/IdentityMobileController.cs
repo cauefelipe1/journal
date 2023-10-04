@@ -51,7 +51,7 @@ public class IdentityMobileController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<UserLoginResult>> RegisterUser([FromBody] UserLoginInput loginInput)
+    public async Task<ActionResult<UserLoginResult>> LoginUser([FromBody] UserLoginInput loginInput)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -68,7 +68,7 @@ public class IdentityMobileController : ControllerBase
     /// <returns></returns>
     [AllowAnonymous]
     [HttpPost("refreshToken")]
-    public async Task<ActionResult<UserLoginResult>> RegisterUser([FromBody] RefreshTokenInput refreshInput)
+    public async Task<ActionResult<UserLoginResult>> RefreshToken([FromBody] RefreshTokenInput refreshInput)
     {
         if (!ModelState.IsValid)
             return BadRequest();
@@ -101,6 +101,7 @@ public class IdentityMobileController : ControllerBase
     }
 
     /// <summary>
+    /// Verifies if the user is authenticated.
     /// </summary>
     /// <returns></returns>
     [HttpGet("checkIfAuthenticated")]
@@ -110,5 +111,24 @@ public class IdentityMobileController : ControllerBase
             return BadRequest(false);
 
         return Ok(true);
+    }
+
+    /// <summary>
+    /// Logout the logged user.
+    /// </summary>
+    [HttpPost("logout")]
+    public async Task<ActionResult<ApiResponse<bool>>> LogoutUser()
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(false);
+
+        var userId = this.GetUserId();
+
+        bool userData = await _sender.Send(new UserMediator.UserLogoutCommand(userId));
+
+        if (!userData)
+            return NotFound(ApiResponse<bool>.NonSuccess("Failed"));
+
+        return Ok(ApiResponse<bool>.WithSuccess(userData));
     }
 }

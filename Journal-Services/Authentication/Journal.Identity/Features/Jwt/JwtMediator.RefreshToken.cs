@@ -49,7 +49,6 @@ public abstract partial class JwtMediator
 
         });
     }
-
     #endregion Create
 
     #region Refresh
@@ -176,4 +175,33 @@ public abstract partial class JwtMediator
 
     }
     #endregion Refresh
+
+    #region Invalidate
+
+    [UsedImplicitly]
+    public class InvalidateRefreshTokenCommand : IRequest<bool>
+    {
+        public string UserId { get; }
+
+        public InvalidateRefreshTokenCommand(string userId)
+        {
+            UserId = userId;
+        }
+    }
+
+    [UsedImplicitly]
+    public class InvalidateRefreshTokenHandler : IRequestHandler<InvalidateRefreshTokenCommand, bool>
+    {
+        private readonly IJwtRepository _repo;
+
+        public InvalidateRefreshTokenHandler(IJwtRepository repo) => _repo = repo;
+
+        public Task<bool> Handle(InvalidateRefreshTokenCommand request, CancellationToken cancellationToken)
+        {
+            _repo.InvalidateRefreshTokenByUserId(request.UserId);
+
+            return Task.FromResult(true);
+        }
+    }
+    #endregion Invalidate
 }
