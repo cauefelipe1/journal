@@ -53,6 +53,7 @@ class IdentityService implements IIdentityService {
   @override
   Future<bool> checkIfAuthenticated() async {
     var requestResult = await _httpClient.executeAuthGet(ApiConstants.identity.checkIfAuthenticated);
+
     return requestResult != null;
   }
 
