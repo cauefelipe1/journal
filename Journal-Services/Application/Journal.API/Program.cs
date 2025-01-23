@@ -2,7 +2,6 @@ using Journal.API.Configurations;
 using Journal.API.DependencyInjection;
 using Journal.Identity.Extensions;
 using Journal.SharedSettings;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +21,8 @@ builder.Services.AddDatabase();
 builder.Services.AddFeatures();
 
 //Must be after AddFeatures
-builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMediatR(cfg=>cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
 
 var app = builder.Build();
 
